@@ -1,0 +1,23 @@
+#banner {
+    @apply w-full bg-cover bg-no-repeat bg-center bg-fixed #{!important};
+}
+
+#banner .banner-body {
+    @apply container flex flex-col text-center max-w-screen-md mx-auto justify-between items-center py-6;
+
+    @screen lg {
+        @apply flex flex-row text-left max-w-screen-xl;
+    }
+}
+
+#banner .getting-starter {
+    @apply py-3 px-7 bg-diskominfo-base text-white uppercase rounded-sm font-semibold inline-block text-sm;
+
+    &:hover {
+        @apply bg-diskominfo-light;
+    }
+}
+
+#banner .logo {
+    height: 378px;
+}

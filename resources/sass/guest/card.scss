@@ -1,0 +1,14 @@
+.btn-card {
+    @apply py-1 uppercase font-semibold rounded-sm w-full bg-diskominfo-base text-white leading-7 text-center text-xs inline-block;
+
+    &:hover {
+        @apply bg-diskominfo-light;
+    }
+}
+
+.form-card {
+    font-family: 'Inter', sans-serif !important;
+    background: #f9fafb !important;
+
+    @apply border border-gray-400 rounded-md p-4;
+}

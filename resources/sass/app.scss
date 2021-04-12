@@ -1,0 +1,43 @@
+@import "fonts";
+@import "includes";
+@import "app/header";
+@import "app/aside";
+@import "app/nav";
+@import "app/table";
+@import "app/card";
+@import "file-upload";
+
+.main-scroll {
+    /* width */
+    &::-webkit-scrollbar {
+        width: 5px;
+        -webkit-transform: translate3d(0, 0, 0);
+        &:hover{
+            width: 10px;
+        }
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px #e2e8f0; 
+        border-radius: 10px;
+    }
+    
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: #9ae6b4; 
+        border-radius: 10px;
+
+        &:hover{
+            background: #48bb78; 
+        }
+    }
+}
+
+.main-app {
+    @apply h-full overflow-y-auto my-6 rounded-t-lg pr-6;
+}
+
+.card {
+    @apply flex items-center p-4 bg-white rounded-lg shadow-sm border border-gray-300;
+}

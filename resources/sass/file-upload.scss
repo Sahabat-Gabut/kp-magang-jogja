@@ -1,0 +1,52 @@
+.hasImage:hover section {
+    background-color: #bcf0da65;
+    color: #1a1c23;
+}
+.hasImage:hover button:hover {
+    background: rgba(0, 0, 0, 0.45);
+    color: #bcf0da;
+}
+
+#overlay p,
+.overlay-icon {
+    opacity: 0;
+}
+
+#overlay.draggedover {
+    backdrop-filter: saturate(200%) blur(2px);
+    background-color: hsla(0, 0%, 100%, 0.8) !important;
+}
+#overlay.draggedover p,
+#overlay.draggedover .overlay-icon {
+    opacity: 1;
+}
+
+.group:hover .group-hover\:text-blue-800 {
+    color: #2b6cb0;
+}
+
+.card-upload {
+    @apply relative mt-2 flex flex-col bg-white border border-gray-300 rounded-md;
+
+}
+.card-upload-overlay {
+    @apply w-full h-full absolute top-0 left-0 pointer-events-none z-50 flex flex-col items-center justify-center rounded-md;
+}
+.card-upload-body {
+    @apply h-full overflow-auto p-8 w-full flex flex-col;
+}
+.label-upload-body {
+    @apply cursor-pointer border-dashed border-2 border-gray-400 py-12 flex flex-col justify-center items-center;
+}
+.label-upload-head {
+    @apply block mb-3 text-center text-gray-900 flex-wrap justify-center cursor-text;
+}
+.button-upload-file {
+    @apply mt-2 rounded-md px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none;
+}
+.gallery-upload-file {
+    @apply flex flex-1 flex-wrap -m-1 mt-10;
+}
+.list-upload-file {
+    @apply h-full w-full text-center flex flex-col items-center justify-center;
+}
