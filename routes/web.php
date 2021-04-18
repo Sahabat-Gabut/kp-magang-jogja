@@ -1,8 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{AuthController, SubmissionController,AttendanceController, ProjectController};
 use App\Http\Livewire\{Apprentice};
+use App\Http\Controllers\{AuthController, 
+    SubmissionController,
+    AttendanceController, 
+    ProjectController,
+    AgencyController,
+    AdminController};
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -49,5 +54,21 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/detail/{id}', [ProjectController::class, 'detail'])->name('.detail');
         Route::get('/detail/{projectID}/{progressID}/change', [ProjectController::class, 'change'])->name('.change');
         Route::get('/detail/{projectID}/{progressID}/remove', [ProjectController::class, 'remove'])->name('.remove');
+    });
+
+    // Agency
+    Route::group(['prefix' => '/agency', 'as' => 'agency'], function() {
+        Route::get('/', [AgencyController::class, 'index']);
+        Route::get('/{id}/detail', [AgencyController::class, 'detail'])->name('.detail');
+        Route::get('/{id}/update', [AgencyController::class, 'update'])->name('.update');
+        Route::get('/{id}/delete', [AgencyController::class, 'delete'])->name('.delete');
+    });
+
+    // Agency
+    Route::group(['prefix' => '/admin', 'as' => 'admin'], function() {
+        Route::get('/', [AdminController::class, 'index']);
+        Route::get('/{id}/detail', [AdminController::class, 'detail'])->name('.detail');
+        Route::get('/{id}/update', [AdminController::class, 'update'])->name('.update');
+        Route::get('/{id}/delete', [AdminController::class, 'delete'])->name('.delete');
     });
 });

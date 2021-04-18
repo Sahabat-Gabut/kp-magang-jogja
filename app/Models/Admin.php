@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\{User,RoleAdmin};
+use App\Models\{RoleAdmin,Jss};
 
 class Admin extends Model
 {
@@ -11,8 +11,18 @@ class Admin extends Model
     public $timestamps      = false;
     protected $fillable     = [ 
         'id', 
-        'id_role_admin', 
-        'id_jss', 
+        'role_admin_id', 
+        'jss_id', 
         'imgSrc'
     ];
+
+    public function adminDetail()
+    {
+        return $this->hasOne(Jss::class, 'id', 'jss_id');
+    }
+
+    public function roleDetail()
+    {
+        return $this->hasOne(RoleAdmin::class, 'id', 'role_admin_id');
+    }
 }
