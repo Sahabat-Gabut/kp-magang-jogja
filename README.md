@@ -13,7 +13,7 @@
 - Clone the repository
 
 ```sh
-git clone https://github.com/changeweb/Unifiedtransform
+git clone https://github.com/Sahabat-Gabut/kp-magang-jogja.git
 ```
 - Copy the contents of the `.env.example` file to create `.env` in the same directory
 
