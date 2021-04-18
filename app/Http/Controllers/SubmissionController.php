@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\TeamApprentice;
+use App\Models\{TeamApprentice,Agency,Apprentice};
 
 class SubmissionController extends Controller
 {
@@ -27,7 +27,7 @@ class SubmissionController extends Controller
         return view('pages.dashboard.submission.detail')->with(compact('submission'));
     }
 
-    public function reject($id)
+    public function reject($id, $agency)
     {
         if (!\Auth::user()->adminDetail) {
             return response(abort(403));
@@ -36,14 +36,27 @@ class SubmissionController extends Controller
         $update = TeamApprentice::where('id',$id)
                   ->update(['status_hired' => 'DI TOLAK']);
 
+        $countApprentice  = Apprentice::where('team_apprentice_id',$id)->count();
+        $countAgency      = Agency::where("id",$agency)->get();
+        $total            = $countAgency[0]->total_apprentice - $countApprentice;
+
         if($update) {
-            return redirect("submission")->with(["message", "berhasil ditolak"]);
+            Agency::where("id", $agency)
+                       ->update(['total_apprentice' => $total]);
+                       
+            session()->flash('success', 'success');
+            session()->flash('title', 'Berhasil');
+            session()->flash('message', 'Pengajuan berhasil disetujui');
+            return redirect("submission");
         }else {
-            return redirect("submission")->with(["message" => "gagal"]);
+            session()->flash('errors', 'errors');
+            session()->flash('title', 'Gagal');
+            session()->flash('message', 'Gagal menyetujui pengajuan');
+            return redirect("submission");
         }
     }
 
-    public function accept($id)
+    public function accept($id, $agency)
     {
         if (!\Auth::user()->adminDetail) {
             return response(abort(403));
@@ -52,10 +65,23 @@ class SubmissionController extends Controller
         $update = TeamApprentice::where('id',$id)
                   ->update(['status_hired' => 'DI TERIMA']);
 
+        $countApprentice  = Apprentice::where('team_apprentice_id',$id)->count();
+        $countAgency      = Agency::where("id",$agency)->get();
+        $total            = $countAgency[0]->total_apprentice + $countApprentice;
+
         if($update) {
-            return redirect("submission")->with(["message", "berhasil diterima"]);
+            Agency::where("id", $agency)
+                       ->update(['total_apprentice' => $total]);
+
+            session()->flash('success', 'success');
+            session()->flash('title', 'Berhasil');
+            session()->flash('message', 'Pengajuan berhasil disetujui');
+            return redirect("submission");
         }else {
-            return redirect("submission")->with(["message" => "gagal"]);
+            session()->flash('errors', 'errors');
+            session()->flash('title', 'Gagal');
+            session()->flash('message', 'Gagal menyetujui pengajuan');
+            return redirect("submission");
         }
     }
 }

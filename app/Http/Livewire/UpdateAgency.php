@@ -30,7 +30,10 @@ class UpdateAgency extends Component
                             ]);
 
         if($update){
-            $this->redirect('/agency');
+            session()->flash('success', 'success');
+            session()->flash('title', 'Berhasil');
+            session()->flash('message', 'Dinas berhasil diperbaharui');
+            return redirect()->to('/agency');
         }
     }
 }

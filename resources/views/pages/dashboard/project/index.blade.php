@@ -37,7 +37,7 @@
                                     </div>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <a href="/project/detail/{{ \Auth::user()->apprenticeProject->team_apprentice_id }}" class="text-teal-600">{{__('Show Detail')}}</a>
+                                    <a href="/project/detail/{{ \Auth::user()->apprenticeProject->team_apprentice_id }}" class="text-teal-600">{{__('Lihat Detail')}}</a>
                                 </td>
                             </tr>
                         @endif
@@ -57,7 +57,7 @@
                                     </div>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <a href="/project/detail/{{$t->id}}" class="text-teal-600">{{__('Show Detail')}}</a>
+                                    <a href="/project/detail/{{$t->id}}" class="text-teal-600">{{__('Lihat Detail')}}</a>
                                 </td>
                             </tr>
                             @endforeach

@@ -3,16 +3,17 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\ProgressProject;
+use App\Models\{ProgressProject,Apprentice};
 
 class CreateProgressProject extends Component
 {
-    public $name, $project_id, $team_id;
+    public $name, $project_id, $team_id, $user, $apprentice;
 
     public function mount($id, $teamid)
     {
         $this->project_id = $id;
         $this->team_id = $teamid;
+        $this->user = Apprentice::where('team_apprentice_id',$teamid)->with('jss')->get();
     }
 
     public function render()
@@ -26,13 +27,16 @@ class CreateProgressProject extends Component
         $validationData = $this->validate(
         [
             'name'    => 'required',
+            'apprentice' => 'required'
         ],
         [
-            'name.required' => 'Planning Harus diisi!'
+            'name.required' => 'Planning Harus diisi!',
+            'apprentice.required' => 'Penanggung Harus diisi!'
         ]);
 
         ProgressProject::create([
             'project_id'    => $this->project_id,
+            'apprentice_id' => $this->apprentice,
             'name'          => $this->name
         ]);
 

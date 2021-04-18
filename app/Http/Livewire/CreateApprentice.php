@@ -16,6 +16,49 @@ class CreateApprentice extends Component
     public $i = 0;
     public $dataAgency;
 
+    protected $rules = [
+        'agency'                => 'required',
+        'university'            => 'required',
+        'departement'           => 'required',
+        'cover_letter'          => 'required|mimes:pdf|max:10000',
+        'proposal'              => 'required|mimes:pdf|max:10000',
+        'presentation'          => 'required|mimes:ppt,pptx|max:10000',
+        'idjss.0'               => 'required',
+        'npm.0'                 => 'required',
+        'cv.0'                  => 'required|mimes:pdf|max:10000',
+        'imagesrc.0'            => 'required',
+        'idjss.*'               => 'required',
+        'npm.*'                 => 'required',
+        'cv.*'                  => 'required|mimes:pdf|max:10000',
+        'imagesrc.*'            => 'required',
+        'project_name'          => 'required',
+        'project_explanation'   => 'required',
+    ];
+
+    protected $messages = [
+        'agency.required'           => 'Dinas wajib diisi!',       
+        'university.required'       => 'Universitas wajib diisi!',       
+        'departement.required'      => 'Jurusan wajib diisi!',       
+        'cover_letter.required'     => 'Surat pengantar wajib diisi!',       
+        'cover_letter.mimes'        => 'Surat pengantar harus berupa pdf',
+        'cover_letter.max'          => 'Ukurat surat pengantar harus dibawah 10Mb',
+        'proposal.required'         => 'Proposal wajib diisi!',       
+        'proposal.mimes'            => 'Proposal harus berupa pdf',       
+        'presentation.required'     => 'Presentasi Projek wajib diisi!',       
+        'presentation.mimes'        => 'Presentasi Projek harus berupa pdf',      
+        'project_name.required'     => 'Nama projek wajib diisi!',
+        'project_explanation.required'=> 'Deskripsi projek wajib diisi!', 
+        'imagesrc.0.required'       => 'Pas Foto wajib diisi!',       
+        'npm.0.required'            => 'NPM wajib diisi!',       
+        'cv.0.required'             => 'CV wajib diisi!',     
+        'cv.0.mimes'                => 'CV harus berupa pdf',     
+        'idjss.*.required'          => 'ID JSS wajib diisi',
+        'npm.*.required'            => 'NPM wajib diisi',
+        'cv.*.required'             => 'CV wajib diisi',
+        'cv.*.mimes'                => 'CV harus berupa pdf',
+        'imagesrc.*.required'       => 'Pas Foto wajib diisi',
+    ];
+
     public function add($i)
     {
         $i = $i + 1;
@@ -48,48 +91,7 @@ class CreateApprentice extends Component
 
     public function store()
     {
-        $validationData = $this->validate([
-            'agency'                => 'required',
-            'university'            => 'required',
-            'departement'           => 'required',
-            'cover_letter'          => 'required|mimes:pdf|max:10000',
-            'proposal'              => 'required|mimes:pdf|max:10000',
-            'presentation'          => 'required|mimes:ppt,pptx|max:10000',
-            'idjss.0'               => 'required',
-            'npm.0'                 => 'required',
-            'cv.0'                  => 'required|mimes:pdf|max:10000',
-            'imagesrc.0'            => 'required',
-            'idjss.*'               => 'required',
-            'npm.*'                 => 'required',
-            'cv.*'                  => 'required|mimes:pdf|max:10000',
-            'imagesrc.*'            => 'required',
-            'project_name'          => 'required',
-            'project_explanation'   => 'required',
-        ],
-        [
-            'agency.required'           => 'Dinas wajib diisi!',       
-            'university.required'       => 'Universitas wajib diisi!',       
-            'departement.required'      => 'Jurusan wajib diisi!',       
-            'cover_letter.required'     => 'Surat pengantar wajib diisi!',       
-            'cover_letter.mimes'        => 'Surat pengantar harus berupa pdf',
-            'cover_letter.max'          => 'Ukurat surat pengantar harus dibawah 10Mb',
-            'proposal.required'         => 'Proposal wajib diisi!',       
-            'proposal.mimes'            => 'Proposal harus berupa pdf',       
-            'presentation.required'     => 'Presentasi Projek wajib diisi!',       
-            'presentation.mimes'        => 'Presentasi Projek harus berupa pdf',      
-            'project_name.required'     => 'Nama projek wajib diisi!',
-            'project_explanation.required'=> 'Deskripsi projek wajib diisi!', 
-            'imagesrc.0.required'       => 'Pas Foto wajib diisi!',       
-            'npm.0.required'            => 'NPM wajib diisi!',       
-            'cv.0.required'             => 'CV wajib diisi!',     
-            'cv.0.mimes'                => 'CV harus berupa pdf',     
-            'idjss.*.required'          => 'ID JSS wajib diisi',
-            'npm.*.required'            => 'NPM wajib diisi',
-            'cv.*.required'             => 'CV wajib diisi',
-            'cv.*.mimes'                => 'CV harus berupa pdf',
-            'imagesrc.*.required'       => 'Pas Foto wajib diisi',
-        ]);
-
+        $validationData = $this->validate();
         $validationData["cover_letter"]     = $this->cover_letter->store('files','public');
         $validationData["proposal"]         = $this->proposal->store('files','public');
         $validationData["presentation"]     = $this->presentation->store('files','public');
@@ -124,7 +126,7 @@ class CreateApprentice extends Component
             ]);
         }
 
-        return route('dashboard');
+        return redirect()->route('dashboard');
     }
 
     private function resetInputFields(){

@@ -58,6 +58,11 @@
                     </svg>
                     <span class="ml-4">{{ __('Daftar Pengajuan') }}</span>
                 </a>
+                @if(\DB::table('team_apprentice')->where('status_hired','SEDANG DIPROSES')->count() > 0)
+                    <div class="absolute bg-yellow-300 text-yellow-600 font-bold h-6 w-6 rounded-full text-xs flex items-center justify-center right-4 top-0 -mt-2">
+                        {{ \DB::table('team_apprentice')->where('status_hired','SEDANG DIPROSES')->count() }}
+                    </div>
+                @endif
             </li>
             <li class="nav-item">
                 <a class="nav-link{{ (strpos(Route::currentRouteName(), 'agency') === 0) ? ' active' : '' }}" href="{{ route('agency') }}">

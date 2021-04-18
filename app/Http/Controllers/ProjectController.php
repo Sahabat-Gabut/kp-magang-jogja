@@ -33,10 +33,10 @@ class ProjectController extends Controller
 
     public function detail($id){
         $team       = TeamApprentice::with(["apprenticeProject"])->where("status_hired","DI TERIMA")->where("id",$id)->get();
-        $progress   = ProgressProject::where("project_id",$team[0]->apprenticeProject->id)->get();
+        $progress   = ProgressProject::where("project_id",$team[0]->apprenticeProject->id)->with('jss')->get();
         $countProgress = ProgressProject::with(["project"])->where("project_id", $team[0]->apprenticeProject->id)->count();
         $done       = ProgressProject::with(["project"])->where("project_id", $team[0]->apprenticeProject->id)->where("status","SELESAI")->count();
-        
+
         if($countProgress <= 0){
             $percentage = 0;
         } else {

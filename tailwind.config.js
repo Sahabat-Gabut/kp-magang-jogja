@@ -9,6 +9,14 @@ module.exports = {
 
     theme: {
         themeVariants: ['dark'],
+        minHeight: {
+            '0': '0',
+            '1': '0.25rem',
+            '2': '0.75rem',
+            '3': '0.874rem',
+            '4': '1rem',
+            '5': '1.25rem'
+        },
         extend: {
             fontFamily: {
                 sans: ['Raleway', ...defaultTheme.fontFamily.sans],

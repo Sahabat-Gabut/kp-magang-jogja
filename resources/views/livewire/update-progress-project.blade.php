@@ -1,6 +1,6 @@
 <form wire:submit.prevent="store">
     @foreach($progress as $prog) 
-        <h1 class="text-2xl font-bold mb-4 text-gray-600">{{ $prog->name_prog_project }}</h1>
+        <h1 class="text-2xl font-bold mb-4 text-gray-600">{{ $prog->name }}</h1>
     @endforeach
     <div class="grid grid-cols-6 gap-6">
         <div class="col-span-6 sm:col-span-6">
@@ -41,8 +41,11 @@
 
 
     <footer class="flex justify-end">
+        <button class="rounded-md px-3 py-1 bg-white hover:bg-gray-200 text-gray-700 border border-gray-300 cursor-pointer focus:shadow-outline focus:outline-none mr-2" onclick="location.href='/project/detail/{{$progress[0]->project_id}}'">
+            {{ __('Kembali') }}
+        </button>
         <button type="submit" wire:loading.attr="disabled" class="rounded-md px-3 py-1 bg-green-700 hover:bg-green-500 text-white focus:shadow-outline focus:outline-none">
-            {{ __('Unggah Sekarang') }}
+            {{ __('Update') }}
         </button>
     </footer>
 </form>

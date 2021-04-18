@@ -16,6 +16,9 @@ class AuthController extends Controller
     public function showFormLogin()
     {
         if (Auth::check()) { 
+            // session()->flash('success', 'success');
+            // session()->flash('title', 'Berhasil');
+            // session()->flash('message', 'Selamat Datang Kembali');
             return redirect()->route('home');
         }
         return view('pages.login');

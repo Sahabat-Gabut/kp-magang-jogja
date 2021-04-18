@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
+use App\Models\Jss;
 
 class Apprentice extends Model
 {
@@ -17,4 +17,9 @@ class Apprentice extends Model
         'cv',
         'imgSrc'
     ];
+
+    public function jss()
+    {
+        return $this->hasMany(Jss::class, 'id','jss_id');
+    }
 }

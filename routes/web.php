@@ -44,8 +44,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => '/submission', 'as' => 'submission'],  function() {        
         Route::get('/',[SubmissionController::class, 'index']);
         Route::get('/detail/{id}',[SubmissionController::class, 'detail'])->name('.detail');
-        Route::get('/detail/{id}/reject',[SubmissionController::class, 'reject'])->name('.rejectTeam');
-        Route::get('/detail/{id}/accept',[SubmissionController::class, 'accept'])->name('.acceptTeam');
+        Route::get('/detail/{id}/{agency}/reject',[SubmissionController::class, 'reject'])->name('.rejectTeam');
+        Route::get('/detail/{id}/{agency}/accept',[SubmissionController::class, 'accept'])->name('.acceptTeam');
     });
 
     // Project 
@@ -64,7 +64,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/{id}/delete', [AgencyController::class, 'delete'])->name('.delete');
     });
 
-    // Agency
+    // Admin
     Route::group(['prefix' => '/admin', 'as' => 'admin'], function() {
         Route::get('/', [AdminController::class, 'index']);
         Route::get('/{id}/detail', [AdminController::class, 'detail'])->name('.detail');

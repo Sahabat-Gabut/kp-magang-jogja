@@ -16,11 +16,12 @@ class CreateProgressProjectTable extends Migration
         Schema::create('progress_project', function (Blueprint $table) {
             $table->id();
             $table->foreignId('project_id')->constrained('project')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('apprentice_id')->constrained('apprentice')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
-            $table->string('explanation');
-            $table->string('status');
-            $table->string('file');
-            $table->timestampTz('date_of_created');
+            $table->string('explanation')->nullable();
+            $table->string('status')->default('DALAM DIPROSES');
+            $table->string('file')->nullable();
+            $table->timestampTz('date_of_created')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 

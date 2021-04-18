@@ -26,7 +26,7 @@
                     Total apprenticeship
                 </p>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                    {{ \DB::table('apprentice')->count() }}
+                    {{ \DB::table('apprentice')->join("team_apprentice","apprentice.team_apprentice_id","=","team_apprentice.id")->where("team_apprentice.status_hired","DI TERIMA")->count() }}
                 </p>
             </div>
         </div>
@@ -56,7 +56,7 @@
                     Total project
                 </p>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                    {{ \DB::table('project')->count() }}
+                    {{ App\Models\TeamApprentice::where("status_hired","DI TERIMA")->count() }}
                 </p>
             </div>
         </div>

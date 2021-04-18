@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
 class ProgressProject extends Model
 {
     protected $table        = "progress_project";
@@ -11,6 +10,7 @@ class ProgressProject extends Model
     protected $fillable     = [ 
         'id', 
         'project_id',
+        'apprentice_id',
         'name',
         'explanation',
         'status',
@@ -20,5 +20,9 @@ class ProgressProject extends Model
     public function project()
     {
         return $this->hasMany(Project::class, 'id');
+    }
+    public function jss()
+    {
+        return $this->hasManyThrough(Jss::class, Apprentice::class, 'id','id','apprentice_id','jss_id');
     }
 }
