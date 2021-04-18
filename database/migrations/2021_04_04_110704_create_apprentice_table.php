@@ -14,14 +14,12 @@ class CreateApprenticeTable extends Migration
     public function up()
     {
         Schema::create('apprentice', function (Blueprint $table) {
-            $table->id('id_appren');
-            $table->unsignedBigInteger('id_jss');
-            $table->unsignedBigInteger('id_team');
+            $table->id();
+            $table->foreignId('jss_id')->constrained('jss')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('team_apprentice_id')->constrained('team_apprentice')->onUpdate('cascade')->onDelete('cascade');
+            $table->char('npm');
             $table->string('cv');
             $table->string('imgSrc',255);
-
-            $table->foreign('id_jss')->references('id')->on('jss_users');
-            $table->foreign('id_team')->references('id_team')->on('team_apprentice');
         });
     }
 

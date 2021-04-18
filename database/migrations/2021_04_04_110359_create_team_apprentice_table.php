@@ -14,8 +14,9 @@ class CreateTeamApprenticeTable extends Migration
     public function up()
     {
         Schema::create('team_apprentice', function (Blueprint $table) {
-            $table->id('id_team');
-            $table->string('status_hired')->default('PROCCESS');
+            $table->id();
+            $table->foreignId('agency_id')->constrained('agency')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('status_hired')->default('SEDANG DIPROSES');
             $table->string('university');
             $table->string('departement');
             $table->string('proposal');

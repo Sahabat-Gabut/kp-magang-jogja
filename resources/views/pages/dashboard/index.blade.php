@@ -1,6 +1,19 @@
 <x-app-layout title="Home">
+    @if(isset(\Auth::user()->apprenticeTeam->status_hired) == "SEDANG DIPROSES" ||
+        isset(\Auth::user()->apprenticeTeam->status_hired) == "DI TOLAK")
+        @if(\Auth::user()->apprenticeTeam->status_hired == "SEDANG DIPROSES")
+            <div class="main-card">
+                <span>MOHON MENUNGGU, PERMINTAANMU SEDANG KAMI PROSES...</span>
+            </div>
+        @elseif(\Auth::user()->apprenticeTeam->status_hired == "DI TOLAK")
+             <div class="main-card">
+                <span>MOHON MAAF ANDA DITOLAK</span>
+             </div>
+        @endif
+    @endif
+    
+    @if(Auth::user()->adminDetail)
     <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4 mt-4">
-        <!-- Card -->
         <div class="card">
             <div class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -13,11 +26,10 @@
                     Total apprenticeship
                 </p>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                    6389
+                    {{ \DB::table('apprentice')->count() }}
                 </p>
             </div>
         </div>
-        <!-- Card -->
         <div class="card">
             <div class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -29,11 +41,10 @@
                     Total apprenticeship requests
                 </p>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                    12
+                    {{ \DB::table('team_apprentice')->where('status_hired','SEDANG DIPROSES')->count() }}
                 </p>
             </div>
         </div>
-        <!-- Card -->
         <div class="card">
             <div class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full dark:text-blue-100 dark:bg-blue-500">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -45,11 +56,10 @@
                     Total project
                 </p>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                    376
+                    {{ \DB::table('project')->count() }}
                 </p>
             </div>
         </div>
-        <!-- Card -->
         <div class="card">
             <div class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -61,10 +71,11 @@
                     Total Admin
                 </p>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                    35
+                    {{ \DB::table('admin')->count() }}
                 </p>
             </div>
         </div>
     </div>
+    @endif
 </x-app-layout>
 

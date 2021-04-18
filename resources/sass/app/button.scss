@@ -1,0 +1,7 @@
+.btn-danger {
+    @apply py-1 px-4 my-2 rounded-md bg-red-300 text-red-600 uppercase hover:bg-red-400 font-semibold inline-block text-sm focus:outline-none mr-3;
+}
+
+.btn-success {
+    @apply py-1 px-4 my-2 rounded-md bg-green-300 text-green-600 uppercase hover:bg-green-400 font-semibold inline-block text-sm focus:outline-none;
+}

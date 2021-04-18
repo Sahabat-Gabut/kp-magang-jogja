@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJssUsersTable extends Migration
+class CreateJssTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateJssUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('jss_users', function (Blueprint $table) {
+        Schema::create('jss', function (Blueprint $table) {
             $table->id();
             $table->char('NIK',17);
             $table->string('username',50);
@@ -31,6 +31,6 @@ class CreateJssUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jss_users');
+        Schema::dropIfExists('jss');
     }
 }

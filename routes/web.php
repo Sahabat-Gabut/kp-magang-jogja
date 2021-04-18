@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{AuthController};
+use App\Http\Controllers\{AuthController, SubmissionController,AttendanceController, ProjectController};
 use App\Http\Livewire\{Apprentice};
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +22,6 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => ['auth']], function () {
-    // Route::get('home', [HomeController::class, 'index'])->name('home');
-
     Route::view('pendaftaran-magang', 'pages.guest.registration')->name('pendaftaran-magang');
     
     Route::get('dashboard',function () {
@@ -35,27 +33,21 @@ Route::group(['middleware' => ['auth']], function () {
     })->name('profile');
     
     // Attendence 
-    Route::get('attendance',function () {
-        return view('pages.dashboard.attendance.index');
-    })->name('attendance');
+    Route::get('attendance', [AttendanceController::class, 'index'])->name('attendance');
 
     // Submission 
-    Route::get('/submission',function () {
-        return view('pages.dashboard.submission.index');
-    })->name('submission');
+    Route::group(['prefix' => '/submission', 'as' => 'submission'],  function() {        
+        Route::get('/',[SubmissionController::class, 'index']);
+        Route::get('/detail/{id}',[SubmissionController::class, 'detail'])->name('.detail');
+        Route::get('/detail/{id}/reject',[SubmissionController::class, 'reject'])->name('.rejectTeam');
+        Route::get('/detail/{id}/accept',[SubmissionController::class, 'accept'])->name('.acceptTeam');
+    });
 
     // Project 
     Route::group(['prefix' => '/project', 'as' => 'project'], function() {
-        Route::get('/', function () {
-            return view('pages.dashboard.project.index');
-        });
-
-        Route::get('/detail/', function () {
-            return view('pages.dashboard.project.detail_project');
-        })->name('.detail');
-
-        Route::get('/upload/', function () {
-            return view('pages.dashboard.project.upload');
-        })->name('.upload');
+        Route::get('/', [ProjectController::class, 'index']);
+        Route::get('/detail/{id}', [ProjectController::class, 'detail'])->name('.detail');
+        Route::get('/detail/{projectID}/{progressID}/change', [ProjectController::class, 'change'])->name('.change');
+        Route::get('/detail/{projectID}/{progressID}/remove', [ProjectController::class, 'remove'])->name('.remove');
     });
 });

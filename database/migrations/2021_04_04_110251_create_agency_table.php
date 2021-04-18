@@ -14,10 +14,10 @@ class CreateAgencyTable extends Migration
     public function up()
     {
         Schema::create('agency', function (Blueprint $table) {
-            $table->id('id_agency');
-            $table->integer('total_appren');
+            $table->id();
             $table->string('name',100);
-            $table->string('location',255);
+            $table->text('location')->nullable();
+            $table->integer('total_apprentice')->nullable();
         });
     }
 

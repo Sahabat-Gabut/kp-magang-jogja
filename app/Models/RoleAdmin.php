@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class RoleAdmin extends Model
 {
     protected $table        = "role_admin";
-    protected $primaryKey   = "id_role_admin";
+    public $timestamps      = false;
     protected $fillable     = [ 
-        'id_role_admin', 
+        'id', 
         'name_role_admin'
     ];
 }

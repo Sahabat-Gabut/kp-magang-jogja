@@ -14,13 +14,13 @@ class CreateProgressProjectTable extends Migration
     public function up()
     {
         Schema::create('progress_project', function (Blueprint $table) {
-            $table->id('id_prog_project');
-            $table->unsignedBigInteger('id_project');
-            $table->timestampTz('datetime_input');
-            $table->string('name_prog_project');
-            $table->string('status_prog');
-
-            $table->foreign('id_project')->references('id_project')->on('project');
+            $table->id();
+            $table->foreignId('project_id')->constrained('project')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('name');
+            $table->string('explanation');
+            $table->string('status');
+            $table->string('file');
+            $table->timestampTz('date_of_created');
         });
     }
 

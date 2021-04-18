@@ -14,19 +14,15 @@ class CreateValidationTable extends Migration
     public function up()
     {
         Schema::create('validation', function (Blueprint $table) {
-            $table->id('id_validation');
-            $table->unsignedBigInteger('id_admin');
-            $table->unsignedBigInteger('id_team');
-            $table->unsignedBigInteger('id_agency');
+            $table->id();
+            $table->foreignId('admin_id')->constrained('admin')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('team_apprentice_id')->constrained('team_apprentice')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('agency_id')->constrained('agency')->onUpdate('cascade')->onDelete('cascade');
             $table->date('result_date');
             $table->date('start_date');
             $table->string('field_supervisor',50);
             $table->string('response_letter',255);
             $table->date('finish');
-
-            $table->foreign('id_admin')->references('id_admin')->on('admin');
-            $table->foreign('id_team')->references('id_team')->on('team_apprentice');
-            $table->foreign('id_agency')->references('id_agency')->on('agency');
         });
     }
 

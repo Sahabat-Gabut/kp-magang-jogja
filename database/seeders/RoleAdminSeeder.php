@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class RoleAdmin extends Seeder
+class RoleAdminSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,16 +14,16 @@ class RoleAdmin extends Seeder
     public function run()
     {
         \DB::table('role_admin')->insert([
-            'id_role_admin'     => '1',
-            'name_role_admin'   => 'SUPER ADMIN'
+            'id'     => '1',
+            'name'   => 'SUPER ADMIN'
         ]);
         \DB::table('role_admin')->insert([
-            'id_role_admin'     => '2',
-            'name_role_admin'   => 'ADMIN'
+            'id'     => '2',
+            'name'   => 'ADMIN'
         ]);
         \DB::table('role_admin')->insert([
-            'id_role_admin'     => '3',
-            'name_role_admin'   => 'MODERATOR'
+            'id'     => '3',
+            'name'   => 'MODERATOR'
         ]);
     }
 }

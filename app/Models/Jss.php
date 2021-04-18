@@ -6,9 +6,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\{Admin,Apprentice};
+use App\Models\{Admin,Apprentice,TeamApprentice,Project};
 
-class User extends Authenticatable
+class Jss extends Authenticatable
 {
     use HasFactory, Notifiable;
 
@@ -17,8 +17,9 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $table = "jss_users";
+    protected $table = "jss";
     protected $primaryKey = "id";
+    public $timestamps      = false;
     protected $fillable = [
         'id',
         'NIK',
@@ -41,11 +42,26 @@ class User extends Authenticatable
 
     public function adminDetail()
     {
-        return $this->hasOne(Admin::class, 'id_jss');
+        return $this->hasOne(Admin::class,'jss_id','id');
+    }
+
+    public function adminRole()
+    {
+        return $this->hasOneThrough(RoleAdmin::class, Admin::class,'jss_id','id');
     }
 
     public function apprenticeDetail()
     {
-        return $this->hasOne(Apprentice::class, 'id_jss');
+        return $this->hasOne(Apprentice::class, 'jss_id');
+    }
+
+    public function apprenticeTeam()
+    {
+        return $this->hasOneThrough(TeamApprentice::class,Apprentice::class, 'jss_id', 'id','id','team_apprentice_id');
+    }
+    
+    public function apprenticeProject()
+    {
+        return $this->hasOneThrough(Project::class, Apprentice::class, 'jss_id','team_apprentice_id','id','team_apprentice_id');
     }
 }

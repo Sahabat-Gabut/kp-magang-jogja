@@ -5,6 +5,7 @@
 @import "app/nav";
 @import "app/table";
 @import "app/card";
+@import "app/button";
 @import "file-upload";
 
 .main-scroll {
@@ -40,4 +41,8 @@
 
 .card {
     @apply flex items-center p-4 bg-white rounded-lg shadow-sm border border-gray-300;
+}
+
+input[type="file" i]::-webkit-file-upload-button {
+    display: none !important;
 }

@@ -8,11 +8,12 @@ use App\Models\User;
 class Apprentice extends Model
 {
     protected $table        = "apprentice";
-    protected $primaryKey   = "id_appren";
+    public $timestamps      = false;
     protected $fillable     = [
-        'id_appren',
-        'id_jss',
-        'id_team',
+        'id',
+        'npm',
+        'jss_id',
+        'team_apprentice_id',
         'cv',
         'imgSrc'
     ];

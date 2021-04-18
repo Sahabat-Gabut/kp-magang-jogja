@@ -26,8 +26,8 @@
                                 @error('agency') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                 <select wire:model="agency" class="form-select w-full text-gray-700">
                                     <option>{{ __('Pilih Dinas') }}</option>
-                                    @foreach($dinas as $d)
-                                        <option value="{{$d}}">{{$d}}</option>
+                                    @foreach($dataAgency as $a)
+                                        <option value="{{$a->id}}">{{$a->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -37,7 +37,7 @@
                                 </label>
                                  @error('university') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                 <div class="mt-1 flex rounded-md shadow-sm">
-                                    <input wire:model="university" type="text" class="focus:ring-green-500 focus:border-green-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300" placeholder="{{ __('ex: Universitas Pembangunan Nasional "Veteran" Yogyakarta') }}">
+                                    <input wire:model="university" name="university" type="text" class="focus:ring-green-500 focus:border-green-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300" placeholder="{{ __('ex: Universitas Pembangunan Nasional "Veteran" Yogyakarta') }}">
                                 </div>
                             </div>
                             <div class="col-span-6 sm:col-span-6">
@@ -46,7 +46,7 @@
                                 </label>
                                 @error('departement') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                 <div class="mt-1 flex rounded-md shadow-sm">
-                                    <input wire:model="departement" type="text" name="departement" class="focus:ring-green-500 focus:border-green-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300" placeholder="{{ __('ex: Informatika') }}">
+                                    <input wire:model="departement" name="departement" type="text" class="focus:ring-green-500 focus:border-green-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300" placeholder="{{ __('ex: Informatika') }}">
                                 </div>
                             </div>
 
@@ -54,11 +54,11 @@
                                 <label class="block text-sm font-medium text-gray-700">
                                     Surat pengantar 
                                 </label>
-                                @error('suratpengantar') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                                @error('cover_letter') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                 <div class="flex flex-wrap items-stretch w-full mb-4 relative">
-                                    <input id="suratpengantar" wire:model="suratpengantar" type="file" class="focus:outline-none items-center py-2 flex flex-shrink flex-grow leading-normal w-px flex-1 border h-10 border-grey-light rounded-r-none px-3 relative rounded-md sm:text-sm border-gray-300">
+                                    <input id="cover_letter" wire:model="cover_letter" type="file" class="focus:outline-none items-center py-2 flex flex-shrink flex-grow leading-normal w-px flex-1 border h-10 border-grey-light rounded-r-none px-3 relative rounded-md sm:text-sm border-gray-300">
                                     <div class="flex -mr-px">
-                                        <label for="suratpengantar" class="flex cursor-pointer items-center leading-normal bg-gray-100 rounded rounded-l-none border border-l-0 border-gray-300 px-3 whitespace-no-wrap text-grey-800 text-sm">
+                                        <label for="cover_letter" class="flex cursor-pointer items-center leading-normal bg-gray-100 rounded rounded-l-none border border-l-0 border-gray-300 px-3 whitespace-no-wrap text-grey-800 text-sm">
                                             Unggah Berkas
                                         </label>
                                     </div>	
@@ -90,11 +90,11 @@
                                 <label class="block text-sm font-medium text-gray-700">
                                     Presentasi projek yang akan diajukan
                                 </label>
-                                @error('ppt') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                                @error('presentation') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                  <div class="flex flex-wrap items-stretch w-full mb-4 relative">
-                                    <input id="ppt" wire:model="ppt" type="file" class="focus:outline-none items-center py-2 flex flex-shrink flex-grow leading-normal w-px flex-1 border h-10 border-grey-light rounded-r-none px-3 relative rounded-md sm:text-sm border-gray-300">
+                                    <input id="presentation" wire:model="presentation" type="file" class="focus:outline-none items-center py-2 flex flex-shrink flex-grow leading-normal w-px flex-1 border h-10 border-grey-light rounded-r-none px-3 relative rounded-md sm:text-sm border-gray-300">
                                     <div class="flex -mr-px">
-                                        <label for="ppt" class="flex cursor-pointer items-center leading-normal bg-gray-100 rounded rounded-l-none border border-l-0 border-gray-300 px-3 whitespace-no-wrap text-grey-800 text-sm">
+                                        <label for="presentation" class="flex cursor-pointer items-center leading-normal bg-gray-100 rounded rounded-l-none border border-l-0 border-gray-300 px-3 whitespace-no-wrap text-grey-800 text-sm">
                                             Unggah Berkas
                                         </label>
                                     </div>	
@@ -102,6 +102,24 @@
                                 <p class="text-xs text-gray-500 -mt-3">
                                     PPT atau PPTX dibawah 10MB
                                 </p>
+                            </div>
+                            <div class="col-span-6 sm:col-span-6">
+                                <label for="university" class="block text-sm font-medium text-gray-700">
+                                    {{ __('Nama Project') }}
+                                </label>
+                                @error('project_name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                                <div class="mt-1 flex rounded-md shadow-sm">
+                                    <input type="text" wire:model="project_name" name="project_name" class="focus:ring-green-500 focus:border-green-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300">
+                                </div>
+                            </div>
+                            <div class="col-span-6 sm:col-span-6">
+                                <label for="university" class="block text-sm font-medium text-gray-700">
+                                    {{ __('Deskripsi Project') }}
+                                </label>
+                                @error('project_explanation') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                                <div class="mt-1 flex rounded-md shadow-sm">
+                                    <textarea type="text" wire:model="project_explanation" name="project_explanation" class="focus:ring-green-500 focus:border-green-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300"></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -209,9 +227,9 @@
                                                 @endif
                                             </div>
                                             @error('imagesrc.'.$value) <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                                            <label for="upload-image{{ $value + 1 }}" class="cursor-pointer font-medium text-sm bg-white py-1 px-3 border border-gray-300 rounded-md shadow-sm mt-4">
+                                            <label for="upload-image{{ $value }}" class="cursor-pointer font-medium text-sm bg-white py-1 px-3 border border-gray-300 rounded-md shadow-sm mt-4">
                                                 <span>Unggah Pas Foto</span>
-                                                <input id="upload-image{{ $value + 1}}" wire:model="imagesrc.{{ $value }}" type="file" class="sr-only">
+                                                <input id="upload-image{{ $value}}" wire:model="imagesrc.{{ $value }}" type="file" class="sr-only">
                                             </label>
                                         </div>
                                     </div>

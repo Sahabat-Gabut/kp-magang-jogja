@@ -1,6 +1,3 @@
-<?php
-    $app = \App\Models\Admin::with('user:id','role:id_role_admin,name_role_admin')->get()
-?>
 <header class="main-header">
       <div class="px-6 flex items-center justify-between h-full mx-auto">
           <div>
@@ -16,17 +13,22 @@
                   <li class="relative">
                       <button class="align-middle flex items-center focus:outline-none" @click="toggleProfileMenu" @keydown.escape="closeProfileMenu" aria-label="Account" aria-haspopup="true">
                         <div class="flex flex-col mr-2 text-gray-700">
-                            <span>{{Auth::user()->username}}</span>
+                            <span>{{ implode(' ', array_slice(explode(' ', Auth::user()->fullname), 0, 2))."\n" }}</span>
                             <span class="text-right -mt-1 text-sm italic">
                                 @if(Auth::user()->adminDetail)
-                                    @foreach ($app as $a)
-                                        {{ ucwords(strtolower($a->role->name_role_admin)) }}
-                                    @endforeach
+                                    {{ ucwords(strtolower(Auth::user()->adminRole->name)) }}
                                 @elseif(Auth::user()->apprenticeDetail)
+                                    JSS-I{{ Auth::user()->apprenticeDetail->jss_id }}
+                                @else
+                                    JSS-I{{ Auth::user()->id }}
                                 @endif
                             </span>
                         </div>
-                        <img class="object-cover w-10 h-10 rounded-full" src="https://ui-avatars.com/api/?name=Maulana+Kurnia&color=84e1bc&background=EBF4FF" alt="Maulana Kurnia" aria-hidden="true" />
+                        @if (Auth::user()->adminDetail)
+                            <img class="object-cover w-10 h-10 rounded-full" src="{{ Auth::user()->adminDetail->imgSrc }}" alt="Maulana Kurnia" aria-hidden="true" />
+                        @elseif(Auth::user()->apprenticeDetail)
+                            <img class="object-cover w-10 h-10 rounded-full" src="{{ Auth::user()->apprenticeDetail->imgSrc }}" alt="Maulana Kurnia" aria-hidden="true" />
+                        @endif
                       </button>
                       <template x-if="isProfileMenuOpen">
                           <ul x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" @click.away="closeProfileMenu" @keydown.escape="closeProfileMenu" class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700" aria-label="submenu">

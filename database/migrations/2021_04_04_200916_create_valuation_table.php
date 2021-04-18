@@ -14,8 +14,8 @@ class CreateValuationTable extends Migration
     public function up()
     {
         Schema::create('valuation', function (Blueprint $table) {
-            $table->id('id_val');
-            $table->unsignedBigInteger('id_prog_project');
+            $table->id();
+            $table->foreignId('progress_project_id')->constrained('progress_project')->onUpdate('cascade')->onDelete('cascade');
             $table->tinyInteger('score');
             $table->string('explanation');
         });

@@ -14,13 +14,10 @@ class CreateAdminTable extends Migration
     public function up()
     {
         Schema::create('admin', function (Blueprint $table) {
-            $table->id('id_admin');
-            $table->unsignedTinyInteger('id_role_admin');
-            $table->unsignedBigInteger('id_jss');
+            $table->id();
+            $table->foreignId('role_admin_id')->constrained('role_admin')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('jss_id')->constrained('jss')->onUpdate('cascade')->onDelete('cascade');
             $table->string('imgSrc');
-
-            $table->foreign('id_role_admin')->references('id_role_admin')->on('role_admin');
-            $table->foreign('id_jss')->references('id')->on('jss_users');
         });
     }
 

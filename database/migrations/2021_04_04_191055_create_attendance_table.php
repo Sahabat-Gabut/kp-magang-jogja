@@ -15,13 +15,11 @@ class CreateAttendanceTable extends Migration
     {
         Schema::create('attendance', function (Blueprint $table) {
             $table->date('date_att')->primary();
-            $table->unsignedBigInteger('id_appren');
+            $table->foreignId('apprentice_id')->constrained('apprentice')->onUpdate('cascade')->onDelete('cascade');
             $table->timestampTz('first_timesheet');
             $table->timestampTz('last_timesheet');
             $table->string('status_early',20);
             $table->string('status_finish',20);
-
-            $table->foreign('id_appren')->references('id_appren')->on('apprentice');
         });
     }
 

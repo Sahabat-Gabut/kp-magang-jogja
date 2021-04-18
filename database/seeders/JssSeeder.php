@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class JssUserSeeder extends Seeder
+class JssSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,7 +13,7 @@ class JssUserSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('jss_users')->insert([
+        \DB::table('jss')->insert([
             'id'        => '9461',
             'NIK'       => '6408040410990001',
             'username'  => 'maulanaakurniaa',
@@ -23,7 +23,7 @@ class JssUserSeeder extends Seeder
             'no_wa'     => '6282115155714'
         ]);
 
-        \DB::table('jss_users')->insert([
+        \DB::table('jss')->insert([
             'id'        => '7873',
             'NIK'       => '3323100201010002',
             'username'  => 'Ashariwdd',
@@ -33,7 +33,7 @@ class JssUserSeeder extends Seeder
             'no_wa'     => '6285158775801'
         ]);
 
-        \DB::table('jss_users')->insert([
+        \DB::table('jss')->insert([
             'id'        => '7871',
             'NIK'       => '0000000000000000',
             'username'  => 'bayupamungkassejati',
@@ -42,7 +42,7 @@ class JssUserSeeder extends Seeder
             'email'     => 'bayupamungkas@gmail.com',
             'no_wa'     => '6285158775801'
         ]);
-        \DB::table('jss_users')->insert([
+        \DB::table('jss')->insert([
             'id'        => '7870',
             'NIK'       => '0000000000000000',
             'username'  => 'rizaldi77',

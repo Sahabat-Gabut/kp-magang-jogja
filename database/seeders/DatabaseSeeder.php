@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Database\Seeders\{JssUserSeeder,RoleAdmin,Admin};
+use Database\Seeders\{JssSeeder,RoleAdminSeeder,AdminSeeder, AgencySeeder};
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,8 +15,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        $this->call(JssUserSeeder::class);  
-        $this->call(RoleAdmin::class);  
-        $this->call(Admin::class);  
+        $this->call(JssSeeder::class);  
+        $this->call(RoleAdminSeeder::class);  
+        $this->call(AdminSeeder::class);  
+        $this->call(AgencySeeder::class);  
     }
 }

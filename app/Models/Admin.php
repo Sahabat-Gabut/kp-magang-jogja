@@ -8,26 +8,11 @@ use App\Models\{User,RoleAdmin};
 class Admin extends Model
 {
     protected $table        = "admin";
-    protected $primaryKey   = "id_admin";
+    public $timestamps      = false;
     protected $fillable     = [ 
-        'id_admin', 
+        'id', 
         'id_role_admin', 
         'id_jss', 
         'imgSrc'
     ];
-
-    public function user()
-    {
-        return $this->hasOne(User::class,'id','id_jss');
-    }
-
-    public function role()
-    {
-        return $this->hasOne(RoleAdmin::class,'id_role_admin');
-    }
-
-    public function detail()
-    {
-        return $this->hasOne(RoleAdmin::class,'id_role_admin','id_role_admin');
-    }
 }
