@@ -1,10 +1,17 @@
+<?php
+    $admin          = Auth::user()->adminDetail;
+    $apprentice     = Auth::user()->apprenticeDetail;
+    $name           = implode(' ', array_slice(explode(' ', Auth::user()->fullname), 0, 2));
+
+    if($admin){
+        $role       = Auth::user()->adminRole->name;
+    }
+?>
 <header class="main-header">
       <div class="px-6 flex items-center justify-between h-full mx-auto">
           <div>
               <button class="p-1 mr-5 -ml-1 rounded-md lg:hidden focus:outline-none text-gray-600" @click="toggleSideMenu" aria-label="Menu">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
-                    </svg>
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
               </button>
           </div>
 
@@ -13,21 +20,23 @@
                   <li class="relative">
                       <button class="align-middle flex items-center focus:outline-none" @click="toggleProfileMenu" @keydown.escape="closeProfileMenu" aria-label="Account" aria-haspopup="true">
                         <div class="flex flex-col mr-2 text-gray-700">
-                            <span>{{ implode(' ', array_slice(explode(' ', Auth::user()->fullname), 0, 2))."\n" }}</span>
+                            <span>{{ $name }}</span>
                             <span class="text-right -mt-1 text-sm italic">
-                                @if(Auth::user()->adminDetail)
-                                    {{ ucwords(strtolower(Auth::user()->adminRole->name)) }}
-                                @elseif(Auth::user()->apprenticeDetail)
-                                    JSS-I{{ Auth::user()->apprenticeDetail->jss_id }}
+                                @if($admin)
+                                    {{ ucwords(strtolower($role)) }}
+                                @elseif($apprentice)
+                                    JSS-I{{ $apprentice->jss_id }}
                                 @else
                                     JSS-I{{ Auth::user()->id }}
                                 @endif
                             </span>
                         </div>
-                        @if (Auth::user()->adminDetail)
-                            <img class="object-cover w-10 h-10 rounded-full" src="{{ Auth::user()->adminDetail->imgSrc }}" alt="Maulana Kurnia" aria-hidden="true" />
-                        @elseif(Auth::user()->apprenticeDetail)
-                            <img class="object-cover w-10 h-10 rounded-full" src="{{ Auth::user()->apprenticeDetail->imgSrc }}" alt="Maulana Kurnia" aria-hidden="true" />
+                        @if ($admin)
+                            <img class="object-cover w-10 h-10 rounded-full" src="{{ $admin->imgSrc ? $admin->imgSrc : 'https://ui-avatars.com/api/?name='.$name.'&color=6dbda1&background=bcf0da' }}" alt="Maulana Kurnia" aria-hidden="true" />
+                        @elseif($apprentice)
+                            <img class="object-cover w-10 h-10 rounded-full" src="{{ $apprentice->imgSrc ? $apprentice->imgSrc : 'https://ui-avatars.com/api/?name='.$name.'&color=6dbda1&background=bcf0da' }}" alt="Maulana Kurnia" aria-hidden="true" />
+                        @else
+                            <img class="object-cover w-10 h-10 rounded-full" src="https://ui-avatars.com/api/?name={{$name}}&color=6dbda1&background=bcf0da" alt="Maulana Kurnia" aria-hidden="true" />
                         @endif
                       </button>
                       <template x-if="isProfileMenuOpen">

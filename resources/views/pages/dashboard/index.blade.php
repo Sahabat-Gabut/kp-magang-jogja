@@ -1,11 +1,11 @@
 <x-app-layout title="Home">
-    @if(isset(\Auth::user()->apprenticeTeam->status_hired) == "SEDANG DIPROSES" ||
-        isset(\Auth::user()->apprenticeTeam->status_hired) == "DI TOLAK")
-        @if(\Auth::user()->apprenticeTeam->status_hired == "SEDANG DIPROSES")
+    @if(isset($team_apprentice->status_hired) == "SEDANG DIPROSES" ||
+        isset($team_apprentice->status_hired) == "DI TOLAK")
+        @if($team_apprentice->status_hired == "SEDANG DIPROSES")
             <div class="main-card">
                 <span>MOHON MENUNGGU, PERMINTAANMU SEDANG KAMI PROSES...</span>
             </div>
-        @elseif(\Auth::user()->apprenticeTeam->status_hired == "DI TOLAK")
+        @elseif($team_apprentice->status_hired == "DI TOLAK")
              <div class="main-card">
                 <span>MOHON MAAF ANDA DITOLAK</span>
              </div>
@@ -23,10 +23,10 @@
             </div>
             <div>
                 <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                    Total apprenticeship
+                    Total orang magang
                 </p>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                    {{ \DB::table('apprentice')->join("team_apprentice","apprentice.team_apprentice_id","=","team_apprentice.id")->where("team_apprentice.status_hired","DI TERIMA")->count() }}
+                    {{ $total_apprentice }}
                 </p>
             </div>
         </div>
@@ -38,10 +38,10 @@
             </div>
             <div>
                 <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                    Total apprenticeship requests
+                    Total permohonan magang
                 </p>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                    {{ \DB::table('team_apprentice')->where('status_hired','SEDANG DIPROSES')->count() }}
+                    {{ $total_submission }}
                 </p>
             </div>
         </div>
@@ -56,7 +56,7 @@
                     Total project
                 </p>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                    {{ App\Models\TeamApprentice::where("status_hired","DI TERIMA")->count() }}
+                    {{ $total_project }}
                 </p>
             </div>
         </div>
@@ -71,7 +71,7 @@
                     Total Admin
                 </p>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                    {{ \DB::table('admin')->count() }}
+                    {{ $total_admin }}
                 </p>
             </div>
         </div>

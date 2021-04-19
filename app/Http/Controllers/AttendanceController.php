@@ -7,22 +7,16 @@ use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
-    public function index() 
-    {
-        if(isset(Auth::user()->apprenticeTeam))
-        {
+    public function index() {
+        if(isset(Auth::user()->apprenticeTeam)) {
             if(Auth::user()->apprenticeTeam->status_hired == "DI TOLAK" || 
-               Auth::user()->apprenticeTeam->status_hired == "SEDANG DIPROSES")
-            {
+               Auth::user()->apprenticeTeam->status_hired == "SEDANG DIPROSES") {
                 return response(abort(403));
-            }else {
+            } else {
                 return view("pages.dashboard.attendance.index");
             }
-        }
-        else 
-        {
+        } else {
             return view("pages.dashboard.attendance.index");
         }
-
     }
 }

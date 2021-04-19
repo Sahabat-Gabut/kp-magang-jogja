@@ -3,21 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\{Apprentice};
 use App\Http\Controllers\{AuthController, 
-    SubmissionController,
-    AttendanceController, 
-    ProjectController,
-    AgencyController,
-    AdminController};
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+                          SubmissionController,
+                          AttendanceController, 
+                          ProjectController,
+                          AgencyController,
+                          AdminController,
+                          ProfileController,
+                          DashboardController
+                         };
+                         
 Route::get('/', function () {
     return view('pages.guest.index');
 })->name('home');
@@ -29,13 +23,9 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 Route::group(['middleware' => ['auth']], function () {
     Route::view('pendaftaran-magang', 'pages.guest.registration')->name('pendaftaran-magang');
     
-    Route::get('dashboard',function () {
-        return view('pages.dashboard.index');
-    })->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('profile',function () {
-        return view('pages.dashboard.profile.index');
-    })->name('profile');
+    Route::get('profile', [ProfileController::class, 'index'])->name('profile');
     
     // Attendence 
     Route::get('attendance', [AttendanceController::class, 'index'])->name('attendance');

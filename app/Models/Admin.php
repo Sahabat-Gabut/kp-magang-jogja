@@ -16,9 +16,9 @@ class Admin extends Model
         'imgSrc'
     ];
 
-    public function adminDetail()
+    public function jss()
     {
-        return $this->hasOne(Jss::class, 'id', 'jss_id');
+        return $this->hasMany(Jss::class, 'id', 'jss_id');
     }
 
     public function roleDetail()

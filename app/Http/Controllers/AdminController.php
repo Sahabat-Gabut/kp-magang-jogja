@@ -8,7 +8,7 @@ use App\Models\Admin;
 class AdminController extends Controller
 {
     public function index() {
-        $admin = Admin::all();
+    $admin = Admin::all();
         return view("pages.dashboard.admin.index")->with(compact("admin"));
     }
 

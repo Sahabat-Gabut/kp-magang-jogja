@@ -14,6 +14,36 @@ class JssSeeder extends Seeder
     public function run()
     {
         \DB::table('jss')->insert([
+            'id'        => '0',
+            'NIK'       => '0000000000000000',
+            'username'  => 'superadmin',
+            'fullname'  => 'Super Admin',
+            'password'  => \Hash::make('1221'),
+            'email'     => 'superadmin@admin.com',
+            'no_wa'     => '0000000000000'
+        ]);
+
+        \DB::table('jss')->insert([
+            'id'        => '00',
+            'NIK'       => '0000000000000000',
+            'username'  => 'admin',
+            'fullname'  => 'admin',
+            'password'  => \Hash::make('1221'),
+            'email'     => 'admin@admin.com',
+            'no_wa'     => '0000000000000'
+        ]);
+
+        \DB::table('jss')->insert([
+            'id'        => '000',
+            'NIK'       => '0000000000000000',
+            'username'  => 'moderator',
+            'fullname'  => 'moderator',
+            'password'  => \Hash::make('1221'),
+            'email'     => 'moderator@admin.com',
+            'no_wa'     => '0000000000000'
+        ]);
+
+        \DB::table('jss')->insert([
             'id'        => '9461',
             'NIK'       => '6408040410990001',
             'username'  => 'maulanaakurniaa',

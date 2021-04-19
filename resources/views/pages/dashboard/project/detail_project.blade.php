@@ -1,8 +1,8 @@
 <x-app-layout title="Detail Project">
     <div class="main-card">
-        <div class="flex justify-between items-center" x-data="{ open: false }">
-            <h1 class="font-semibold text-gray-700">{{ $team[0]->apprenticeProject->name_project }}</h1>
-            <livewire:create-progress-project :id="$team[0]->apprenticeProject->id" :teamid="$team[0]->id">
+        <div class="flex justify-between items-center">
+            <h1 class="font-semibold text-gray-700">{{ $team[0]->project->name_project }}</h1>
+            <livewire:create-progress-project :id="$team[0]->project->id" :teamid="$team[0]->id">
         </div>
         <div class="relative pt-1 mt-4">
             <div class="flex mb-2 items-center justify-between">

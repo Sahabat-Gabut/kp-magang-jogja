@@ -36,7 +36,7 @@ class TeamApprentice extends Model
         return $this->hasManyThrough(Jss::class, Apprentice::class, 'team_apprentice_id','id','id','jss_id');
     }
 
-    public function apprenticeProject()
+    public function project()
     {
         return $this->hasOne(Project::class, 'team_apprentice_id');
     }

@@ -5,10 +5,32 @@
     <div class="grid grid-cols-6 gap-6">
         <div class="col-span-6 sm:col-span-6">
             <label for="university" class="block text-md font-medium text-gray-700">
+                {{ __('Planning') }}
+            </label>
+            @error('name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            <div class="mt-1 flex rounded-md shadow-sm">
+                <input type="text" wire:model="name" class="focus:ring-green-500 focus:border-green-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300">
+            </div>
+        </div>
+        <div class="col-span-6 sm:col-span-6">
+            <label for="university" class="block text-md font-medium text-gray-700">
+                {{ __('Penanggung Jawab') }}
+            </label>
+            <div class="mt-1 flex rounded-md shadow-sm">
+                <select wire:model="apprentice" class="form-select border border-gray-300 @error('name') border-red-500 @enderror w-full px-3 py-2 text-gray-600 mt-1 focus:ring-0 focus:border-green-500 text-sm">
+                    <option>{{ __('Pilih Penanggung Jawab') }}</option>
+                    @foreach($user as $key => $u)
+                        <option value="{{$u->id}}">{{$user[$key]->jss[0]->fullname}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="col-span-6 sm:col-span-6">
+            <label for="university" class="block text-md font-medium text-gray-700">
                 {{ __('Progres') }}
             </label>
             <div class="mt-1 flex rounded-md shadow-sm">
-                <select wire:model="status" class="focus:ring-green-500 focus:border-green-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300">
+                <select wire:model="status" class="form-select border border-gray-300 @error('name') border-red-500 @enderror w-full px-3 py-2 text-gray-600 mt-1 focus:ring-0 focus:border-green-500 text-sm">
                     <option value="DALAM PROGRES">DALAM PROGRES</option>
                     <option value="SELESAI">SELESAI</option>
                 </select>

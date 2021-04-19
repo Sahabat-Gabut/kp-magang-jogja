@@ -19,7 +19,7 @@ class CreateApprenticeTable extends Migration
             $table->foreignId('team_apprentice_id')->constrained('team_apprentice')->onUpdate('cascade')->onDelete('cascade');
             $table->char('npm');
             $table->string('cv');
-            $table->string('imgSrc',255);
+            $table->string('imgSrc')->nullable();
         });
     }
 

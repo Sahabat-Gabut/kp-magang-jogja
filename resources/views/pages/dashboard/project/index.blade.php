@@ -44,9 +44,10 @@
 
                         @if(\Auth::user()->adminDetail)
                             @foreach($team as $key => $t)
+                            {{-- {{ dd($team) }} --}}
                             <tr>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    {{ $team[$key]->apprenticeProject->name_project }}
+                                    {{ $team[$key]->project->name_project }}
                                 </td>
 
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">

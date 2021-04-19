@@ -1,4 +1,4 @@
-<div>
+<div x-data="{ open: false }">
     <button class="bg-green-500 text-white px-4 py-1 rounded-md focus:outline-none" @click="open = true">Tambah Planning</button>
     <form wire:submit.prevent="store">
         <div x-show="open" class="fixed inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" style="z-index: 9999">

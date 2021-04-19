@@ -7,14 +7,14 @@
     </main>
     @if (session()->has('error'))
         <div x-data="{ open: true }" class="group fixed right-6 top-6 select-none" style="z-index: 99999999999">
-            <div x-show="open" class="bg-red-200 bg-opacity-25 backdrop-filter backdrop-blur-sm px-6 py-3 shadow-md rounded-md text-lg flex items-center">
+            <div x-show="open" class="bg-red-200 px-6 py-3 shadow-md rounded-md text-lg flex items-center">
                 <svg class="h-6 w-6 mr-4 text-red-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 <div class="flex flex-col cursor-text">
                     <h1 class="text-red-800 text-lg font-bold">{{ session('title') }}</h1>
-                    <span class="text-red-800 -mt-1 text-base">{{ session('message') }}</span>
+                    <span class="text-red-800 -mt-3 text-base">{{ session('message') }}</span>
                 </div>
                 <button class="relative mb-auto ml-3 -mr-4 focus:outline-none text-red-800" @click="open = false">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <svg class="w-4 h-4 text-red-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
         </div>

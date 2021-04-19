@@ -17,7 +17,8 @@ class CreateAdminTable extends Migration
             $table->id();
             $table->foreignId('role_admin_id')->constrained('role_admin')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('jss_id')->constrained('jss')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('imgSrc');
+            $table->foreignId('agency_id')->nullable()->constrained('agency')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('imgSrc')->nullable();
         });
     }
 
