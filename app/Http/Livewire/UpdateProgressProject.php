@@ -15,11 +15,11 @@ class UpdateProgressProject extends Component
     public function mount($data, $id)
     {
         $this->progress = $data;
-        $this->apprentice = $data[0]->apprentice_id;
-        $this->name     = $data[0]->name;
-        $this->status   = $data[0]->status;
-        $this->explanation= $data[0]->explanation;
-        $this->file     = $data[0]->file;
+        $this->apprentice = $data->apprentice_id;
+        $this->name     = $data->name;
+        $this->status   = $data->status;
+        $this->explanation= $data->explanation;
+        $this->file     = $data->file;
         $this->teamid   = $id;
         $this->user     = Apprentice::where('team_apprentice_id',$id)->with('jss')->get();
     }
@@ -45,9 +45,9 @@ class UpdateProgressProject extends Component
             'explanation.required' => 'Deskripsi Harus diisi!',
         ]);
 
-        if($this->file != $this->progress[0]->file) {
+        if($this->file != $this->progress->file) {
             $validationData["file"]     = $this->file->store('files','public');
-            ProgressProject::where('id', $this->progress[0]->id)
+            ProgressProject::where('id', $this->progress->id)
                             ->update([
                                 'apprentice_id'=> $this->apprentice,
                                 'name'          => $this->name,
@@ -56,7 +56,7 @@ class UpdateProgressProject extends Component
                                 'file'          => "/storage/".$validationData["file"]
                             ]);
         } else {
-            ProgressProject::where('id', $this->progress[0]->id)
+            ProgressProject::where('id', $this->progress->id)
                             ->update([
                                 'apprentice_id'=> $this->apprentice,
                                 'name'          => $this->name,

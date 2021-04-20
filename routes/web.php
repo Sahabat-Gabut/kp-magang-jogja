@@ -42,8 +42,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => '/project', 'as' => 'project'], function() {
         Route::get('/', [ProjectController::class, 'index']);
         Route::get('/detail/{id}', [ProjectController::class, 'detail'])->name('.detail');
-        Route::get('/detail/{projectID}/{progressID}/change', [ProjectController::class, 'change'])->name('.change');
-        Route::get('/detail/{projectID}/{progressID}/remove', [ProjectController::class, 'remove'])->name('.remove');
+        Route::get('/detail/{teamID}/{projectID}/{progressID}', [ProjectController::class, 'detailProgress'])->name('.change');
+        Route::get('/detail/{teamID}/{projectID}/{progressID}/change', [ProjectController::class, 'change'])->name('.change');
+        Route::get('/detail/{teamID}/{projectID}/{progressID}/remove', [ProjectController::class, 'remove'])->name('.remove');
     });
 
     // Agency

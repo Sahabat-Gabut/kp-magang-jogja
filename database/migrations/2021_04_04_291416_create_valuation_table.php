@@ -17,7 +17,7 @@ class CreateValuationTable extends Migration
             $table->id();
             $table->foreignId('progress_project_id')->constrained('progress_project')->onUpdate('cascade')->onDelete('cascade');
             $table->tinyInteger('score');
-            $table->string('explanation');
+            $table->string('explanation')->null();
         });
     }
 

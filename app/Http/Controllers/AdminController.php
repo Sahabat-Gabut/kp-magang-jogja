@@ -4,12 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Admin;
-
+use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
     public function index() {
-    $admin = Admin::all();
-        return view("pages.dashboard.admin.index")->with(compact("admin"));
+        if(Auth::user()->apprenticeTeam) {
+            return response(abort(403));
+        }else {
+            if(Auth::user()->adminRole->id == "3") {
+                return response(abort(403));
+            } else {
+                if(Auth::user()->adminRole->id == "1") {
+                    $admin = Admin::all();
+                    return view("pages.dashboard.admin.index")->with(compact("admin"));
+                }else {
+                    $admin = Admin::where("agency_id", Auth::user()->adminDetail->agency_id)->get();
+                    return view("pages.dashboard.admin.index")->with(compact("admin"));
+                }
+            }
+        }
     }
 
     public function detail($id) {

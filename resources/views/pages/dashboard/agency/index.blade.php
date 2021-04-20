@@ -14,9 +14,9 @@
         </div>
     </div>
     <div>
-        @if (session()->has('message'))
+        @if (session()->has('success'))
             <div x-data="{ open: true }" class="group fixed right-6 top-6 select-none" style="z-index: 99999999999">
-                <div x-show="open" class="bg-green-200 bg-opacity-25 backdrop-filter backdrop-blur-sm px-6 py-3 shadow-md rounded-md text-lg flex items-center">
+                <div x-show="open" class="bg-green-200 px-6 py-3 shadow-md rounded-md text-lg flex items-center">
                     <svg class="h-6 w-6 mr-4 text-green-600" viewBox="0 0 24 24" class="text-green-600 w-10 h-10 sm:w-5 sm:h-5 mr-3">
                         <path fill="currentColor" d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z"></path>
                     </svg>

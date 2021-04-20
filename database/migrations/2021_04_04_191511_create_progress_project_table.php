@@ -19,7 +19,7 @@ class CreateProgressProjectTable extends Migration
             $table->foreignId('apprentice_id')->constrained('apprentice')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->string('explanation')->nullable();
-            $table->string('status')->default('DALAM DIPROSES');
+            $table->string('status')->default('DALAM PROGRES');
             $table->string('file')->nullable();
             $table->timestampTz('date_of_created')->default(DB::raw('CURRENT_TIMESTAMP'));
         });

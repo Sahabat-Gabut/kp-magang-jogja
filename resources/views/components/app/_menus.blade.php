@@ -58,12 +58,21 @@
                     </svg>
                     <span class="ml-4">{{ __('Daftar Pengajuan') }}</span>
                 </a>
-                @if(\DB::table('team_apprentice')->where('status_hired','SEDANG DIPROSES')->count() > 0)
-                    <div class="absolute bg-yellow-300 text-yellow-600 font-bold h-6 w-6 rounded-full text-xs flex items-center justify-center right-4 top-0 -mt-2">
-                        {{ \DB::table('team_apprentice')->where('status_hired','SEDANG DIPROSES')->count() }}
-                    </div>
+                @if(Auth::user()->adminRole->id == "1")
+                    @if(\DB::table('team_apprentice')->where('status_hired','SEDANG DIPROSES')->count() > 0)
+                        <div class="absolute bg-yellow-300 text-yellow-600 font-bold h-6 w-6 rounded-full text-xs flex items-center justify-center right-4 top-0 -mt-2">
+                            {{ \DB::table('team_apprentice')->where('status_hired','SEDANG DIPROSES')->count() }}
+                        </div>
+                    @endif
+                @else 
+                    @if(\DB::table('team_apprentice')->where('status_hired','SEDANG DIPROSES')->count() > 0)
+                        <div class="absolute bg-yellow-300 text-yellow-600 font-bold h-6 w-6 rounded-full text-xs flex items-center justify-center right-4 top-0 -mt-2">
+                            {{ \DB::table('team_apprentice')->where('status_hired','SEDANG DIPROSES')->where('agency_id',Auth::user()->adminDetail->agency_id)->count() }}
+                        </div>
+                    @endif
                 @endif
             </li>
+            @if(Auth::user()->adminRole->id == "1")
             <li class="nav-item">
                 <a class="nav-link{{ (strpos(Route::currentRouteName(), 'agency') === 0) ? ' active' : '' }}" href="{{ route('agency') }}">
                     <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -72,14 +81,17 @@
                     <span class="ml-4">{{ __('Daftar Dinas') }}</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link{{ (strpos(Route::currentRouteName(), 'admin') === 0) ? ' active' : '' }}" href="{{ route('admin') }}">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
-                    </svg>
-                    <span class="ml-4">{{ __('Daftar Admin') }}</span>
-                </a>
-            </li>
+            @endif
+            @if(Auth::user()->adminRole->id != "3")
+                <li class="nav-item">
+                    <a class="nav-link{{ (strpos(Route::currentRouteName(), 'admin') === 0) ? ' active' : '' }}" href="{{ route('admin') }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
+                        </svg>
+                        <span class="ml-4">{{ __('Daftar Admin') }}</span>
+                    </a>
+                </li>
+            @endif
         @endif
     </ul>
 </div>

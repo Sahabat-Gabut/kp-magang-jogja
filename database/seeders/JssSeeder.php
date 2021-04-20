@@ -14,7 +14,7 @@ class JssSeeder extends Seeder
     public function run()
     {
         \DB::table('jss')->insert([
-            'id'        => '0',
+            'id'        => '1',
             'NIK'       => '0000000000000000',
             'username'  => 'superadmin',
             'fullname'  => 'Super Admin',
@@ -24,7 +24,7 @@ class JssSeeder extends Seeder
         ]);
 
         \DB::table('jss')->insert([
-            'id'        => '00',
+            'id'        => '2',
             'NIK'       => '0000000000000000',
             'username'  => 'admin',
             'fullname'  => 'admin',
@@ -34,7 +34,7 @@ class JssSeeder extends Seeder
         ]);
 
         \DB::table('jss')->insert([
-            'id'        => '000',
+            'id'        => '3',
             'NIK'       => '0000000000000000',
             'username'  => 'moderator',
             'fullname'  => 'moderator',

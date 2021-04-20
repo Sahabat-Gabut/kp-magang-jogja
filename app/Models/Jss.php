@@ -47,7 +47,7 @@ class Jss extends Authenticatable
 
     public function adminRole()
     {
-        return $this->hasOneThrough(RoleAdmin::class, Admin::class,'jss_id','id');
+        return $this->hasOneThrough(RoleAdmin::class, Admin::class,'jss_id','id','id','role_admin_id');
     }
 
     public function apprenticeDetail()

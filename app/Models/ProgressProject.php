@@ -17,12 +17,15 @@ class ProgressProject extends Model
         'date_of_created'
     ];
 
-    public function project()
-    {
+    public function project() {
         return $this->hasMany(Project::class, 'id');
     }
-    public function jss()
-    {
+
+    public function jss() {
         return $this->hasManyThrough(Jss::class, Apprentice::class, 'id','id','apprentice_id','jss_id');
+    }
+    
+    public function valuation() {
+        return $this->hasOne(Valuation::class, 'progress_project_id');
     }
 }
