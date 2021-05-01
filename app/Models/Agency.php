@@ -13,7 +13,8 @@ class Agency extends Model
         'id', 
         'name', 
         'location',
-        'total_apprentice'
+        'total_team',
+        'quota'
     ];
 
     public function teamApprentice()

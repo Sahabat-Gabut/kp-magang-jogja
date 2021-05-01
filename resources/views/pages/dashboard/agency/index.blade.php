@@ -57,7 +57,7 @@
                                 {{ $a->name}}
                             </td>
                             <td class="px-5 py-5 text-center border-b border-gray-200 bg-white text-sm">
-                                {{ $a->total_apprentice}}
+                                {{ $a->total_team}}
                             </td>
                             <td class="px-5 py-5 justify-center text-center border-b border-gray-200 bg-white text-sm">
                                 <div class="flex justify-center rounded-lg text-lg" role="group">

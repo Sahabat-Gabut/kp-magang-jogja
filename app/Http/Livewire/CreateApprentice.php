@@ -10,7 +10,7 @@ class CreateApprentice extends Component
 {
     use WithFileUploads;
 
-    public $agency, $university, $departement, $cover_letter, $proposal, $presentation, $project_name, $project_explanation;
+    public $agency, $university, $departement, $cover_letter, $proposal, $presentation, $project_name, $project_explanation, $duration;
     public $imagesrc = [], $idjss = [], $npm = [], $cv =[];
     public $inputs = [];
     public $i = 0;
@@ -104,6 +104,7 @@ class CreateApprentice extends Component
             'proposal'      => "/storage/".$validationData["proposal"],
             'presentation'  => "/storage/".$validationData["presentation"],
             'cover_letter'  => "/storage/".$validationData["cover_letter"],
+            'duration'      => $this->duration,
             'date_of_created' => NOW()
         ]);
 

@@ -17,7 +17,7 @@ class CreateAgencyTable extends Migration
             $table->id();
             $table->string('name',100);
             $table->text('location')->nullable();
-            $table->integer('total_apprentice')->default(0);
+            $table->integer('total_team')->default(0);
         });
     }
 

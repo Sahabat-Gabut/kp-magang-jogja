@@ -28,7 +28,7 @@
                 <span>Total Magang</span>
             </div>
             <div class="col-span-6 sm:col-span-5 border-l sm:border-l-0 border-r sm:border-t p-2 border border-gray-300">
-                <span>{{$agency->total_apprentice}}</span>
+                <span>{{$agency->total_team}}</span>
             </div>
         </div>
     </div>

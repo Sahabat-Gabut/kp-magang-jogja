@@ -32,4 +32,9 @@ class AgencyController extends Controller
             return redirect()->route('agency')->with('message', 'Gagal Menghapus Dinas');
         }
     }
+
+    public function quota() {
+        $agency = Agency::all();
+        return view("pages.guest.agencyQuota")->with(compact("agency"));
+    }
 }

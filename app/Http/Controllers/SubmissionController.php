@@ -46,11 +46,12 @@ class SubmissionController extends Controller
     {
         $isAdmin            = \Auth::user()->adminDetail;
         $isSuperAdmin       = \Auth::user()->adminRole->id == "1";
-        $apprentice         = Apprentice::where('team_apprentice_id',$id)->get();
         $isAdminFromAgency  = \Auth::user()->adminDetail->agency_id == $agency;
-        $countApprentice    = Apprentice::where('team_apprentice_id',$id)->count();
+
+        $apprentice         = Apprentice::where('team_apprentice_id',$id)->get();
+        
         $countAgency        = Agency::where("id",$agency)->get();
-        $total              = $countAgency[0]->total_apprentice - $countApprentice;
+        $total              = $countAgency[0]->total_team - 1;
 
         if (!$isAdmin) {
             return response(abort(403));
@@ -64,7 +65,7 @@ class SubmissionController extends Controller
             }
 
             if($update && $remove_attendance) {
-                Agency::where("id", $agency)->update(['total_apprentice' => $total]);
+                Agency::where("id", $agency)->update(['total_team' => $total]);
             
                 return $this->success("Berhasil menolak pengajuan");
             }else {
@@ -79,7 +80,7 @@ class SubmissionController extends Controller
             }
             
             if($update && $remove_attendance) {
-                Agency::where("id", $agency)->update(['total_apprentice' => $total]);
+                Agency::where("id", $agency)->update(['total_team' => $total]);
                         
                 return $this->success("Berhasil menolak pengajuan");
             }else {
@@ -93,20 +94,17 @@ class SubmissionController extends Controller
     {
         date_default_timezone_set("Asia/Jakarta");
 
-        
         $isAdmin            = \Auth::user()->adminDetail;
         $superAdmin         = \Auth::user()->adminRole->id == "1";
         $isAdminFromAgency  = \Auth::user()->adminDetail->agency_id == $agency;
-        
+
         $apprentice         = Apprentice::where('team_apprentice_id',$id)->get();
         $teamApprentice     = TeamApprentice::where('id',$id)->get();
 
-        $countApprentice    = Apprentice::where('team_apprentice_id',$id)->count();
         $countAgency        = Agency::where("id",$agency)->get();
-        $total              = $countAgency[0]->total_apprentice + $countApprentice;
+        $total              = $countAgency[0]->total_team + 1;
 
         $generateAttendance = $this->generateAttendance($teamApprentice[0]->duration);
-
 
         if (!$isAdmin) {
             return response(abort(403));
@@ -115,7 +113,7 @@ class SubmissionController extends Controller
             $insert_attendance  = $this->handleAttendance($generateAttendance, $apprentice);
 
             if($update) {
-                Agency::where("id", $agency)->update(['total_apprentice' => $total]);
+                Agency::where("id", $agency)->update(['total_team' => $total]);
                 return $this->success("Pengajuan berhasil disetujui");
             }else {
                 return $this->errors("Gagal menyetujui pengajuan");
@@ -126,7 +124,7 @@ class SubmissionController extends Controller
             $insert_attendance  = $this->handleAttendance($generateAttendance, $apprentice);
 
             if($update && $insert_attendance) {
-                Agency::where("id", $agency)->update(['total_apprentice' => $total]);
+                Agency::where("id", $agency)->update(['total_team' => $total]);
                 return $this->success("Pengajuan berhasil disetujui");
             }else {
                 return $this->errors("Gagal menyetujui pengajuan");
@@ -165,7 +163,8 @@ class SubmissionController extends Controller
         return $insert_attendance;
     }
 
-    function generateAttendance($duration) {
+    function generateAttendance($duration) 
+    {
         $day			= floor($duration * date('t'));
         $start_date 	= date('Y-m-d');
         $start_time 	= strtotime($start_date);

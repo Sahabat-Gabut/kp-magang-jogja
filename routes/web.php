@@ -9,8 +9,7 @@ use App\Http\Controllers\{AuthController,
                           AgencyController,
                           AdminController,
                           ProfileController,
-                          DashboardController,
-                          AbsenController
+                          DashboardController
                          };
                          
 Route::get('/', function () {
@@ -20,12 +19,11 @@ Route::get('/', function () {
 Route::get('login', [AuthController::class, 'showFormLogin'])->name('login');
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('quota-agency',[AgencyController::class, 'quota'])->name('quotaAgency');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::view('pendaftaran-magang', 'pages.guest.registration')->name('pendaftaran-magang');
-    
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
     Route::get('profile', [ProfileController::class, 'index'])->name('profile');
     
     // Attendence 

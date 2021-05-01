@@ -81,17 +81,17 @@
                             </th>
                             <th
                                 class="px-5 py-3 border-b border-gray-300 z-20 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                University
+                                Universitas
                             </th>
                             <th
                                 class="px-5 py-3 border-b border-gray-300 z-20 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Action
+                                Aksi
                             </th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($team as $key =>$tm)
                         <tr>
-                            @foreach ($team as $key =>$tm)
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     @foreach ($team[$key]->apprenticeUser as $key => $value)
                                     <span class="block">
@@ -107,8 +107,8 @@
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <a href="/attendance/detail/{{ $tm->id }}" class="text-green-600">Lihat Detail</a>
                                 </td>
-                            @endforeach
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

@@ -63,5 +63,15 @@
                 <a href="#" class="btn-card">Unduh Surat</a>
             </div>
         </div>
+        <div class="border border-gray-300 rounded-md" style="max-width: 395px;">
+            <img class="w-full" src="/assets/img/logo/download.png"/>
+            <div class="p-4">
+                <h3 class="uppercase">Kuota Magang</h3>
+                <p>Daftar Kuota Magang di Setiap Dinas</p>
+            </div>
+            <div class="bg-gray-300 p-3 w-full flex">
+                <a href="{{ route("quotaAgency") }}" class="btn-card">Lihat Kuota</a>
+            </div>
+        </div>
     </main>
 </x-guest-layout>

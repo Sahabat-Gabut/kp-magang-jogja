@@ -18,7 +18,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                                 </svg>
                             </div>
-                            <div class="mx-auto max-w-sm text-center flex flex-col justify-centermt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                            <div class="mx-auto max-w-sm flex flex-col justify-centermt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                                 <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
                                     Absensi
                                 </h3>

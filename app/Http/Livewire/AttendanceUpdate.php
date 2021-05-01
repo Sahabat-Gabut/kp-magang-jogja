@@ -18,11 +18,18 @@ class AttendanceUpdate extends Component
 
     public function render()
     {
+        if($this->status == "TEPAT WAKTU" || $this->status == "TELAT") {
+            $this->status = "HADIR";
+        }
         return view('livewire.attendance-update');
     }
 
     public function store()
     {
+        if($this->status == "HADIR") {
+            $this->status = "TEPAT WAKTU";
+        }
+        
         $update = \DB::table('attendance')
                     ->where('id', $this->attendance_id)
                     ->update(['status' => $this->status]);
