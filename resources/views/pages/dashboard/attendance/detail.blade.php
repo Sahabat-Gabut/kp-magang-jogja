@@ -1,5 +1,4 @@
 <x-app-layout title="Attendance">
-    <div class="">
         <div>
             <h2 class="text-2xl font-semibold leading-tight">{{ __('Attendance') }}</h2>
         </div>
@@ -33,6 +32,6 @@
                 </div>
             </div>
         @endif
-        <livewire:detail-attendance :data="$attendance" :select="$apprentice">
-    </div>
+        <livewire:attendance-detail :data="$attendance" :select="$apprentice">
+
 </x-app-layout>

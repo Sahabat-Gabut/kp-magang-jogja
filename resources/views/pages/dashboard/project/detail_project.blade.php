@@ -2,7 +2,7 @@
     <div class="main-card">
         <div class="flex justify-between items-center">
             <h1 class="font-semibold text-gray-700">{{ $team->project->name_project }}</h1>
-            <livewire:create-progress-project :id="$team->project->id" :teamid="$team->id">
+            <livewire:progress-project-create :id="$team->project->id" :teamid="$team->id">
         </div>
         <div class="relative pt-1 mt-4">
             <div class="flex mb-2 items-center justify-between">

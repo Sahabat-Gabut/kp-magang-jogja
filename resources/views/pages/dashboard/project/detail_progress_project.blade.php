@@ -8,9 +8,9 @@
         @if(\Auth::user()->adminDetail)
             @if($progress->status == "SELESAI")
                 @if(isset($progress->valuation->score))
-                    <livewire:update-valuation :valuation="$progress->valuation" :id="$team->project->id">
+                    <livewire:valuation-update :valuation="$progress->valuation" :id="$team->project->id">
                 @else
-                    <livewire:create-valuation :id="$team->project->id" :teamid="$team->id" :progress="$progress">
+                    <livewire:valuation-create :id="$team->project->id" :teamid="$team->id" :progress="$progress">
                 @endif
             @endif
         @endif

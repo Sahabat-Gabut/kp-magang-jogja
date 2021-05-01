@@ -18,5 +18,5 @@
             </div>
         @endif
     </div>
-    <livewire:show-agency>
+    <livewire:agency-show>
 </x-app-layout>

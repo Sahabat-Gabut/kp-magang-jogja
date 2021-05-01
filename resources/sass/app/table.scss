@@ -10,10 +10,10 @@ table {
         }
     }
 }
-
+td {clear:both}
 .tableFixHead {
-    overflow-y: auto;
-    max-height: 83vh;
+    // overflow-y: auto;
+    // max-height: 83vh;
 
     &::-webkit-scrollbar {
         width: 5px;
