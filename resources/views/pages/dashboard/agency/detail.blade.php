@@ -24,11 +24,18 @@
                 <span>{{$agency->location}}</span>
             </div>
 
+            <div class="col-span-6 sm:col-span-1 border-l sm:border-b-0 border-r sm:border-t border-b-0 bg-gray-100 p-2 border border-gray-300">
+                <span>Total Tim</span>
+            </div>
+            <div class="col-span-6 sm:col-span-5 border-l sm:border-l-0 sm:border-b-0 border-b-0 border-r sm:border-t p-2 border border-gray-300">
+                <span>{{$agency->total_team}}</span>
+            </div>
+
             <div class="col-span-6 sm:col-span-1 bg-gray-100 p-2 border border-gray-300 border-b-0 sm:border-b">
-                <span>Total Magang</span>
+                <span>Kuota</span>
             </div>
             <div class="col-span-6 sm:col-span-5 border-l sm:border-l-0 border-r sm:border-t p-2 border border-gray-300">
-                <span>{{$agency->total_team}}</span>
+                <span>{{$agency->quota}}</span>
             </div>
         </div>
     </div>

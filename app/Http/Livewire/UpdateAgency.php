@@ -7,13 +7,14 @@ use App\Models\Agency;
 
 class UpdateAgency extends Component
 {
-    public $idAgency, $name, $location;
+    public $idAgency, $name, $location, $quota;
 
     public function mount($data)
     {
         $this->idAgency = $data->id;
-        $this->name   = $data->name;
+        $this->name     = $data->name;
         $this->location = $data->location;
+        $this->quota    = $data->quota;
     }
 
     public function render()
@@ -26,7 +27,8 @@ class UpdateAgency extends Component
        $update =  Agency::where('id', $this->idAgency)
                             ->update([
                                 'name'          => $this->name,
-                                'location'      => $this->location
+                                'location'      => $this->location,
+                                'quota'         => $this->quota
                             ]);
 
         if($update){
