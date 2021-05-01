@@ -10,13 +10,14 @@ class TeamApprentice extends Model
     public $timestamps      = false;
     protected $fillable     = [
         'id',
-        'status_hired',
         'agency_id',
+        'status_hired',
         'university',
         'departement',
         'proposal',
         'presentation',
         'cover_letter',
+        'duration',
         'date_of_created'
     ];
 
@@ -39,5 +40,10 @@ class TeamApprentice extends Model
     public function project()
     {
         return $this->hasOne(Project::class, 'team_apprentice_id');
+    }
+
+    public function attendance()
+    {
+        return $this->hasManyThrough(Attendance::class, Apprentice::class, 'team_apprentice_id', 'id', 'start_attendace');
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\{Admin,Apprentice,TeamApprentice,Project};
+use App\Models\{Admin,Apprentice,Attendance,TeamApprentice,Project};
 
 class Jss extends Authenticatable
 {
@@ -63,5 +63,10 @@ class Jss extends Authenticatable
     public function apprenticeProject()
     {
         return $this->hasOneThrough(Project::class, Apprentice::class, 'jss_id','team_apprentice_id','id','team_apprentice_id');
+    }
+
+    public function apprenticeAttendance()
+    {
+        return $this->hasOneThrough(Attendance::class, Apprentice::class, 'jss_id', 'id', 'id', 'apprentice_id');
     }
 }

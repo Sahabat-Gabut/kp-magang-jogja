@@ -1,7 +1,7 @@
 <x-app-layout title="Project">
     <div class="">
         <div>
-            <h2 class="text-2xl font-semibold leading-tight">{{ __('Project') }}</h2>
+            <h2 class="text-2xl font-semibold leading-tight">{{ __('Projek') }}</h2>
         </div>
         <div class="pt-4 overflow-x-auto">
             <div class="tableFixHead inline-block min-w-full rounded-md overflow-hidden border border-gray-300">
@@ -10,15 +10,15 @@
                         <tr>
                             <th
                                 class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Project Name
+                                Nama Projek
                             </th>
                             <th
                                 class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                User
+                                Anggota
                             </th>
                             <th
                                 class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Action
+                                Aksi
                             </th>
                         </tr>
                     </thead>
@@ -44,7 +44,6 @@
 
                         @if(\Auth::user()->adminDetail)
                             @foreach($team as $key => $t)
-                            {{-- {{ dd($team) }} --}}
                             <tr>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     {{ $team[$key]->project->name_project }}

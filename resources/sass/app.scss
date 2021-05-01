@@ -46,3 +46,23 @@
 input[type="file" i]::-webkit-file-upload-button {
     display: none !important;
 }
+
+input[type="radio"] + label span {
+    transition: background .2s,
+      transform .2s;
+}
+
+input[type="radio"] + label span:hover,
+input[type="radio"] + label:hover span{
+    @apply bg-green-200;
+    transform: scale(1.2);
+} 
+
+input[type="radio"]:checked + label span {
+    @apply bg-green-600;
+    box-shadow: 0px 0px 0px 2px white inset;
+}
+
+input[type="radio"]:checked + label{
+    @apply text-green-600;
+}

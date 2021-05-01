@@ -9,7 +9,8 @@ use App\Http\Controllers\{AuthController,
                           AgencyController,
                           AdminController,
                           ProfileController,
-                          DashboardController
+                          DashboardController,
+                          AbsenController
                          };
                          
 Route::get('/', function () {
@@ -28,7 +29,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('profile', [ProfileController::class, 'index'])->name('profile');
     
     // Attendence 
-    Route::get('attendance', [AttendanceController::class, 'index'])->name('attendance');
+    Route::group(['prefix' => '/attendance', 'as' => 'attendance'], function(){
+        Route::get('/', [AttendanceController::class, 'index']);
+        Route::get('/detail/{id}',[AttendanceController::class, 'detail'])-> name('detail');
+    });
 
     // Submission 
     Route::group(['prefix' => '/submission', 'as' => 'submission'],  function() {        

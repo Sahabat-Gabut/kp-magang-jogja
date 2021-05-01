@@ -45,7 +45,7 @@ class CreateApprentice extends Component
         'proposal.required'         => 'Proposal wajib diisi!',       
         'proposal.mimes'            => 'Proposal harus berupa pdf',       
         'presentation.required'     => 'Presentasi Projek wajib diisi!',       
-        'presentation.mimes'        => 'Presentasi Projek harus berupa pdf',      
+        'presentation.mimes'        => 'Presentasi Projek harus berupa ppt atau pptx',      
         'project_name.required'     => 'Nama projek wajib diisi!',
         'project_explanation.required'=> 'Deskripsi projek wajib diisi!', 
         'imagesrc.0.required'       => 'Pas Foto wajib diisi!',       
@@ -95,6 +95,7 @@ class CreateApprentice extends Component
         $validationData["cover_letter"]     = $this->cover_letter->store('files','public');
         $validationData["proposal"]         = $this->proposal->store('files','public');
         $validationData["presentation"]     = $this->presentation->store('files','public');
+        
         
         TeamApprentice::create([
             'agency_id'     => $this->agency,

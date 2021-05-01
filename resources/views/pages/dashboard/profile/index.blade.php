@@ -20,7 +20,7 @@
 
     @if(\Auth::user()->apprenticeDetail)
     <main class="main-card shadow-md">
-        <h1 class="font-bold text-xl text-gray-600 mb-4">Project</h1>
+        <h1 class="font-bold text-xl text-gray-600 mb-4">Projek</h1>
         <div class="grid grid-cols-6 gap-6">
             <div class="lg:col-span-2 col-span-6">
                 <div class="main-card flex items-center">

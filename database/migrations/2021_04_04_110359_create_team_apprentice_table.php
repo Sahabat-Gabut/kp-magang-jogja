@@ -22,6 +22,7 @@ class CreateTeamApprenticeTable extends Migration
             $table->string('proposal');
             $table->string('presentation');
             $table->string('cover_letter');
+            $table->float('duration',2, 1);
             $table->date('date_of_created');
         });
     }

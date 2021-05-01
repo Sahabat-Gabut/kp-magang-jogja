@@ -62,34 +62,10 @@
                                             <button @click="open = true" class="bg-white text-gray-600 hover:bg-red-200 hover:text-red-600 border border-l-0 border-gray-300 rounded-r-md px-4 py-2 mx-0 outline-none">
                                                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>    
                                             </button>
-                                            <!-- This example requires Tailwind CSS v2.0+ -->
                                             <div x-show="open"  class="fixed inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" style="z-index: 9999999999">
                                                 <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                                                    <!--
-                                                    Background overlay, show/hide based on modal state.
-    
-                                                    Entering: "ease-out duration-300"
-                                                        From: "opacity-0"
-                                                        To: "opacity-100"
-                                                    Leaving: "ease-in duration-200"
-                                                        From: "opacity-100"
-                                                        To: "opacity-0"
-                                                    -->
                                                     <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-    
-                                                    <!-- This element is to trick the browser into centering the modal contents. -->
                                                     <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-    
-                                                    <!--
-                                                    Modal panel, show/hide based on modal state.
-    
-                                                    Entering: "ease-out duration-300"
-                                                        From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                                                        To: "opacity-100 translate-y-0 sm:scale-100"
-                                                    Leaving: "ease-in duration-200"
-                                                        From: "opacity-100 translate-y-0 sm:scale-100"
-                                                        To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                                                    -->
                                                     <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                                                         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                                             <div class="sm:flex sm:items-start">

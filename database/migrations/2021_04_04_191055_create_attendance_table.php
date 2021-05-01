@@ -14,12 +14,11 @@ class CreateAttendanceTable extends Migration
     public function up()
     {
         Schema::create('attendance', function (Blueprint $table) {
-            $table->date('date_att')->primary();
+            $table->id();
+            $table->timestampTz('start_attendace');
+            $table->timestampTz('end_attendace');
             $table->foreignId('apprentice_id')->constrained('apprentice')->onUpdate('cascade')->onDelete('cascade');
-            $table->timestampTz('first_timesheet')->nullable();
-            $table->timestampTz('last_timesheet')->nullable();
-            $table->string('status_early',20);
-            $table->string('status_finish',20);
+            $table->string('status',20)->nullable();
         });
     }
 

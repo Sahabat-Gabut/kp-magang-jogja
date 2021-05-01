@@ -18,7 +18,7 @@
             <div class="col-span-6 sm:col-span-1 border-l sm:border-b-0 border-r sm:border-t bg-gray-100 p-2 border border-gray-300">
                 <span>Penanggung Jawab</span>
             </div>
-            <div class="col-span-6 sm:col-span-5 p-2 border-l sm:border-l-0 border-r sm:border-t border-gray-300">
+            <div class="col-span-6 sm:col-span-5 p-2 bo5rder-l sm:border-l-0 border-r sm:border-t border-gray-300">
                 <span>{{ $progress->jss[0]->fullname }}</span>
             </div>
 

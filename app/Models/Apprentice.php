@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Jss;
+use App\Models\Attendance;
 
 class Apprentice extends Model
 {
@@ -21,5 +22,10 @@ class Apprentice extends Model
     public function jss()
     {
         return $this->hasMany(Jss::class, 'id','jss_id');
+    }
+
+    public function attendance()
+    {
+        return $this->hasMany(Attendance::class, 'apprentice_id', 'id');
     }
 }

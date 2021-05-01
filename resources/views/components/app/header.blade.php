@@ -32,11 +32,11 @@
                             </span>
                         </div>
                         @if ($admin)
-                            <img class="object-cover w-10 h-10 rounded-full" src="{{ $admin->imgSrc ? $admin->imgSrc : 'https://ui-avatars.com/api/?name='.$name.'&color=6dbda1&background=bcf0da' }}" alt="Maulana Kurnia" aria-hidden="true" />
+                            <img class="object-cover w-10 h-10 rounded-full" src="{{ $admin->imgSrc ? $admin->imgSrc : 'https://ui-avatars.com/api/?name='.$name.'&color=6dbda1&background=bcf0da' }}" alt="{{ $name }}" aria-hidden="true" />
                         @elseif($apprentice)
-                            <img class="object-cover w-10 h-10 rounded-full" src="{{ $apprentice->imgSrc ? $apprentice->imgSrc : 'https://ui-avatars.com/api/?name='.$name.'&color=6dbda1&background=bcf0da' }}" alt="Maulana Kurnia" aria-hidden="true" />
+                            <img class="object-cover w-10 h-10 rounded-full" src="{{ $apprentice->imgSrc ? $apprentice->imgSrc : 'https://ui-avatars.com/api/?name='.$name.'&color=6dbda1&background=bcf0da' }}" alt="{{ $name }}" aria-hidden="true" />
                         @else
-                            <img class="object-cover w-10 h-10 rounded-full" src="https://ui-avatars.com/api/?name={{$name}}&color=6dbda1&background=bcf0da" alt="Maulana Kurnia" aria-hidden="true" />
+                            <img class="object-cover w-10 h-10 rounded-full" src="https://ui-avatars.com/api/?name={{$name}}&color=6dbda1&background=bcf0da" alt="{{ $name }}" aria-hidden="true" />
                         @endif
                       </button>
                       <template x-if="isProfileMenuOpen">
