@@ -1,6 +1,3 @@
-<?php
-    $date = new DateTime($submission->date_of_created);
-?>
 <x-app-layout title="Submission">
     <div>
         <h2 class="text-2xl font-semibold leading-tight">{{ __('Detail Tim')}}</h2>
@@ -33,7 +30,7 @@
                                             </h3>
                                             <div class="mt-2">
                                                 <p class="text-sm text-gray-500">
-                                                    Apakah anda yakin ingin membatalkan tim ini untuk magang di <strong>{{$submission->agencyDetail->name}}</strong>?</br> Jika anda membatalkan, maka semua absensi, progres projek yang ada pada tim ini akan terhapus permanen!
+                                                    Apakah anda yakin ingin membatalkan tim ini untuk magang di <strong>{{$submission->agency->name}}</strong>?</br> Jika anda membatalkan, maka semua absensi, progres projek yang ada pada tim ini akan terhapus permanen!
                                                 </p>
                                             </div>
                                         </div>
@@ -63,7 +60,7 @@
                 <span>Dinas yang dituju</span>
             </div>
             <div class="col-span-6 sm:col-span-5 p-2 border-l sm:border-l-0 border-r sm:border-t border-gray-300">
-                <span>{{$submission->agencyDetail->name}}</span>
+                <span>{{$submission->agency->name}}</span>
             </div>
 
             <div class="col-span-6 sm:col-span-1 border-l sm:border-b-0 border-r sm:border-t border-b-0 bg-gray-100 p-2 border border-gray-300">
@@ -90,7 +87,12 @@
                 <span>Tanggal Daftar</span>
             </div>
             <div class="col-span-6 sm:col-span-5 border-l sm:border-l-0 border-r sm:border-t p-2 border border-gray-300">
-                <span>{{$date->format("d M Y")}}</span>
+                @php 
+                    $date = new \DateTime($submission->date_of_created);
+                    $carbon = \carbon\Carbon::instance($date);
+                @endphp
+           
+                <span>{{ $carbon->isoFormat('dddd, D MMMM Y') }}</span>
             </div>
         </div>
     </div>

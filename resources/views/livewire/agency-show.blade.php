@@ -7,6 +7,15 @@
 @endphp
 <div>
     <div class="my-2 flex sm:flex-row flex-col">
+        <div class="relative w-40">
+            <select
+                wire:model="availableData"
+                class="focus:ring-0 focus:border-gray-300 appearance-none h-full rounded-l border block w-full bg-white border-gray-300 border-r-0 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white cursor-pointer">
+                <option>5</option>
+                <option>10</option>
+                <option>20</option>
+            </select>
+        </div>
         <div class="block relative w-full">
             <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
                 <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-300">
@@ -22,7 +31,7 @@
         </div>
     </div>
     <div class="pt-4 overflow-x-auto">
-        <div class="tableFixHead inline-block min-w-full border border-gray-300 rounded-md overflow-hidden" style="max-height: 77vh">
+        <div class="tableFixHead inline-block min-w-full border border-gray-300 rounded-md overflow-y-auto" style="max-height: 71vh">
             <table class="min-w-full leading-normal">
                 <thead>
                     <tr>
@@ -128,4 +137,5 @@
             </table>
         </div>
     </div>
+    {{ $agency->links("components.pagination") }}
 </div>

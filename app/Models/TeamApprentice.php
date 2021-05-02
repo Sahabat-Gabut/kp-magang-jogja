@@ -22,7 +22,7 @@ class TeamApprentice extends Model
     ];
 
     
-    public function agencyDetail()
+    public function agency()
     {
         return $this->hasOne(Agency::class, 'id', 'agency_id');
     }

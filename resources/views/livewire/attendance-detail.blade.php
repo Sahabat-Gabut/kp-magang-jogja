@@ -55,7 +55,7 @@
     @endif
     
     <div class="pt-4 overflow-x-auto">
-        <div class="tableFixHead inline-block min-w-full border border-gray-300 rounded-md overflow-hidden">
+        <div class="tableFixHead inline-block min-w-full border border-gray-300 rounded-md overflow-y-auto" style="max-height: 71vh">
             <table class="min-w-full leading-normal">
                 <thead>
                     <tr>
@@ -91,10 +91,10 @@
                         @foreach ($attendance as $key => $a)
                             <tr>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <?php 
+                                    @php 
                                         $date = new \DateTime($a->start_attendace);
                                         $carbon = \carbon\Carbon::instance($date);
-                                    ?>
+                                    @endphp
                                     {{ $carbon->isoFormat('dddd, D MMMM Y') }}
                                 </td>
 
@@ -137,6 +137,5 @@
             </table>
         </div>
     </div>
-
-    {{ $attendance->links() }}
+    {{ $attendance->links("components.pagination") }}
 </div>

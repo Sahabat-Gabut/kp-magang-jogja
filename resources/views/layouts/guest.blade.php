@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="{{ mix('/assets/css/guest.css') }}">
         <link rel="stylesheet" href="/assets/vendor/css/aos.min.css" />
         <link rel="stylesheet" href="/assets/vendor/css/bootstrap-icons.min.css" />
-        <link rel="stylesheet" href="/assets/vendor/js/jquery.min.js" />
+        <script href="/assets/vendor/js/jquery.min.js"></script>
         <script src="{{ mix('/assets/js/guest.js') }}" defer></script>
         @livewireStyles
         @yield('style')

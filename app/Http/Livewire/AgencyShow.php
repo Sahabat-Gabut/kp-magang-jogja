@@ -4,21 +4,22 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Agency;
+use Livewire\WithPagination;
 
 class AgencyShow extends Component
 {
-    public $agency, $searchTerm;
+    use WithPagination;
+    public $searchTerm, $availableData;
 
     public function mount()
     {
-        $this->agency = Agency::all();
+        $this->availableData = 5;
     }
 
     public function render()
-    {
-        $searchTerm = '%'.$this->searchTerm.'%';
-        $this->agency = Agency::where('name','like',$searchTerm)->get();
-    
-        return view('livewire.agency-show');
+    {    
+        return view('livewire.agency-show',[
+            "agency"    => Agency::where('name','like','%'.$this->searchTerm.'%')->paginate($this->availableData)
+        ]);
     }
 }
