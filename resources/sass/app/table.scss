@@ -43,3 +43,15 @@ td {clear:both}
     top: 0;
     z-index: 2;
 }
+
+.striped {
+    tr:nth-child(even) td {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover td {
+        background-color: #84e1bc !important;
+        cursor: pointer;
+        color: #03543f !important;
+    }
+}

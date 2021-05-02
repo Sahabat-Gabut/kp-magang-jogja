@@ -16,7 +16,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="striped">
                             @foreach ($agency as $key => $a)
                             <tr>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
