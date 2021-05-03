@@ -1,6 +1,6 @@
 {
-    "/assets/js/guest.js": "/assets/js/guest.js?id=e6df1ecb5ddbf7d3a268",
-    "/assets/js/app.js": "/assets/js/app.js?id=9409b5564fdafaaf856d",
-    "/assets/css/app.css": "/assets/css/app.css?id=8c3e88eafde8e3e0d5df",
-    "/assets/css/guest.css": "/assets/css/guest.css?id=4a638d35c24fa2c657bc"
+    "/assets/js/guest.js": "/assets/js/guest.js",
+    "/assets/js/app.js": "/assets/js/app.js",
+    "/assets/css/app.css": "/assets/css/app.css",
+    "/assets/css/guest.css": "/assets/css/guest.css"
 }
