@@ -34,9 +34,17 @@ footer {
 }
 
 .footer-addrees {
-    @apply order-last lg:order-first mx-4 mt-4 lg:m-0;
+    @apply order-last mx-4 mt-4;
+
+    @screen lg {
+        @apply order-first m-0;
+    }
 }
 
 .footer-map {
-    @apply order-first lg:order-last;
+    @apply order-first;
+
+    @screen lg {
+        @apply order-last;
+    }
 }

@@ -1,6 +1,0 @@
-header.main-header {
-    backdrop-filter: saturate(200%) blur(30px);
-    background-color: hsla(0, 0%, 100%, 0.8) !important;
-
-    @apply z-10 py-3 rounded-md border border-gray-300 sticky top-0;
-}

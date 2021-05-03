@@ -7,7 +7,7 @@
         $role       = Auth::user()->adminRole->name;
     }
 ?>
-<header class="main-header">
+<header class="header-app">
       <div class="px-6 flex items-center justify-between h-full mx-auto">
           <div>
               <button class="p-1 mr-5 -ml-1 rounded-md lg:hidden focus:outline-none text-gray-600" @click="toggleSideMenu" aria-label="Menu">

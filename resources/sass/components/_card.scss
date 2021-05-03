@@ -1,3 +1,7 @@
+.main-card {
+    @apply w-full h-full bg-white p-4 text-gray-800 border border-gray-300 rounded-md;
+}
+
 .btn-card {
     @apply py-1 uppercase font-semibold rounded-sm w-full bg-diskominfo-base text-white leading-7 text-center text-xs inline-block;
 
