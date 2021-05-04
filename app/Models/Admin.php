@@ -21,7 +21,7 @@ class Admin extends Model
         return $this->hasMany(Jss::class, 'id', 'jss_id');
     }
 
-    public function roleDetail()
+    public function role()
     {
         return $this->hasOne(RoleAdmin::class, 'id', 'role_admin_id');
     }

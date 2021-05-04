@@ -15,8 +15,8 @@ class CreateAttendanceTable extends Migration
     {
         Schema::create('attendance', function (Blueprint $table) {
             $table->id();
-            $table->timestampTz('start_attendace');
-            $table->timestampTz('end_attendace');
+            $table->timestampTz('start_attendace')->nullable();
+            $table->timestampTz('end_attendace')->nullable();
             $table->foreignId('apprentice_id')->constrained('apprentice')->onUpdate('cascade')->onDelete('cascade');
             $table->string('status',20)->nullable();
         });
