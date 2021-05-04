@@ -36,8 +36,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => '/submission', 'as' => 'submission'],  function() {        
         Route::get('/',[SubmissionController::class, 'index']);
         Route::get('/detail/{id}',[SubmissionController::class, 'detail'])->name('.detail');
-        Route::get('/detail/{id}/{agency}/reject',[SubmissionController::class, 'reject'])->name('.rejectTeam');
-        Route::get('/detail/{id}/{agency}/accept',[SubmissionController::class, 'accept'])->name('.acceptTeam');
+        Route::post('/reject',[SubmissionController::class, 'reject'])->name('.reject');
+        Route::post('/accept',[SubmissionController::class, 'accept'])->name('.accept');
     });
 
     // Project 

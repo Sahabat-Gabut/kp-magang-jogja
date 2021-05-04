@@ -4,16 +4,32 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\{TeamApprentice,Agency,Apprentice, Attendance};
-
+use Illuminate\Support\Facades\Auth;
 class SubmissionController extends Controller
 {
+    protected $isAdmin, $isSuperAdmin, $isAdminFromAgency, $apprentice, $agency;
+
+    public function __construct(Request $request) 
+    {
+        $this->middleware(function ($request, $next) {
+            if(Auth::check() ) {
+                $this->isAdmin            = \Auth::user()->adminDetail;
+                $this->isSuperAdmin       = \Auth::user()->adminRole->id == "1";
+                $this->isAdminFromAgency  = \Auth::user()->adminDetail->agency_id == $request->agency_id;
+                $this->apprentice         = Apprentice::where('team_apprentice_id',$request->team_apprentice_id)->get();
+                $this->agency             = Agency::where("id",$request->agency_id)->first();
+            }
+           return $next($request);
+       });
+
+    }
     
     public function index()
     {
-        if (!\Auth::user()->adminDetail) {
+        if (!$this->isAdmin) {
             return response(abort(403));
         }
-        if(\Auth::user()->adminRole->id == "1") {
+        if($this->isSuperAdmin) {
             $submission = TeamApprentice::all();
         } else {
             $submission = TeamApprentice::where("agency_id", \Auth::user()->adminDetail->agency_id)->get();
@@ -23,10 +39,10 @@ class SubmissionController extends Controller
     
     public function detail($id)
     {
-        if (!\Auth::user()->adminDetail) {
+        if (!$this->isAdmin) {
             return response(abort(403));
         }else {
-            if(\Auth::user()->adminRole->id == "1"){
+            if($this->isSuperAdmin){
                 $submission = TeamApprentice::find($id);                
                 return view('pages.dashboard.submission.detail')->with(compact('submission'));
             }else {
@@ -42,47 +58,22 @@ class SubmissionController extends Controller
         }
     }
 
-    public function reject($id, $agency)
+    public function reject(Request $request)
     {
-        $isAdmin            = \Auth::user()->adminDetail;
-        $isSuperAdmin       = \Auth::user()->adminRole->id == "1";
-        $isAdminFromAgency  = \Auth::user()->adminDetail->agency_id == $agency;
+        $total              = $this->agency->total_team - 1;
 
-        $apprentice         = Apprentice::where('team_apprentice_id',$id)->get();
-        
-        $countAgency        = Agency::where("id",$agency)->get();
-        $total              = $countAgency[0]->total_team - 1;
+        if (!$this->isAdmin) { return response(abort(403)); } 
+        else if($this->isSuperAdmin || $this->isAdminFromAgency){
+            $update           = TeamApprentice::where('id',$request->team_apprentice_id)->where('agency_id', $request->agency_id)->update(['status_hired' => 'DI TOLAK']);
 
-        if (!$isAdmin) {
-            return response(abort(403));
-        }
-
-        if($isSuperAdmin){
-            $update           = TeamApprentice::where('id',$id)->where('agency_id', $agency)->update(['status_hired' => 'DI TOLAK']);
-
-            foreach($apprentice as $key => $a) {
+            foreach($this->apprentice as $key => $a) {
                 $remove_attendance = Attendance::where(['apprentice_id'   => $a->id ])->delete();                    
             }
 
             if($update && $remove_attendance) {
-                Agency::where("id", $agency)->update(['total_team' => $total]);
-            
+                Agency::where("id", $request->agency_id)->update(['total_team' => $total]);
                 return $this->success("Berhasil menolak pengajuan");
-            }else {
-                return $this->errors("Gagal menolak pengajuan");
-            }
 
-        } else if($isAdminFromAgency){
-            $update             = TeamApprentice::where('id',$id)->where('agency_id', $agency)->update(['status_hired' => 'DI TOLAK']);
-
-            foreach($apprentice as $key => $a) {
-                $remove_attendance = Attendance::where(['apprentice_id'   => $a->id ])->delete();                    
-            }
-            
-            if($update && $remove_attendance) {
-                Agency::where("id", $agency)->update(['total_team' => $total]);
-                        
-                return $this->success("Berhasil menolak pengajuan");
             }else {
                 return $this->errors("Gagal menolak pengajuan");
             }
@@ -90,46 +81,28 @@ class SubmissionController extends Controller
         return response(abort(403));
     }
 
-    public function accept($id, $agency)
+    public function accept(Request $request)
     {
         date_default_timezone_set("Asia/Jakarta");
 
-        $isAdmin            = \Auth::user()->adminDetail;
-        $superAdmin         = \Auth::user()->adminRole->id == "1";
-        $isAdminFromAgency  = \Auth::user()->adminDetail->agency_id == $agency;
+        $apprentice         = Apprentice::where('team_apprentice_id',$request->team_apprentice_id)->get();
+        $teamApprentice     = TeamApprentice::where('id',$request->team_apprentice_id)->first();
+        $total              = $this->agency->total_team + 1;
+        $generateAttendance = $this->generateAttendance($teamApprentice->duration);
 
-        $apprentice         = Apprentice::where('team_apprentice_id',$id)->get();
-        $teamApprentice     = TeamApprentice::where('id',$id)->get();
-
-        $countAgency        = Agency::where("id",$agency)->get();
-        $total              = $countAgency[0]->total_team + 1;
-
-        $generateAttendance = $this->generateAttendance($teamApprentice[0]->duration);
-
-        if (!$isAdmin) {
-            return response(abort(403));
-        } else if($superAdmin) {
-            $update             = TeamApprentice::where('id',$id)->where('agency_id', $agency)->update(['status_hired' => 'DI TERIMA']);
+        if (!$this->isAdmin) { return response(abort(403)); } 
+        else if($this->isSuperAdmin || $this->isAdminFromAgency) { 
+            $update_status      = TeamApprentice::where('id',$request->team_apprentice_id)->where('agency_id', $request->agency_id)->update(['status_hired' => 'DI TERIMA']);
+            $update_quota       = Agency::where("id", $request->agency_id)->update(['total_team' => $total]);
             $insert_attendance  = $this->handleAttendance($generateAttendance, $apprentice);
-
-            if($update) {
-                Agency::where("id", $agency)->update(['total_team' => $total]);
+    
+            if($update_status && $update_quota && $insert_attendance) {
                 return $this->success("Pengajuan berhasil disetujui");
             }else {
                 return $this->errors("Gagal menyetujui pengajuan");
             }
+        } 
 
-        } else if($isAdminFromAgency) {
-            $update             = TeamApprentice::where('id',$id)->where('agency_id', $agency)->update(['status_hired' => 'DI TERIMA']);
-            $insert_attendance  = $this->handleAttendance($generateAttendance, $apprentice);
-
-            if($update && $insert_attendance) {
-                Agency::where("id", $agency)->update(['total_team' => $total]);
-                return $this->success("Pengajuan berhasil disetujui");
-            }else {
-                return $this->errors("Gagal menyetujui pengajuan");
-            }
-        }
         return response(abort(403));
     }
 
@@ -157,7 +130,7 @@ class SubmissionController extends Controller
                                         'start_attendace' => $d." 07:30:00.000000",
                                         'end_attendace'   => $d." 08:00:00.000000",
                                         'apprentice_id'   => $a->id
-                                        ]);                    
+                                    ]);                    
             }
         }
         return $insert_attendance;
