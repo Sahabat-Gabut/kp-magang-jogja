@@ -31,6 +31,6 @@
     </div>
     <div class="footer-body">
         <span class="text-white">© Copyright <span class="font-bold text-white">2020</span>. Dinas Kominfosandi Yogyakarta</span>
-        <span class="text-white">Developed by Ashari & Bayu</span>
+        <span class="text-white">Developed by Ashari, Bayu, Maul, Rizaldi</span>
     </div>
 </footer>

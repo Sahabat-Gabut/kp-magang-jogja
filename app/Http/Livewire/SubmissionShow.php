@@ -32,14 +32,14 @@ class SubmissionShow extends Component
 
         if(Auth::user()->adminRole->id == '1') {
             return view('livewire.submission-show',[
-                "submission"    => TeamApprentice::with(['apprentices','agency'])
+                "submission"    => TeamApprentice::with(['apprentices','agency','apprenticeUser'])
                                                  ->where('status_hired',"like",'%'.$this->status.'%')
                                                  ->where('agency_id','like',$selectAgency)
                                                  ->paginate($this->availableData)
             ]);
         }else {
             return view('livewire.submission-show',[
-                "submission"    => TeamApprentice::with(['apprentices','agency'])
+                "submission"    => TeamApprentice::with(['apprentices','agency','apprenticeUser'])
                                                  ->where('status_hired',"like",'%'.$this->status.'%')
                                                  ->where('agency_id','like',Auth::user()->adminDetail->agency_id)
                                                  ->paginate($this->availableData)

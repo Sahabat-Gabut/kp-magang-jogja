@@ -14,12 +14,10 @@ class AttendanceController extends Controller
                Auth::user()->apprenticeTeam->status_hired == "SEDANG DIPROSES") {
                 return response(abort(403));
             } else {
-                $absen = Attendance::where('apprentice_id',Auth::user()->apprenticeDetail->id)->with('apprentice')->orderBy('start_attendace', 'asc')->get();
-                return view("pages.dashboard.attendance.index")->with(compact('absen'));
+                return view("pages.dashboard.attendance.index");
             }
         } else {
-            $team = TeamApprentice::with('attendance')->get();
-            return view("pages.dashboard.attendance.index")->with(compact('team'));
+            return view("pages.dashboard.attendance.index");
         } 
     }
 

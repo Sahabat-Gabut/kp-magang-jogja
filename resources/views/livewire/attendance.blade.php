@@ -1,7 +1,9 @@
 <div x-data="{ open: false }">
     @if($attendance->status)
         <button class="text-green-300 py-1 rounded-md focus:outline-none cursor-not-allowed" disabled>Absen</button>
-    @elseif(date("Y-m-d H:i:s") >= $attendance->start_attendace && $attendance->end_attendace <= date("Y-m-d 23:59:59"))
+    @elseif(date("Y-m-d H:i:s") > $attendance->end_attendace)
+        <button class="text-green-300 py-1 rounded-md focus:outline-none cursor-not-allowed" disabled>Absen</button>
+    @elseif(date("Y-m-d H:i:s") >= $attendance->start_attendace && date("Y-m-d H:i:s") <= $attendance->end_attendace)
         <button class="text-green-500 py-1 rounded-md focus:outline-none" @click="open = true">Absen</button>
     @endif
     <form wire:submit.prevent="store">
