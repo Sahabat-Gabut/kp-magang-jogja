@@ -12,13 +12,13 @@ class AttendanceController extends Controller
         if(isset(Auth::user()->apprenticeTeam)) {
             if(Auth::user()->apprenticeTeam->status_hired == "DI TOLAK" || 
                Auth::user()->apprenticeTeam->status_hired == "SEDANG DIPROSES") {
-                return responsea(abort(403));
+                return response(abort(403));
             } else {
                 $absen = Attendance::where('apprentice_id',Auth::user()->apprenticeDetail->id)->with('apprentice')->orderBy('start_attendace', 'asc')->get();
                 return view("pages.dashboard.attendance.index")->with(compact('absen'));
             }
         } else {
-            $team = TeamApprentice::all();
+            $team = TeamApprentice::with('attendance')->get();
             return view("pages.dashboard.attendance.index")->with(compact('team'));
         } 
     }

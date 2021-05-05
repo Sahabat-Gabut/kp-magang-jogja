@@ -166,13 +166,29 @@
                                     <div class="flex flex-col mt-1 items-center justify-center">
                                         <div class="justify-center">
                                             @if(isset($imagesrc['0']))
-                                                <img src="{{ $imagesrc['0']->temporaryUrl() }}" alt="foto" class="rounded-full h-44 w-44 border bg-cover bg-center" />
-                                            @else 
-                                                <span class="inline-block h-44 w-44 rounded-full overflow-hidden bg-gray-100">
-                                                    <svg class="h-full w-full text-gray-200" fill="currentColor" viewBox="0 0 24 24">
-                                                        <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                                                    </svg>
-                                                </span>
+                                                @php
+                                                    try {
+                                                        $url                    = $imagesrc['0']->temporaryUrl();
+                                                        $imageStatus['0']       = true;
+                                                    }catch (RuntimeException $exception){
+                                                        $this->imageStatus['0']     =  false;
+                                                    }
+                                                @endphp
+                                                @if($imageStatus['0'])
+                                                    <img src="{{ $imagesrc['0']->temporaryUrl() }}" alt="foto" class="rounded-full h-44 w-44 border bg-cover bg-center" />
+                                                @else
+                                                    <span class="inline-block h-44 w-44 rounded-full overflow-hidden bg-gray-100">
+                                                        <svg class="h-full w-full text-gray-200" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                        </svg>
+                                                    </span>
+                                                    @endif
+                                                @else 
+                                                    <span class="inline-block h-44 w-44 rounded-full overflow-hidden bg-gray-100">
+                                                        <svg class="h-full w-full text-gray-200" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                        </svg>
+                                                    </span>
                                             @endif
                                         </div>
                                             @error('imagesrc.0') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -229,13 +245,29 @@
                                         <div class="flex flex-col mt-1 items-center justify-center">
                                             <div class="justify-center">
                                                 @if(isset($imagesrc[$value]))
-                                                    <img src="{{ $imagesrc[$value]->temporaryUrl() }}" alt="foto" class="rounded-full h-44 w-44 border bg-cover bg-center" />
-                                                @else 
-                                                    <span class="inline-block h-44 w-44 rounded-full overflow-hidden bg-gray-100">
-                                                        <svg class="h-full w-full text-gray-200" fill="currentColor" viewBox="0 0 24 24">
-                                                            <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                                                        </svg>
-                                                    </span>
+                                                    @php
+                                                        try {
+                                                            $url                        = $imagesrc[$value]->temporaryUrl();
+                                                            $imageStatus[$value]        = true;
+                                                        }catch (RuntimeException $exception){
+                                                            $this->imageStatus[$value]     =  false;
+                                                        }
+                                                    @endphp
+                                                    @if($imageStatus[$value])
+                                                        <img src="{{ $imagesrc[$value]->temporaryUrl() }}" alt="foto" class="rounded-full h-44 w-44 border bg-cover bg-center" />
+                                                    @else
+                                                        <span class="inline-block h-44 w-44 rounded-full overflow-hidden bg-gray-100">
+                                                            <svg class="h-full w-full text-gray-200" fill="currentColor" viewBox="0 0 24 24">
+                                                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                            </svg>
+                                                        </span>
+                                                        @endif
+                                                    @else 
+                                                        <span class="inline-block h-44 w-44 rounded-full overflow-hidden bg-gray-100">
+                                                            <svg class="h-full w-full text-gray-200" fill="currentColor" viewBox="0 0 24 24">
+                                                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                            </svg>
+                                                        </span>
                                                 @endif
                                             </div>
                                             @error('imagesrc.'.$value) <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -249,6 +281,7 @@
                                         <label for="idjss" class="block text-sm font-medium text-gray-700">ID JSS</label>
                                         <input type="text" wire:model="idjss.{{ $value }}" autocomplete="idjss" class="mt-1 focus:ring-green-500 focus:border-green-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                         @error('idjss.'.$value) <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                                        @error('jss.'.$value) <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                     </div>
 
                                     <div class="col-span-6 sm:col-span-3">

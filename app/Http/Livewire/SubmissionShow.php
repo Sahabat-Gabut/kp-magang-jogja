@@ -5,7 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\{TeamApprentice,Apprentice,Agency};
 use Livewire\WithPagination;
-
+use Illuminate\Support\Facades\Auth;
 class SubmissionShow extends Component
 {
     use WithPagination;
@@ -13,8 +13,8 @@ class SubmissionShow extends Component
 
     public function mount()
     {
-        if(\Auth::user()->adminRole->id != "1") {
-            $agency           = Agency::find(\Auth::user()->adminDetail->agency_id);
+        if(Auth::user()->adminRole->id != "1") {
+            $agency           = Agency::find(Auth::user()->adminDetail->agency_id);
             $this->quota      = $agency->quota; 
         }
         $this->agency = Agency::all(); 
@@ -23,22 +23,33 @@ class SubmissionShow extends Component
 
     public function render()
     {
-        if($this->selectAgency == "Dinas"){
+        
+        if($this->selectAgency == "Dinas") {
             $selectAgency = "%%";
-        }else{
+        } else {
             $selectAgency = '%'.$this->selectAgency.'%';
         }
-        return view('livewire.submission-show',[
-            "submission"    => TeamApprentice::with(['apprentices','agency'])
-                                             ->where('status_hired',"like",'%'.$this->status.'%')
-                                             ->where('agency_id','like',$selectAgency)
-                                             ->paginate($this->availableData)
-        ]);
+
+        if(Auth::user()->adminRole->id == '1') {
+            return view('livewire.submission-show',[
+                "submission"    => TeamApprentice::with(['apprentices','agency'])
+                                                 ->where('status_hired',"like",'%'.$this->status.'%')
+                                                 ->where('agency_id','like',$selectAgency)
+                                                 ->paginate($this->availableData)
+            ]);
+        }else {
+            return view('livewire.submission-show',[
+                "submission"    => TeamApprentice::with(['apprentices','agency'])
+                                                 ->where('status_hired',"like",'%'.$this->status.'%')
+                                                 ->where('agency_id','like',Auth::user()->adminDetail->agency_id)
+                                                 ->paginate($this->availableData)
+            ]);
+        }
     }
 
     public function addQuota()
     {
-        $insert = Agency::where("id", \Auth::user()->adminDetail->agency_id)
+        $insert = Agency::where("id", Auth::user()->adminDetail->agency_id)
                         ->update(["quota" => $this->quota]);
 
         if($insert) {

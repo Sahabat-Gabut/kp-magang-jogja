@@ -90,24 +90,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($team as $key =>$tm)
-                        <tr>
-                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    @foreach ($team[$key]->apprenticeUser as $key => $value)
-                                    <span class="block">
-                                        {{$value->fullname}}
-                                    </span>
-                                    @endforeach
-                                </td>
-                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <span class="block">
-                                        {{$tm->university}} 
-                                    </span>
-                                </td>
-                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <a href="/attendance/detail/{{ $tm->id }}" class="text-green-600">Lihat Detail</a>
-                                </td>
-                        </tr>
+                        @foreach ($team as $key =>$t)
+                            @if ($t->status_hired == "DI TERIMA" )         
+                                <tr>
+                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        @if($team[$key]->apprenticeUser)   
+                                            @foreach ($team[$key]->apprenticeUser as $key => $value)
+                                            <span class="block">
+                                                {{$value->fullname}}
+                                            </span>
+                                            @endforeach
+                                        @endif
+                                    </td>
+                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        <span class="block">
+                                            {{$t->university}} 
+                                        </span>
+                                    </td>
+                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        <a href="/attendance/detail/{{ $t->id }}" class="text-green-600">Lihat Detail</a>
+                                    </td>
+                                </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>

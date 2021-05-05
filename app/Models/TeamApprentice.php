@@ -44,6 +44,6 @@ class TeamApprentice extends Model
 
     public function attendance()
     {
-        return $this->hasManyThrough(Attendance::class, Apprentice::class, 'team_apprentice_id', 'id', 'start_attendace');
+        return $this->hasManyThrough(Attendance::class, Apprentice::class, 'team_apprentice_id', 'apprentice_id','id','id');
     }
 }

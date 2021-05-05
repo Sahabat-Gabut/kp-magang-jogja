@@ -7,7 +7,7 @@
 }
 
 .nav-link {
-    @apply items-center p-2 text-gray-600 rounded-md inline-flex items-center w-full text-sm font-semibold transition-colors duration-150;
+    @apply p-2 text-gray-600 rounded-md inline-flex items-center w-full text-sm font-semibold transition-colors duration-150;
 
     &:hover:not(.active) {
         @apply bg-green-200 text-green-800 ;

@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use App\Models\{TeamApprentice,Apprentice,Agency,Project};
+use App\Models\{TeamApprentice,Apprentice,Agency,Project,Jss};
 
 class ApprenticeCreate extends Component
 {
@@ -15,6 +15,9 @@ class ApprenticeCreate extends Component
     public $inputs = [];
     public $i = 0;
     public $dataAgency;
+    public $imageStatus = [
+        '0' => false
+    ];
 
     protected $rules = [
         'agency'                => 'required',
@@ -26,37 +29,39 @@ class ApprenticeCreate extends Component
         'idjss.0'               => 'required',
         'npm.0'                 => 'required',
         'cv.0'                  => 'required|mimes:pdf|max:10000',
-        'imagesrc.0'            => 'required',
+        'imagesrc.0'            => 'required|image|mimes:jpeg,jpg,png',
         'idjss.*'               => 'required',
         'npm.*'                 => 'required',
         'cv.*'                  => 'required|mimes:pdf|max:10000',
-        'imagesrc.*'            => 'required',
+        'imagesrc.*'            => 'required|image|mimes:jpeg,jpg,png',
         'project_name'          => 'required',
         'project_explanation'   => 'required',
     ];
 
     protected $messages = [
-        'agency.required'           => 'Dinas wajib diisi!',       
-        'university.required'       => 'Universitas wajib diisi!',       
-        'departement.required'      => 'Jurusan wajib diisi!',       
-        'cover_letter.required'     => 'Surat pengantar wajib diisi!',       
-        'cover_letter.mimes'        => 'Surat pengantar harus berupa pdf',
-        'cover_letter.max'          => 'Ukurat surat pengantar harus dibawah 10Mb',
-        'proposal.required'         => 'Proposal wajib diisi!',       
-        'proposal.mimes'            => 'Proposal harus berupa pdf',       
-        'presentation.required'     => 'Presentasi Projek wajib diisi!',       
-        'presentation.mimes'        => 'Presentasi Projek harus berupa ppt atau pptx',      
-        'project_name.required'     => 'Nama projek wajib diisi!',
-        'project_explanation.required'=> 'Deskripsi projek wajib diisi!', 
-        'imagesrc.0.required'       => 'Pas Foto wajib diisi!',       
-        'npm.0.required'            => 'NPM wajib diisi!',       
-        'cv.0.required'             => 'CV wajib diisi!',     
-        'cv.0.mimes'                => 'CV harus berupa pdf',     
-        'idjss.*.required'          => 'ID JSS wajib diisi',
-        'npm.*.required'            => 'NPM wajib diisi',
-        'cv.*.required'             => 'CV wajib diisi',
-        'cv.*.mimes'                => 'CV harus berupa pdf',
-        'imagesrc.*.required'       => 'Pas Foto wajib diisi',
+        'agency.required'               => 'Dinas wajib diisi!',       
+        'university.required'           => 'Universitas wajib diisi!',       
+        'departement.required'          => 'Jurusan wajib diisi!',       
+        'cover_letter.required'         => 'Surat pengantar wajib diisi!',       
+        'cover_letter.mimes'            => 'Surat pengantar harus berupa pdf',
+        'cover_letter.max'              => 'Ukurat surat pengantar harus dibawah 10Mb',
+        'proposal.required'             => 'Proposal wajib diisi!',       
+        'proposal.mimes'                => 'Proposal harus berupa pdf',       
+        'presentation.required'         => 'Presentasi Projek wajib diisi!',       
+        'presentation.mimes'            => 'Presentasi Projek harus berupa ppt atau pptx',      
+        'project_name.required'         => 'Nama projek wajib diisi!',
+        'project_explanation.required'  => 'Deskripsi projek wajib diisi!', 
+        'imagesrc.0.required'           => 'Pas Foto wajib diisi!',       
+        'npm.0.required'                => 'NPM wajib diisi!',       
+        'cv.0.required'                 => 'CV wajib diisi!',     
+        'cv.0.mimes'                    => 'CV harus berupa pdf',     
+        'idjss.*.required'              => 'ID JSS wajib diisi',
+        'npm.*.required'                => 'NPM wajib diisi',
+        'cv.*.required'                 => 'CV wajib diisi',
+        'cv.*.mimes'                    => 'CV harus berupa pdf',
+        'imagesrc.*.required'           => 'Pas Foto wajib diisi',
+        'imagesrc.0.image'              => 'Pas Foto harus berupa gambar!',
+        'imagesrc.*.image'              => 'Pas Foto harus berupa gambar!',
     ];
 
     public function add($i)
@@ -66,6 +71,7 @@ class ApprenticeCreate extends Component
 
         $this->idjss[$i] = null;
         $this->npm[$i] = null;
+        $this->imageStatus[$i] = false; 
 
         array_push($this->inputs, $i);
     }
@@ -77,7 +83,36 @@ class ApprenticeCreate extends Component
         unset($this->imagesrc[$i+1]);
         unset($this->cv[$i+1]);
         unset($this->inputs[$i]);
+        unset($this->imageStatus[$i]);
         $this->i--;
+    }
+
+    public function updated($propertyName)
+    {
+        try {
+            $this->validateOnly($propertyName);
+        } catch (ValidationException $e) {
+            if ($propertyName == 'imagesrc.0') {
+                $this->reset($propertyName);
+            }
+            
+            throw $e;
+        }
+        $this->findJSS();
+    }
+
+    public function findJSS(){ 
+        $errors = $this->getErrorBag();
+        foreach($this->idjss as $key => $id) {
+            $id = \str_replace("JSS-I","",$id);
+            $jss = Jss::find($id);
+            if(!$jss){
+                $key =+ 1;
+                return $errors->add('jss.'.$key, 'Akun JSS Tidak Ditemukan!');
+            }
+        }
+
+        return true;
     }
 
     public function render()
@@ -95,7 +130,6 @@ class ApprenticeCreate extends Component
         $validationData["cover_letter"]     = $this->cover_letter->store('files','public');
         $validationData["proposal"]         = $this->proposal->store('files','public');
         $validationData["presentation"]     = $this->presentation->store('files','public');
-        
         
         TeamApprentice::create([
             'agency_id'     => $this->agency,
