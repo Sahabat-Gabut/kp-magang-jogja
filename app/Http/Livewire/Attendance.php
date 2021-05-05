@@ -39,7 +39,7 @@ class Attendance extends Component
         if($update){
             session()->flash('success', 'success');
             session()->flash('title', 'Berhasil');
-            session()->flash('message', 'Status Berhasil Diperbaharui');
+            session()->flash('message', 'Berhasil Absen!');
             return redirect()->to('/attendance');
         }else{
             session()->flash('gagal', 'gagal');

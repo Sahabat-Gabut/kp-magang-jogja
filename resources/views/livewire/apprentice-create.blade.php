@@ -109,7 +109,7 @@
                                 </label>
                                 @error('duration') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                 <div class="mt-1 flex rounded-md shadow-sm">
-                                    <input type="number" step="0.1" wire:model="duration" class="focus:ring-green-500 focus:border-green-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300" placeholder="1.5">
+                                    <input type="number" min="0" step="0.1" max="12" wire:model="duration" class="focus:ring-green-500 focus:border-green-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300" placeholder="1.5">
                                 </div>
                                 <p class="text-xs text-gray-500 mt-1">
                                     ex: 1.5 sama dengan 1 bulan setengah

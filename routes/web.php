@@ -22,7 +22,7 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('quota-agency',[AgencyController::class, 'quota'])->name('quotaAgency');
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::view('pendaftaran-magang', 'pages.guest.registration')->name('pendaftaran-magang');
+    Route::get('pendaftaran-magang', [SubmissionController::class, 'submissionApprentice'])->name('pendaftaran-magang');
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('profile', [ProfileController::class, 'index'])->name('profile');
     

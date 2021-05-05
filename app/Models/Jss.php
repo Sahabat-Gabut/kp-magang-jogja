@@ -59,6 +59,11 @@ class Jss extends Authenticatable
     {
         return $this->hasOneThrough(TeamApprentice::class,Apprentice::class, 'jss_id', 'id','id','team_apprentice_id');
     }
+
+    public function apprenticeTeams()
+    {
+        return $this->hasManyThrough(TeamApprentice::class,Apprentice::class, 'jss_id', 'id','id','team_apprentice_id');
+    }
     
     public function apprenticeProject()
     {

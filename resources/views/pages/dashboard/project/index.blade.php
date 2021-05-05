@@ -24,9 +24,13 @@
                     </thead>
                     <tbody>
                         @if(\Auth::user()->apprenticeTeam)
+                            @php
+                                $projects = \Auth::user()->apprenticeTeams->where('status_hired','DI TERIMA');    
+                            @endphp
+                            @foreach($projects as $key => $at)                         
                             <tr>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    {{\Auth::user()->apprenticeProject->name_project}}
+                                    {{Auth::user()->apprenticeTeams[$key]->project->name_project}}
                                 </td>
 
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -37,9 +41,10 @@
                                     </div>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <a href="/project/detail/{{ \Auth::user()->apprenticeProject->team_apprentice_id }}" class="text-teal-600">{{__('Lihat Detail')}}</a>
+                                    <a href="/project/detail/{{ \Auth::user()->apprenticeTeams[$key]->project->team_apprentice_id }}" class="text-teal-600">{{__('Lihat Detail')}}</a>
                                 </td>
                             </tr>
+                            @endforeach
                         @endif
 
                         @if(\Auth::user()->adminDetail)
