@@ -30,7 +30,7 @@
                 <p>Melihat hasil Pengumuman pendaftaran magang Dinas Koya Yogyakarta.</p>
             </div>
             <div class="bg-gray-300 p-3 w-full flex">
-                <a href="#" class="btn-card">Lihat Pengumuman</a>
+                <a href="{{ route("dashboard") }}" class="btn-card">Lihat Pengumuman</a>
             </div>
         </div>
         <div class="border border-gray-300 rounded-md" style="max-width: 395px;">
@@ -51,16 +51,6 @@
             </div>
             <div class="bg-gray-300 p-3 w-full flex">
                 <a href="{{ route("project") }}" class="btn-card">Lihat Progres</a>
-            </div>
-        </div>
-        <div class="border border-gray-300 rounded-md" style="max-width: 395px;">
-            <img class="w-full" src="/assets/img/logo/download.png"/>
-            <div class="p-4">
-                <h3 class="uppercase">Unduh Surat</h3>
-                <p>Melakukan Pengunduhan Surat yang diperlukan pada Magang Kota Yogyakarta.</p>
-            </div>
-            <div class="bg-gray-300 p-3 w-full flex">
-                <a href="#" class="btn-card">Unduh Surat</a>
             </div>
         </div>
         <div class="border border-gray-300 rounded-md" style="max-width: 395px;">

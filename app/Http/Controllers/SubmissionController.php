@@ -13,9 +13,9 @@ class SubmissionController extends Controller
     {
         $this->middleware(function ($request, $next) {
             if(Auth::check() ) {
-                $this->isAdmin            = \Auth::user()->adminDetail;
-                $this->isSuperAdmin       = \Auth::user()->adminRole->id == "1";
-                $this->isAdminFromAgency  = \Auth::user()->adminDetail->agency_id == $request->agency_id;
+                $this->isAdmin            = Auth::user()->adminDetail;
+                $this->isSuperAdmin       = isset(Auth::user()->adminRole->id) == "1";
+                $this->isAdminFromAgency  = isset(Auth::user()->adminDetail->agency_id) == $request->agency_id;
                 $this->apprentice         = Apprentice::where('team_apprentice_id',$request->team_apprentice_id)->get();
                 $this->agency             = Agency::where("id",$request->agency_id)->first();
             }
@@ -35,6 +35,31 @@ class SubmissionController extends Controller
             $submission = TeamApprentice::where("agency_id", \Auth::user()->adminDetail->agency_id)->get();
         }
         return view('pages.dashboard.submission.index')->with(compact('submission'));
+    }
+
+    public function submissionApprentice()
+    {
+        $doSubmission = true;
+        
+        if(Auth::user()->apprenticeTeam) {
+            foreach (Auth::user()->apprenticeTeams as $key => $a) {      
+                if($a->status_hired != "SEDANG DIPROSES")
+                {
+                    $doSubmission = true;
+
+                } else {
+                    $doSubmission = false;
+                }
+            }
+
+            if($doSubmission){
+                return view("pages.guest.registration");
+            }else{
+                $this->errors("Silahkan menunggu pengajuan sebelumnya terlebih dahulu!");
+                return redirect("/");
+            }
+
+        }
     }
     
     public function detail($id)
@@ -60,7 +85,7 @@ class SubmissionController extends Controller
 
     public function reject(Request $request)
     {
-        $total              = $this->agency->total_team - 1;
+        $total              = $this->agency->quota - 1;
 
         if (!$this->isAdmin) { return response(abort(403)); } 
         else if($this->isSuperAdmin || $this->isAdminFromAgency){
@@ -71,7 +96,7 @@ class SubmissionController extends Controller
             }
 
             if($update && $remove_attendance) {
-                Agency::where("id", $request->agency_id)->update(['total_team' => $total]);
+                Agency::where("id", $request->agency_id)->update(['quota' => $total]);
                 return $this->success("Berhasil menolak pengajuan");
 
             }else {
@@ -87,13 +112,13 @@ class SubmissionController extends Controller
 
         $apprentice         = Apprentice::where('team_apprentice_id',$request->team_apprentice_id)->get();
         $teamApprentice     = TeamApprentice::where('id',$request->team_apprentice_id)->first();
-        $total              = $this->agency->total_team + 1;
+        $total              = $this->agency->quota + 1;
         $generateAttendance = $this->generateAttendance($teamApprentice->duration);
 
         if (!$this->isAdmin) { return response(abort(403)); } 
         else if($this->isSuperAdmin || $this->isAdminFromAgency) { 
             $update_status      = TeamApprentice::where('id',$request->team_apprentice_id)->where('agency_id', $request->agency_id)->update(['status_hired' => 'DI TERIMA']);
-            $update_quota       = Agency::where("id", $request->agency_id)->update(['total_team' => $total]);
+            $update_quota       = Agency::where("id", $request->agency_id)->update(['quota' => $total]);
             $insert_attendance  = $this->handleAttendance($generateAttendance, $apprentice);
     
             if($update_status && $update_quota && $insert_attendance) {

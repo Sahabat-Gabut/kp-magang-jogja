@@ -79,17 +79,33 @@
         </div>
         <div class="grid grid-cols-6">
             <div class="col-span-6 sm:col-span-1 border-l sm:border-b-0 border-r sm:border-t bg-gray-100 p-2 border border-gray-300">
-                <span>Dinas yang dituju</span>
+                <span>Tanggal Daftar</span>
             </div>
             <div class="col-span-6 sm:col-span-5 p-2 border-l sm:border-l-0 border-r sm:border-t border-gray-300">
+                @php 
+                    $date = new \DateTime($submission->date_of_created);
+                    $carbon = \carbon\Carbon::instance($date);
+                @endphp
+        
+                <span>{{ $carbon->isoFormat('dddd, D MMMM Y') }}</span>
+            </div>
+
+            <div class="col-span-6 sm:col-span-1 border-l sm:border-b-0 border-r sm:border-t border-b-0 bg-gray-100 p-2 border border-gray-300">
+                <span>Dinas yang dituju</span>
+            </div>
+            
+            <div class="col-span-6 sm:col-span-5 border-l sm:border-l-0 sm:border-b-0 border-b-0 border-r sm:border-t p-2 border border-gray-300">
                 <span>{{$submission->agency->name}}</span>
             </div>
 
             <div class="col-span-6 sm:col-span-1 border-l sm:border-b-0 border-r sm:border-t border-b-0 bg-gray-100 p-2 border border-gray-300">
-                <span>Status</span>
+                <span>Anggota</span>
             </div>
-            <div class="col-span-6 sm:col-span-5 border-l sm:border-l-0 sm:border-b-0 border-b-0 border-r sm:border-t p-2 border border-gray-300">
-                <span>{{$submission->status_hired}}</span>
+
+            <div class="flex flex-col col-span-6 sm:col-span-5 border-l sm:border-l-0 sm:border-b-0 border-b-0 border-r sm:border-t p-2 border border-gray-300">
+                @foreach ($submission->apprenticeUser as $key =>$sa)  
+                    <span>{{ $sa->fullname }}</span>
+                @endforeach
             </div>
 
             <div class="col-span-6 sm:col-span-1 border-l sm:border-b-0 border-r sm:border-t border-b-0 bg-gray-100 p-2 border border-gray-300">
@@ -106,15 +122,10 @@
             </div>
 
             <div class="col-span-6 sm:col-span-1 bg-gray-100 p-2 border border-gray-300 border-b-0 sm:border-b">
-                <span>Tanggal Daftar</span>
+                <span>Status</span>
             </div>
             <div class="col-span-6 sm:col-span-5 border-l sm:border-l-0 border-r sm:border-t p-2 border border-gray-300">
-                @php 
-                    $date = new \DateTime($submission->date_of_created);
-                    $carbon = \carbon\Carbon::instance($date);
-                @endphp
-           
-                <span>{{ $carbon->isoFormat('dddd, D MMMM Y') }}</span>
+                <span>{{$submission->status_hired}}</span>
             </div>
         </div>
     </div>
