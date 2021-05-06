@@ -5,7 +5,7 @@
     @if(\Auth::user()->apprenticeTeam)
         <div class="my-2 flex items-center">
             <span class="mr-4">
-                Project : 
+                Project :
             </span>
             <div class="relative w-40">
                 <select
@@ -41,7 +41,7 @@
                         <tr>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                 <span class="block">
-                                    <?php 
+                                    <?php
                                         $start  = new \DateTime($a->start_attendace);
                                         $end    = new \DateTime($a->end_attendace);
                                         $start_att = \carbon\Carbon::instance($start);
@@ -49,7 +49,6 @@
                                     ?>
                                     {{ $start_att->isoFormat('dddd, D MMMM Y') }}
                                 </span>
-                                {{ $a->id }}
                                 <span class="text-xs font-semibold inline-block py-1 uppercase rounded-full">
                                     {{ $start_att->isoFormat('HH:mm') }} - {{ $end_att->isoFormat('HH:mm') }}
                                 </span>
@@ -105,10 +104,10 @@
                 </thead>
                 <tbody>
                     @foreach ($attendance as $key =>$t)
-                        @if ($t->status_hired == "DI TERIMA" )         
+                        @if ($t->status_hired == "DI TERIMA" )
                             <tr>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    @if($attendance[$key]->apprenticeUser)   
+                                    @if($attendance[$key]->apprenticeUser)
                                         @foreach ($attendance[$key]->apprenticeUser as $key => $value)
                                         <span class="block">
                                             {{$value->fullname}}
@@ -118,7 +117,7 @@
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <span class="block">
-                                        {{$t->university}} 
+                                        {{$t->university}}
                                     </span>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">

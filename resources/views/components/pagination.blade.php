@@ -35,20 +35,20 @@
                 </p>
             </div>
 
-            <div>
-                <span class="container-link">
-                    {{-- Previous Page Link --}}
-                    @if ($paginator->onFirstPage())
-                        <span aria-disabled="true" aria-label="{{ __('Sebelumnya') }}">
-                            <span class="prev-link-disabled" aria-hidden="true">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
-                            </span>
-                        </span>
-                    @else
-                        <button type="button" wire:click="previousPage" rel="prev" class="prev-link" aria-label="{{ __('Sebelumnya') }}">
+            <div class="flex items-center">
+                {{-- Previous Page Link --}}
+                @if ($paginator->onFirstPage())
+                    <span aria-disabled="true" aria-label="{{ __('Sebelumnya') }}">
+                        <span class="prev-link-disabled" aria-hidden="true">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
-                        </button>
-                    @endif
+                        </span>
+                    </span>
+                @else
+                    <button type="button" wire:click="previousPage" rel="prev" class="prev-link" aria-label="{{ __('Sebelumnya') }}">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                    </button>
+                @endif
+                <span class="container-link">
 
                     {{-- Pagination Elements --}}
                     @foreach ($elements as $element)
@@ -74,20 +74,19 @@
                             @endforeach
                         @endif
                     @endforeach
-
-                    {{-- Next Page Link --}}
-                    @if ($paginator->hasMorePages())
-                        <button type="button" wire:click="nextPage" rel="next" class="next-link" aria-label="{{ __('Berikutnya') }}">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
-                        </button>
-                    @else
-                        <span aria-disabled="true" aria-label="{{ __('Berikutnya') }}">
-                            <span class="next-link-disabled" aria-hidden="true">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
-                            </span>
-                        </span>
-                    @endif
                 </span>
+                {{-- Next Page Link --}}
+                @if ($paginator->hasMorePages())
+                    <button type="button" wire:click="nextPage" rel="next" class="next-link" aria-label="{{ __('Berikutnya') }}">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+                    </button>
+                @else
+                    <span aria-disabled="true" aria-label="{{ __('Berikutnya') }}">
+                        <span class="next-link-disabled" aria-hidden="true">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+                        </span>
+                    </span>
+                @endif
             </div>
         </div>
     </nav>

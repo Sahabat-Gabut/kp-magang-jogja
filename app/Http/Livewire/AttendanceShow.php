@@ -24,19 +24,21 @@ class AttendanceShow extends Component
             if(!$this->selectProjects){
                 $this->selectProjects = $this->projects[0]->project_id;
             }
-    
+
             $apprentice         = \DB::table('apprentice')
                                 ->join('team_apprentice','team_apprentice.id','=','apprentice.team_apprentice_id')
                                 ->join('project','project.team_apprentice_id','=','team_apprentice.id')
                                 ->where('project.id',$this->selectProjects)
                                 ->select('apprentice.id')
                                 ->first();
+            $id = $apprentice->id;
         }else {
             $this->attendance = TeamApprentice::all();
+            $id = "";
         }
 
         return view('livewire.attendance-show',[
-            'attendance2' => Attendance::where('apprentice_id',isset($apprentice->id))
+            'attendance2' => Attendance::where('apprentice_id',$id)
                                         ->orderBy('start_attendace', 'asc')
                                         ->paginate(5)
         ]);

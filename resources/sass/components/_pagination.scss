@@ -14,7 +14,7 @@ nav.paginate {
 
         .enable-nav {
             @apply relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md transition ease-in-out duration-150;
-            
+
             &:hover {
                 @apply text-gray-500;
             }
@@ -34,16 +34,16 @@ nav.paginate {
         }
 
         .container-link {
-            @apply relative z-0 inline-flex shadow-sm;
+            @apply relative z-0 inline-flex shadow-sm bg-white border mx-2 px-2 rounded-full;
         }
-        
+
         .prev-link-disabled {
-            @apply relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-400 bg-white border border-gray-300 cursor-default rounded-l-md leading-5;
+            @apply relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-400 bg-white border border-gray-300 cursor-default rounded-full leading-5;
         }
 
         .prev-link {
-            @apply relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-l-md leading-5 transition ease-in-out duration-150;
-            
+            @apply relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full leading-5 transition ease-in-out duration-150;
+
             &:hover {
                 @apply text-gray-400;
             }
@@ -58,14 +58,14 @@ nav.paginate {
         }
 
         .item-link-active {
-            @apply relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-green-800 bg-green-300 border border-gray-300 cursor-default leading-5;
+            @apply relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-green-800 bg-green-300 border border-gray-300 cursor-default leading-5 rounded-md shadow-xl;
         }
 
         .item-link {
-            @apply relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 transition ease-in-out duration-150;
-            
+            @apply relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 leading-5 transition ease-in-out duration-150;
+
             &:hover {
-                @apply text-gray-500;
+                @apply text-green-800;
             }
 
             &:focus {
@@ -73,13 +73,13 @@ nav.paginate {
             }
 
             &:active {
-                @apply bg-gray-100 text-gray-700;
+                @apply bg-gray-100 text-green-800 rounded-md;
             }
         }
 
         .next-link {
-            @apply relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md leading-5 transition ease-in-out duration-150;
-        
+            @apply relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full leading-5 transition ease-in-out duration-150;
+
             &:hover {
                 @apply text-gray-400;
             }
@@ -94,7 +94,7 @@ nav.paginate {
         }
 
         .next-link-disabled {
-            @apply relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-r-md leading-5;
+            @apply relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-full leading-5;
         }
 
     }
