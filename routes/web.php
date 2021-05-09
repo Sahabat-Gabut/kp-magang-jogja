@@ -2,45 +2,46 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\{Apprentice};
-use App\Http\Controllers\{AuthController, 
-                          SubmissionController,
-                          AttendanceController, 
-                          ProjectController,
-                          AgencyController,
-                          AdminController,
-                          ProfileController,
-                          DashboardController
-                         };
-                         
-Route::get('/', function () {
-    return view('pages.guest.index');
-})->name('home');
+use App\Http\Controllers\{
+    AuthController,
+    SubmissionController,
+    AttendanceController,
+    ProjectController,
+    AgencyController,
+    AdminController,
+    ProfileController,
+    DashboardController
+};
 
+
+Route::get('/', function () { return view('pages.guest.index');})->name('home');
+Route::get('quota-agency',[AgencyController::class, 'quota'])->name('quotaAgency');
+
+// Login
 Route::get('login', [AuthController::class, 'showFormLogin'])->name('login');
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('quota-agency',[AgencyController::class, 'quota'])->name('quotaAgency');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('pendaftaran-magang', [SubmissionController::class, 'submissionApprentice'])->name('pendaftaran-magang');
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('profile', [ProfileController::class, 'index'])->name('profile');
-    
-    // Attendence 
+
+    // Attendence
     Route::group(['prefix' => '/attendance', 'as' => 'attendance'], function(){
         Route::get('/', [AttendanceController::class, 'index']);
         Route::get('/detail/{id}',[AttendanceController::class, 'detail'])-> name('detail');
     });
 
-    // Submission 
-    Route::group(['prefix' => '/submission', 'as' => 'submission'],  function() {        
+    // Submission
+    Route::group(['prefix' => '/submission', 'as' => 'submission'],  function() {
         Route::get('/',[SubmissionController::class, 'index']);
         Route::get('/detail/{id}',[SubmissionController::class, 'detail'])->name('.detail');
         Route::post('/reject',[SubmissionController::class, 'reject'])->name('.reject');
         Route::post('/accept',[SubmissionController::class, 'accept'])->name('.accept');
     });
 
-    // Project 
+    // Project
     Route::group(['prefix' => '/project', 'as' => 'project'], function() {
         Route::get('/', [ProjectController::class, 'index']);
         Route::get('/detail/{id}', [ProjectController::class, 'detail'])->name('.detail');

@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{TeamApprentice,Agency,Apprentice, Attendance};
 use Illuminate\Support\Facades\Auth;
+use App\Models\{
+    TeamApprentice,
+    Agency,
+    Apprentice,
+    Attendance
+};
+
 class SubmissionController extends Controller
 {
     protected $isAdmin, $isSuperAdmin, $isAdminFromAgency, $apprentice, $agency;
 
-    public function __construct(Request $request) 
+    public function __construct(Request $request)
     {
         $this->middleware(function ($request, $next) {
             if(Auth::check() ) {
@@ -23,7 +29,7 @@ class SubmissionController extends Controller
        });
 
     }
-    
+
     public function index()
     {
         if (!$this->isAdmin) {
@@ -40,9 +46,9 @@ class SubmissionController extends Controller
     public function submissionApprentice()
     {
         $doSubmission = true;
-        
+
         if(Auth::user()->apprenticeTeam) {
-            foreach (Auth::user()->apprenticeTeams as $key => $a) {      
+            foreach (Auth::user()->apprenticeTeams as $key => $a) {
                 if($a->status_hired != "SEDANG DIPROSES")
                 {
                     $doSubmission = true;
@@ -61,19 +67,19 @@ class SubmissionController extends Controller
 
         }
     }
-    
+
     public function detail($id)
     {
         if (!$this->isAdmin) {
             return response(abort(403));
         }else {
             if($this->isSuperAdmin){
-                $submission = TeamApprentice::find($id);                
+                $submission = TeamApprentice::find($id);
                 return view('pages.dashboard.submission.detail')->with(compact('submission'));
             }else {
                 $submission = TeamApprentice::where("id",$id)
                                             ->where("agency_id", \Auth::user()->adminDetail->agency_id)
-                                            ->first();    
+                                            ->first();
                 if($submission != NULL) {
                     return view('pages.dashboard.submission.detail')->with(compact('submission'));
                 } else {
@@ -87,12 +93,12 @@ class SubmissionController extends Controller
     {
         $total              = $this->agency->quota - 1;
 
-        if (!$this->isAdmin) { return response(abort(403)); } 
+        if (!$this->isAdmin) { return response(abort(403)); }
         else if($this->isSuperAdmin || $this->isAdminFromAgency){
             $update           = TeamApprentice::where('id',$request->team_apprentice_id)->where('agency_id', $request->agency_id)->update(['status_hired' => 'DI TOLAK']);
 
             foreach($this->apprentice as $key => $a) {
-                $remove_attendance = Attendance::where(['apprentice_id'   => $a->id ])->delete();                    
+                $remove_attendance = Attendance::where(['apprentice_id'   => $a->id ])->delete();
             }
 
             if($update && $remove_attendance) {
@@ -115,18 +121,18 @@ class SubmissionController extends Controller
         $total              = $this->agency->quota + 1;
         $generateAttendance = $this->generateAttendance($teamApprentice->duration);
 
-        if (!$this->isAdmin) { return response(abort(403)); } 
-        else if($this->isSuperAdmin || $this->isAdminFromAgency) { 
+        if (!$this->isAdmin) { return response(abort(403)); }
+        else if($this->isSuperAdmin || $this->isAdminFromAgency) {
             $update_status      = TeamApprentice::where('id',$request->team_apprentice_id)->where('agency_id', $request->agency_id)->update(['status_hired' => 'DI TERIMA']);
             $update_quota       = Agency::where("id", $request->agency_id)->update(['quota' => $total]);
             $insert_attendance  = $this->handleAttendance($generateAttendance, $apprentice);
-    
+
             if($update_status && $update_quota && $insert_attendance) {
                 return $this->success("Pengajuan berhasil disetujui");
             }else {
                 return $this->errors("Gagal menyetujui pengajuan");
             }
-        } 
+        }
 
         return response(abort(403));
     }
@@ -155,13 +161,13 @@ class SubmissionController extends Controller
                                         'start_attendace' => $d." 07:30:00.000000",
                                         'end_attendace'   => $d." 08:00:00.000000",
                                         'apprentice_id'   => $a->id
-                                    ]);                    
+                                    ]);
             }
         }
         return $insert_attendance;
     }
 
-    function generateAttendance($duration) 
+    function generateAttendance($duration)
     {
         $day			= floor($duration * date('t'));
         $start_date 	= date('Y-m-d');

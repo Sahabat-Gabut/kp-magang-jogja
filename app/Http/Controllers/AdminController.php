@@ -7,14 +7,27 @@ use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
+    public $isAdmin, $isSuperAdmin, $isModerator, $isApprentice;
+
+    public function __construct(Request $request)
+    {
+        $this->middleware(function ($request, $next) {
+            if(Auth::check() ) {
+                $this->isApprentice       = isset(Auth::user()->apprenticeTeam);
+                $this->isSuperAdmin       = isset(Auth::user()->adminRole->id) == "1";
+                $this->isModerator        = Auth::user()->adminRole->id == "3";
+            }
+           return $next($request);
+       });
+
+    }
+
     public function index() {
-        if(Auth::user()->apprenticeTeam) {
-            return response(abort(403));
-        }else {
-            if(Auth::user()->adminRole->id == "3") {
-                return response(abort(403));
-            } else {
-                if(Auth::user()->adminRole->id == "1") {
+        if($this->isApprentice) { return response(abort(403)); }
+        else {
+            if($this->isModerator) { return response(abort(403)); }
+            else {
+                if($this->isSuperAdmin) {
                     $admin = Admin::all();
                     return view("pages.dashboard.admin.index")->with(compact("admin"));
                 }else {
