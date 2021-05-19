@@ -64,7 +64,8 @@ class SubmissionController extends Controller
                 $this->errors("Silahkan menunggu pengajuan sebelumnya terlebih dahulu!");
                 return redirect("/");
             }
-
+        }else {
+            return view("pages.guest.registration");
         }
     }
 
