@@ -9,7 +9,7 @@ class AttendanceController extends Controller
 {
     public function index() {
         setlocale(LC_TIME, 'id_ID');
-        if(isset(Auth::user()->apprenticeTeam)) {
+        if(Auth::user()->apprenticeTeam) {
             if(Auth::user()->apprenticeTeam->status_hired == "DI TOLAK" || 
                Auth::user()->apprenticeTeam->status_hired == "SEDANG DIPROSES") {
                 return response(abort(403));

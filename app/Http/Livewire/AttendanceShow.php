@@ -13,7 +13,7 @@ class AttendanceShow extends Component
 
     public function render()
     {
-        if(!\Auth::user()->adminDetail) {
+        if(\Auth::user()->apprenticeTeam) {
             $this->projects     = \DB::table('apprentice')
                                     ->join('team_apprentice','team_apprentice.id','=','apprentice.team_apprentice_id')
                                     ->join('project','project.team_apprentice_id','=','team_apprentice.id')
@@ -32,9 +32,11 @@ class AttendanceShow extends Component
                                 ->select('apprentice.id')
                                 ->first();
             $id = $apprentice->id;
-        }else {
+        }else if(\Auth::user()->adminDetail) {
             $this->attendance = TeamApprentice::all();
             $id = "";
+        }else {
+            return response(abort(403));
         }
 
         return view('livewire.attendance-show',[

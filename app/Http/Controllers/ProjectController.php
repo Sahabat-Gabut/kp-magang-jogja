@@ -20,9 +20,13 @@ class ProjectController extends Controller {
         $this->middleware(function ($request, $next) {
             if(Auth::check() ) {
                 $this->isAdmin            = Auth::user()->adminDetail;
-                $this->isSuperAdmin       = isset(Auth::user()->adminRole->id) == "1";
-                $this->isApprentice       = isset(Auth::user()->apprenticeTeam);
-                $this->status_hired       = isset(Auth::user()->apprenticeTeam->status_hired);
+                if($this->isAdmin) {
+                    $this->isSuperAdmin       = Auth::user()->adminRole->id == "1";
+                }
+                $this->isApprentice       = Auth::user()->apprenticeTeam;
+                if($this->isApprentice){
+                    $this->status_hired       = Auth::user()->apprenticeTeam->status_hired;
+                }
             }
            return $next($request);
        });
@@ -40,7 +44,7 @@ class ProjectController extends Controller {
                 return view("pages.dashboard.project.index")->with(compact('team'));
 
             }
-        }else {
+        }else if($this->isAdmin) {
             if($this->isSuperAdmin){
                 $team = TeamApprentice::where("status_hired","DI TERIMA")->get();
                 return view("pages.dashboard.project.index")->with(compact('team'));
@@ -50,6 +54,8 @@ class ProjectController extends Controller {
                                       ->get();
                 return view("pages.dashboard.project.index")->with(compact('team'));
             }
+        }else {
+            return response(abort('403'));
         }
     }
 
