@@ -52,7 +52,7 @@
 
                             <div class="col-span-6 sm:col-span-6">
                                 <label class="block text-sm font-medium text-gray-700">
-                                    Surat pengantar 
+                                    Surat pengantar
                                 </label>
                                 @error('cover_letter') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                 <div class="flex flex-wrap items-stretch w-full mb-4 relative">
@@ -61,11 +61,11 @@
                                         <label for="cover_letter" class="flex cursor-pointer items-center leading-normal bg-gray-100 rounded rounded-l-none border border-l-0 border-gray-300 px-3 whitespace-no-wrap text-grey-800 text-sm">
                                             Unggah Berkas
                                         </label>
-                                    </div>	
+                                    </div>
                                 </div>
                                 <p class="text-xs text-gray-500 -mt-3">
                                     PDF dibawah 10MB
-                                </p>	
+                                </p>
                             </div>
 
                             <div class="col-span-6 sm:col-span-6">
@@ -79,8 +79,8 @@
                                         <label for="proposal" class="flex cursor-pointer items-center leading-normal bg-gray-100 rounded rounded-l-none border border-l-0 border-gray-300 px-3 whitespace-no-wrap text-grey-800 text-sm">
                                             Unggah Berkas
                                         </label>
-                                    </div>	
-                                </div>	
+                                    </div>
+                                </div>
                                 <p class="text-xs text-gray-500 -mt-3">
                                     PDF dibawah 10MB
                                 </p>
@@ -97,8 +97,8 @@
                                         <label for="presentation" class="flex cursor-pointer items-center leading-normal bg-gray-100 rounded rounded-l-none border border-l-0 border-gray-300 px-3 whitespace-no-wrap text-grey-800 text-sm">
                                             Unggah Berkas
                                         </label>
-                                    </div>	
-                                </div>	
+                                    </div>
+                                </div>
                                 <p class="text-xs text-gray-500 -mt-3">
                                     PPT atau PPTX dibawah 10MB
                                 </p>
@@ -168,6 +168,7 @@
                                             @if(isset($imagesrc['0']))
                                                 @php
                                                     try {
+                                                        // dd($imagesrc['0']);
                                                         $url                    = $imagesrc['0']->temporaryUrl();
                                                         $imageStatus['0']       = true;
                                                     }catch (RuntimeException $exception){
@@ -183,7 +184,7 @@
                                                         </svg>
                                                     </span>
                                                     @endif
-                                                @else 
+                                                @else
                                                     <span class="inline-block h-44 w-44 rounded-full overflow-hidden bg-gray-100">
                                                         <svg class="h-full w-full text-gray-200" fill="currentColor" viewBox="0 0 24 24">
                                                             <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -221,8 +222,8 @@
                                             <label for="cv.0" class="flex cursor-pointer items-center leading-normal bg-gray-100 rounded rounded-l-none border border-l-0 border-gray-300 px-3 whitespace-no-wrap text-grey-800 text-sm">
                                                 Unggah Berkas
                                             </label>
-                                        </div>	
-                                    </div>	
+                                        </div>
+                                    </div>
                                     <p class="text-xs text-gray-500 -mt-3">
                                         PDF dibawah 10MB
                                     </p>
@@ -250,11 +251,11 @@
                                                             $url                        = $imagesrc[$value]->temporaryUrl();
                                                             $imageStatus[$value]        = true;
                                                         }catch (RuntimeException $exception){
-                                                            $this->imageStatus[$value]     =  false;
+                                                            $this->imageStatus[$value]  =  false;
                                                         }
                                                     @endphp
                                                     @if($imageStatus[$value])
-                                                        <img src="{{ $imagesrc[$value]->temporaryUrl() }}" alt="foto" class="rounded-full h-44 w-44 border bg-cover bg-center" />
+                                                    <img src="{{ $imagesrc[$value]->temporaryUrl() }}" alt="foto" class="rounded-full h-44 w-44 border bg-cover bg-center" />
                                                     @else
                                                         <span class="inline-block h-44 w-44 rounded-full overflow-hidden bg-gray-100">
                                                             <svg class="h-full w-full text-gray-200" fill="currentColor" viewBox="0 0 24 24">
@@ -262,7 +263,7 @@
                                                             </svg>
                                                         </span>
                                                         @endif
-                                                    @else 
+                                                    @else
                                                         <span class="inline-block h-44 w-44 rounded-full overflow-hidden bg-gray-100">
                                                             <svg class="h-full w-full text-gray-200" fill="currentColor" viewBox="0 0 24 24">
                                                                 <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -300,8 +301,8 @@
                                                 <label for="cv.{{ $value }}" class="flex cursor-pointer items-center leading-normal bg-gray-100 rounded rounded-l-none border border-l-0 border-gray-300 px-3 whitespace-no-wrap text-grey-800 text-sm">
                                                     Unggah Berkas
                                                 </label>
-                                            </div>	
-                                        </div>	
+                                            </div>
+                                        </div>
                                         <p class="text-xs text-gray-500 -mt-3">
                                             PDF dibawah 10MB
                                         </p>

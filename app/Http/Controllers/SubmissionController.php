@@ -38,7 +38,7 @@ class SubmissionController extends Controller
         if($this->isSuperAdmin) {
             $submission = TeamApprentice::all();
         } else {
-            $submission = TeamApprentice::where("agency_id", \Auth::user()->adminDetail->agency_id)->get();
+            $submission = TeamApprentice::where("agency_id", Auth::user()->adminDetail->agency_id)->get();
         }
         return view('pages.dashboard.submission.index')->with(compact('submission'));
     }
@@ -79,7 +79,7 @@ class SubmissionController extends Controller
                 return view('pages.dashboard.submission.detail')->with(compact('submission'));
             }else {
                 $submission = TeamApprentice::where("id",$id)
-                                            ->where("agency_id", \Auth::user()->adminDetail->agency_id)
+                                            ->where("agency_id", Auth::user()->adminDetail->agency_id)
                                             ->first();
                 if($submission != NULL) {
                     return view('pages.dashboard.submission.detail')->with(compact('submission'));

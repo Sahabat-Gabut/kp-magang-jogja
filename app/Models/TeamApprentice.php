@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\{Agency,Apprentice,Project,Jss,TeamApprentice};
+use App\Models\{Agency,Apprentice,Project,Jss};
 class TeamApprentice extends Model
 {
     protected $table        = "team_apprentice";
@@ -21,7 +21,7 @@ class TeamApprentice extends Model
         'date_of_created'
     ];
 
-    
+
     public function agency()
     {
         return $this->hasOne(Agency::class, 'id', 'agency_id');
