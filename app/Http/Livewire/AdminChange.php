@@ -12,14 +12,14 @@ class AdminChange extends Component
     public function mount($idadmin, $role)
     {
         $admin = Admin::find($idadmin);
-        $this->idadmin  = $idadmin; 
+        $this->idadmin  = $idadmin;
         $this->admin    = $admin;
         $this->role     = $role;
         $this->idjss    = "JSS-I".$admin->jss_id;
         $this->idrole   = $admin->role_admin_id;
         $this->idagency = $admin->agency_id;
     }
-    
+
     public function render()
     {
         return view('livewire.admin-change');
@@ -27,8 +27,7 @@ class AdminChange extends Component
 
     public function store()
     {
-        $validationData = $this->validate(
-        [
+        $this->validate([
             'idjss'       => 'required',
             'idrole'      => 'required',
             'idagency'    => 'required',
@@ -38,7 +37,7 @@ class AdminChange extends Component
             'idrole.required'     => 'Role Harus diisi!',
             'idagency.required'   => 'Dinas Harus diisi!'
         ]);
-    
+
         if($this->idrole == "1") {
             $this->idagency = NULL;
         }
@@ -55,7 +54,7 @@ class AdminChange extends Component
         }else {
             return $this->errors("Gagal merubah admin");
         }
- 
+
     }
 
     public function success($message)

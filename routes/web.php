@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\{Apprentice};
 use App\Http\Controllers\{
     AuthController,
     SubmissionController,
@@ -10,11 +9,11 @@ use App\Http\Controllers\{
     AgencyController,
     AdminController,
     ProfileController,
-    DashboardController
+    DashboardController,
+    HomeController
 };
 
-
-Route::get('/', function () { return view('pages.guest.index');})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('quota-agency',[AgencyController::class, 'quota'])->name('quotaAgency');
 
 // Login

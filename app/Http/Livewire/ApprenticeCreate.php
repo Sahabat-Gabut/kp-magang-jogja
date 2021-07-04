@@ -31,15 +31,14 @@ class ApprenticeCreate extends Component
         'idjss.0'               => 'required',
         'npm.0'                 => 'required',
         'cv.0'                  => 'required|mimes:pdf|max:10000',
-        'cv.1'                  => 'required|mimes:pdf|max:10000',
         'imagesrc.0'            => 'required|image|mimes:jpeg,jpg,png',
-        'imagesrc.1'            => 'required|image|mimes:jpeg,jpg,png',
         'idjss.*'               => 'required',
         'npm.*'                 => 'required',
         'cv.*'                  => 'required|mimes:pdf|max:10000',
         'imagesrc.*'            => 'required|image|mimes:jpeg,jpg,png',
         'project_name'          => 'required',
         'project_explanation'   => 'required',
+        'duration'              => 'required'
     ];
 
     protected $messages = [
@@ -66,6 +65,7 @@ class ApprenticeCreate extends Component
         'imagesrc.*.required'           => 'Pas Foto wajib diisi',
         'imagesrc.0.image'              => 'Pas Foto harus berupa gambar!',
         'imagesrc.*.image'              => 'Pas Foto harus berupa gambar!',
+        'duration.required'             => 'Durasi wajib diisi!'
     ];
 
     public function add($i)
@@ -75,7 +75,9 @@ class ApprenticeCreate extends Component
 
         $this->idjss[$i] = null;
         $this->npm[$i] = null;
+        $this->imagesrc[$i] = null;
         $this->imageStatus[$i] = false;
+        $this->cv[$i] = null;
 
         array_push($this->inputs, $i);
     }

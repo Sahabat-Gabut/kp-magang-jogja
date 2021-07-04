@@ -64,11 +64,13 @@
                             {{ \DB::table('team_apprentice')->where('status_hired','SEDANG DIPROSES')->count() }}
                         </div>
                     @endif
-                @else 
+                @else
                     @if(\DB::table('team_apprentice')->where('status_hired','SEDANG DIPROSES')->count() > 0)
-                        <div class="absolute bg-yellow-300 text-yellow-600 font-bold h-6 w-6 rounded-full text-xs flex items-center justify-center right-4 top-0 -mt-2">
-                            {{ \DB::table('team_apprentice')->where('status_hired','SEDANG DIPROSES')->where('agency_id',Auth::user()->adminDetail->agency_id)->count() }}
-                        </div>
+                        @if(\DB::table('team_apprentice')->where('status_hired','SEDANG DIPROSES')->where('agency_id', Auth::user()->adminDetail->agency_id)->count() > 0)
+                            <div class="absolute bg-yellow-300 text-yellow-600 font-bold h-6 w-6 rounded-full text-xs flex items-center justify-center right-4 top-0 -mt-2">
+                                {{ \DB::table('team_apprentice')->where('status_hired','SEDANG DIPROSES')->where('agency_id', Auth::user()->adminDetail->agency_id)->count() }}
+                            </div>
+                        @endif
                     @endif
                 @endif
             </li>
