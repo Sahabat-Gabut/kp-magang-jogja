@@ -9,6 +9,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        return Inertia::render('Index');
+        $title = 'Magang Jogja';
+        return Inertia::render('Index', compact('title'));
     }
 }
