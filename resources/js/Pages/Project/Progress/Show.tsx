@@ -1,14 +1,15 @@
 import Confirm from '@/Components/molecules/ConfirmDialog';
 import AppLayout from '@/Components/templates/AppLayout';
-import { usePage } from '@/hooks/usePage';
 import { PaperClipIcon } from '@heroicons/react/solid';
 import { useForm } from '@inertiajs/inertia-react';
 import React, { useState } from 'react'
 import route from 'ziggy-js';
+import useTypedPage from "@/hooks/useTypedPage";
+import {ProgressProject} from "@/types/models";
 
 export default function ShowProgress() {
-    // @ts-ignore
-    const { title, progress, auth } = usePage().props;
+
+    const { title, progress, auth } = useTypedPage<{ progress: ProgressProject}>().props;
     const [valuationOpen, setValuationOpen] = useState(false);
 
     const valuationForm = useForm({

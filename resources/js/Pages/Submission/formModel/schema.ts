@@ -9,7 +9,7 @@ const SUPPORTED_FORMATS_PPT = ["application/vnd.ms-powerpoint", "application/vnd
 const generalSchema = yup.object({
     agency: yup.string().required('Dinas harus diisi!'),
     university: yup.string().required('Universitas harus diisi!'),
-    departement: yup.string().required('Jurusan harus diisi!'),
+    department: yup.string().required('Jurusan harus diisi!'),
     dateStart: yup.string().required('Rencana Mulai harus diisi!'),
     dateFinish: yup.string().required('Rencana Selesai harus diisi!'),
 });

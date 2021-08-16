@@ -1,10 +1,10 @@
 import React from "react"
 import Icons from "@/Components/icons"
 import AsideLink from "@/Components/molecules/AsideLink";
-import { usePage } from "@/hooks/usePage";
+import useTypedPage from "@/hooks/useTypedPage";
 
 const AppAside = () => {
-    const { auth } = usePage().props;
+    const { auth } = useTypedPage().props;
     return (
         <aside className="flex-shrink-0 hidden w-64 overflow-y-auto rounded-md lg:block">
             <div className="py-4 text-gray-500 dark:text-gray-400">

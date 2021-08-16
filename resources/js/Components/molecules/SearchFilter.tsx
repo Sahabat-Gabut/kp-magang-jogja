@@ -1,12 +1,12 @@
 import route from 'ziggy-js';
 import pickBy from 'lodash/pickBy';
 import { usePrevious } from 'react-use';
-import { usePage } from '@/hooks/usePage';
 import { Inertia } from '@inertiajs/inertia';
 import React, { useState, useEffect } from 'react';
+import useTypedPage from "@/hooks/useTypedPage";
 
 export default () => {
-  const { filters } = usePage().props;
+  const { filters } = useTypedPage().props;
   const [opened, setOpened] = useState(false);
 
   const [values, setValues] = useState({

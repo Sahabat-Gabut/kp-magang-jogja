@@ -1,5 +1,4 @@
 import React from 'react'
-import { usePage } from '@/hooks/usePage';
 import { MainLayout } from '@/Components/templates';
 import ImageField from '@/Components/molecules/ImageField';
 import InputField from '@/Components/molecules/InputField';
@@ -13,18 +12,19 @@ import {
 } from './formModel/schema';
 import WizardForm, { FormStep } from '@/Components/templates/WizardForm';
 import FileField from '@/Components/molecules/FileField';
-// @ts-ignore
 import Swal from 'sweetalert2'
 import axios from 'axios';
 import route from 'ziggy-js';
+import useTypedPage from "@/hooks/useTypedPage";
+import {SelectOptions} from "@/types/UsePageProps";
 
 export default function Submission() {
-    const props = usePage().props;
+    const {auth, options} = useTypedPage<{options: SelectOptions[]}>().props;
 
     const initialValues = {
         agency: '',
         university: '',
-        departement: '',
+        department: '',
         dateStart: '',
         dateFinish: '',
         coverLetter: {
@@ -46,9 +46,9 @@ export default function Submission() {
         // projectDesc: '',
         participants: [
             {
-                jss_id: props.auth.user?.id,
+                jss_id: auth.user?.id,
                 npm: '',
-                name: props.auth.user?.fullname,
+                name: auth.user?.fullname,
                 cv: {
                     name: "",
                     src: null,
@@ -110,12 +110,12 @@ export default function Submission() {
                         <SelectField
                             label="Dinas"
                             name="agency"
-                            options={props.options}
+                            options={options}
                             placeholder="Pilih Dinas..." />
 
                         <div className="grid mt-2 md:grid-cols-2 md:grid-rows-2 md:gap-4">
                             <InputField id="university" label="Universitas" name="university" />
-                            <InputField id="departement" label="Jurusan" name="departement" />
+                            <InputField id="department" label="Jurusan" name="department" />
 
                             <InputField id="dateStart" label="Rencana Mulai" type="date" name="dateStart" />
                             <InputField id="dateFinish" label="Rencana Selesai" type="date" name="dateFinish" />
@@ -211,7 +211,7 @@ export default function Submission() {
                             <div className="px-5">
                                 <div className="grid mt-2 md:grid-cols-2 md:grid-rows-2 md:gap-4">
                                     <InputField id="university" label="Universitas" name="university" readOnly={true} />
-                                    <InputField id="departement" label="Jurusan" name="departement" readOnly={true} />
+                                    <InputField id="department" label="Jurusan" name="department" readOnly={true} />
 
                                     <InputField id="dateStart" label="Rencana Mulai" type="date" name="dateStart" readOnly={true} />
                                     <InputField id="dateFinish" label="Rencana Selesai" type="date" name="dateFinish" readOnly={true} />
@@ -235,8 +235,8 @@ export default function Submission() {
                                 <span className="w-full text-lg font-semibold text-gray-700 uppercase">Informasi Projek</span>
                             </div>
                             <div className="px-5">
-                                <InputField id="university" label="Nama Projek" name="projectName" readOnly={true} />
-                                <InputField id="departement" label="Deskripsi Projek" name="projectDesc" readOnly={true} />
+                                <InputField id="projectName" label="Nama Projek" name="projectName" readOnly={true} />
+                                <InputField id="projectDesc" label="Deskripsi Projek" name="projectDesc" readOnly={true} />
                             </div>
                         </div>
 

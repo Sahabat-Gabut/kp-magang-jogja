@@ -1,21 +1,25 @@
 import Pagination from '@/Components/molecules/Pagination';
 import SearchFilter from '@/Components/molecules/SearchFilter';
 import AppLayout from '@/Components/templates/AppLayout'
-import { usePage } from '@/hooks/usePage'
 import { InertiaLink, useForm } from '@inertiajs/inertia-react';
 import moment from 'moment-timezone';
 import React from 'react'
 import route from 'ziggy-js';
+import useTypedPage from "@/hooks/useTypedPage";
+import {PaginatedData} from "@/types/UsePageProps";
+import {Attendance, Team} from "@/types/models";
 
 export default function Attendance() {
-    const { attendance_paginate: attendances, team_paginate: teams, auth } = usePage().props;
+    const { attendance_paginate: attendances, team_paginate: teams, auth }
+        = useTypedPage<{
+        attendance_paginate: PaginatedData<Attendance>;
+        team_paginate: PaginatedData<Team>;
+    }>().props;
     const { meta } = teams;
     const attendanceForm = useForm({
         status: '',
     });
-    const {
-        put
-    } = attendanceForm;
+    const { put } = attendanceForm;
 
     const formHandler = (e: React.FormEvent, id: string) => {
         e.preventDefault();

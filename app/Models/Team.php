@@ -9,14 +9,14 @@ class Team extends Model
 {
     protected $table        = "team";
     public $timestamps      = false;
-    
+
     protected $fillable     = [
         'id',
         'agency_id',
         'admin_id',
         'status',
         'university',
-        'departement',
+        'department',
         'proposal',
         'presentation',
         'cover_letter',
@@ -30,7 +30,7 @@ class Team extends Model
     {
         return $this->hasOne(Agency::class, 'id', 'agency_id');
     }
-    
+
     public function agencies()
     {
         return $this->hasMany(Agency::class, 'id', 'agency_id');

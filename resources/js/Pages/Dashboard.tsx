@@ -1,11 +1,16 @@
 import Icons from '@/Components/icons';
 import CardInfo from '@/Components/organisms/CardInfo';
 import AppLayout from '@/Components/templates/AppLayout'
-import { usePage } from '@/hooks/usePage';
 import React from 'react'
+import useTypedPage from "@/hooks/useTypedPage";
 
 export default function Dashboard() {
-    const { total_team, total_project, total_submission, total_admin, auth: { user } } = usePage().props;
+    const { total_team, total_project, total_submission, total_admin, auth: { user } }
+        = useTypedPage<{
+        total_team: number;
+        total_project: number;
+        total_submission: number;
+    }>().props;
 
     return (
         <>

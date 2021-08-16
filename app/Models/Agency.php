@@ -10,9 +10,9 @@ class Agency extends Model
 
     protected $table        = "agency";
     public $timestamps      = false;
-    protected $fillable     = [ 
-        'id', 
-        'name', 
+    protected $fillable     = [
+        'id',
+        'name',
         'location',
         'total_team',
         'quota'
@@ -28,5 +28,10 @@ class Agency extends Model
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where('name', 'ilike', '%'.$search.'%');
         });
+    }
+
+    public function getAgencySelect()
+    {
+        return $this->where('quota', '>', 0)->get(['id AS value', 'name as label']);
     }
 }

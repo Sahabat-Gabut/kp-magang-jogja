@@ -1,14 +1,16 @@
 import SearchFilter from '@/Components/molecules/SearchFilter';
 import Pagination from '@/Components/molecules/Pagination';
 import AppLayout from '@/Components/templates/AppLayout'
-import { usePage } from '@/hooks/usePage'
 import React, { useState } from 'react'
 import Confirm from '@/Components/molecules/ConfirmDialog';
 import { useForm } from '@inertiajs/inertia-react';
 import route from 'ziggy-js';
+import useTypedPage from "@/hooks/useTypedPage";
+import {PaginatedData} from "@/types/UsePageProps";
+import {Agency} from "@/types/models";
 
 export default function Agency() {
-    const { agency_paginate } = usePage().props;
+    const { agency_paginate } = useTypedPage<{agency_paginate: PaginatedData<Agency>}>().props;
     const { data: agencies, meta } = agency_paginate;
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);

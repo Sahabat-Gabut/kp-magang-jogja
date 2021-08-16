@@ -1,14 +1,20 @@
 import Pagination from '@/Components/molecules/Pagination';
 import AppLayout from '@/Components/templates/AppLayout'
-import { usePage } from '@/hooks/usePage'
 import { InertiaLink, useForm } from '@inertiajs/inertia-react';
 import React, { useState } from 'react'
 import route from 'ziggy-js';
 import Confirm from '@/Components/molecules/ConfirmDialog';
 import SearchFilter from '@/Components/molecules/SearchFilter';
+import useTypedPage from "@/hooks/useTypedPage";
+import {PaginatedData} from "@/types/UsePageProps";
+import {Project} from "@/types/models";
 
 export default function Project() {
-    const { project_paginate: projects, project, percentage, auth } = usePage().props;
+    const { project_paginate: projects, project, percentage, auth } = useTypedPage<{
+        project_paginate: PaginatedData<Project>;
+        percentage: number;
+        project: Project;
+    }>().props;
     const [editOpen, setEditOpen] = useState(false);
     const [edit, setEdit] = useState({
         id: 0,

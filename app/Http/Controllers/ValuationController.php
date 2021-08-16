@@ -11,19 +11,19 @@ class ValuationController extends Controller
     public function store(Request $request)
     {
         $insert = Valuation::create([
-            'progress_project_id' => $request->progress_project_id,
-            'score' => $request->score,
-            'description' => $request->description
+            'progress_project_id'   => $request->progress_project_id,
+            'score'                 => $request->score,
+            'description'           => $request->description
         ]);
-        
+
         if($insert) {
             return Redirect::back()->with([
-                'type'      => 'success', 
+                'type'      => 'success',
                 'message'   => 'Berhasil memberi nilai.'
             ]);
         } else {
             return Redirect::back()->with([
-                'type'      => 'error', 
+                'type'      => 'error',
                 'message'   => 'Gagal memberi nilai.'
             ]);
         }
@@ -39,12 +39,12 @@ class ValuationController extends Controller
 
         if($update) {
             return Redirect::back()->with([
-                'type'      => 'success', 
+                'type'      => 'success',
                 'message'   => 'Berhasil mengubah nilai.'
             ]);
         } else {
             return Redirect::back()->with([
-                'type'      => 'error', 
+                'type'      => 'error',
                 'message'   => 'Gagal mengubah nilai.'
             ]);
         }

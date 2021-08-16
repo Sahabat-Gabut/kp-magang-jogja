@@ -1,7 +1,6 @@
 import Pagination from '@/Components/molecules/Pagination';
 import SearchFilter from '@/Components/molecules/SearchFilter';
 import AppLayout from '@/Components/templates/AppLayout'
-import { usePage } from '@/hooks/usePage'
 import { Listbox, Transition } from '@headlessui/react';
 import { SelectorIcon } from '@heroicons/react/solid';
 import { Inertia } from '@inertiajs/inertia';
@@ -10,6 +9,9 @@ import { pickBy } from 'lodash';
 import React, { Fragment, useEffect, useState } from 'react'
 import { usePrevious } from 'react-use';
 import route from 'ziggy-js';
+import useTypedPage from "@/hooks/useTypedPage";
+import {PaginatedData} from "@/types/UsePageProps";
+import {Team} from "@/types/models";
 
 const status = [
     { id: 1, name: 'Semua', value: '' },
@@ -20,10 +22,9 @@ const status = [
 
 // TODO: MAKE EXPORT!
 export default function Submission() {
-    const { submission_paginate, filters } = usePage().props;
+    const { submission_paginate, filters } = useTypedPage<{submission_paginate: PaginatedData<Team>}>().props;
     const { data: submissions, meta } = submission_paginate;
     const [selectedStatus, setSelectedStatus] = useState(status[0]);
-
     const [values, setValues] = useState({
         status: filters.status || ''
     });

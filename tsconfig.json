@@ -7,9 +7,9 @@
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
-        "baseUrl": "./resources/js",
+        "baseUrl": ".",
         "paths": {
-            "@/*": ["*"]
+            "@/*": ["./resources/js/*"]
         }
     },
     "include": [

@@ -2,14 +2,14 @@ import React, { useEffect } from 'react'
 import AppLayoutProps from './interface'
 import { AppAside } from '@/Components/organisms';
 import AppHeader from '@/Components/organisms/AppHeader';
-import { usePage } from '@/hooks/usePage';
 import toast, { Toaster } from 'react-hot-toast';
 // @ts-ignore
 import { Head } from '@inertiajs/inertia-react';
+import useTypedPage from "@/hooks/useTypedPage";
 
 export default function AppLayout(props: AppLayoutProps) {
     const { children } = props;
-    const { title: pageTitle, flash } = usePage().props;
+    const { title: pageTitle, flash } = useTypedPage().props;
 
     useEffect(() => {
         flash.type && toast.success(flash.message);

@@ -1,6 +1,5 @@
 import Pagination from '@/Components/molecules/Pagination';
 import AppLayout from '@/Components/templates/AppLayout';
-import { usePage } from '@/hooks/usePage';
 import React, { Fragment, useEffect, useState } from 'react'
 import moment from 'moment-timezone'
 import { Listbox, RadioGroup, Transition } from '@headlessui/react';
@@ -12,9 +11,16 @@ import { Inertia } from '@inertiajs/inertia';
 import route from 'ziggy-js';
 import { useForm } from '@inertiajs/inertia-react';
 import Confirm from '@/Components/molecules/ConfirmDialog';
+import useTypedPage from "@/hooks/useTypedPage";
+import {PaginatedData} from "@/types/UsePageProps";
+import {Apprentice, Attendance} from "@/types/models";
 
 export default function AttendanceShow() {
-    const { attendance_paginate: { data, meta }, apprentices, filters } = usePage().props;
+    const { attendance_paginate: { data, meta }, apprentices, filters }
+        = useTypedPage<{
+        attendance_paginate: PaginatedData<Attendance>;
+        apprentices: {data: Apprentice[]};
+    }>().props;
     const [index, setIndex] = useState(0);
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);

@@ -1,5 +1,4 @@
 import AppLayout from '@/Components/templates/AppLayout';
-import { usePage } from '@/hooks/usePage';
 import React, { useState } from 'react'
 import { InertiaLink, useForm } from '@inertiajs/inertia-react';
 import moment from 'moment-timezone';
@@ -7,9 +6,11 @@ import Confirm from '@/Components/molecules/ConfirmDialog';
 import route from 'ziggy-js';
 import { PaperClipIcon } from '@heroicons/react/solid';
 import { BsArrowLeftShort } from "react-icons/bs"
+import useTypedPage from "@/hooks/useTypedPage";
+import {Admin, Team} from "@/types/models";
 
 export default function ShowSubmission() {
-    const { team, admins } = usePage().props;
+    const { team, admins } = useTypedPage<{team:Team, admins: Admin[]}>().props;
     const [confirmOpen, setConfirmOpen] = useState(false);
     const [confProjectOpen, setConfProjectOpen] = useState(false);
 
@@ -132,7 +133,7 @@ export default function ShowSubmission() {
                     </div>
                     <div className="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">Jurusan</dt>
-                        <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{team.departement}</dd>
+                        <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{team.department}</dd>
                     </div>
                     <div className="px-4 py-5 bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">Tanggal Pengajuan</dt>

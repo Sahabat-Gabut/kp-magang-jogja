@@ -2,18 +2,24 @@ import Confirm from '@/Components/molecules/ConfirmDialog';
 import Pagination from '@/Components/molecules/Pagination';
 import SearchFilter from '@/Components/molecules/SearchFilter';
 import AppLayout from '@/Components/templates/AppLayout'
-import { usePage } from '@/hooks/usePage';
-import { PlusIcon, PlusSmIcon } from '@heroicons/react/solid';
+import { PlusIcon} from '@heroicons/react/solid';
 import { useForm } from '@inertiajs/inertia-react';
 import React, { useState } from 'react'
 import route from 'ziggy-js';
+import useTypedPage from "@/hooks/useTypedPage";
+import {PaginatedData} from "@/types/UsePageProps";
+import {Admin, Agency, Role} from "@/types/models";
 
 export default function Admin() {
-    const { admin_paginate: { data: admins, meta }, agencies, roles, auth } = usePage().props;
+    const { admin_paginate: { data: admins, meta }, agencies, roles, auth } =
+        useTypedPage<{
+            admin_paginate: PaginatedData<Admin>;
+            agencies: Agency[];
+            roles: Role[]
+    }>().props;
     const [addOpen, setAddOpen] = useState(false);
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
-
     const [edit, setEdit] = useState({
         id: 0,
         jss_id: '',
@@ -140,7 +146,7 @@ export default function Admin() {
                     <option value="">Pilih Role</option>
                     {roles.map((role, idx) => (
                         role.id === 1 ? (
-                            auth.user?.admin.role.id === 1 &&
+                            auth?.user?.admin.role.id === 1 &&
                             <option key={idx} value={role.id}>{role.name}</option>
                         ) : (
                             <option key={idx} value={role.id}>{role.name}</option>

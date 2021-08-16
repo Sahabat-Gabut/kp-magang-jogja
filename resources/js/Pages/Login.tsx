@@ -1,11 +1,11 @@
 import React from 'react'
-import { usePage } from '@/hooks/usePage';
 import { MainLayout } from '@/Components/templates'
 import { useForm } from '@inertiajs/inertia-react';
 import route from 'ziggy-js';
+import useTypedPage from "@/hooks/useTypedPage";
 
 export default function Login() {
-    const { errors } = usePage().props;
+    const { errors } = useTypedPage().props;
     const loginForm = useForm({
         username: '',
         password: '',

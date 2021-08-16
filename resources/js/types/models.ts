@@ -19,7 +19,7 @@ export type Team = {
     agency_id: number
     status: string
     university: string
-    departement: string
+    department: string
     proposal: string
     presentation: string
     cover_letter: string
@@ -53,6 +53,7 @@ export type ProgressProject = {
     file: string;
     date_of_created: Date;
     jss: JSS;
+    valuation: any;
 }
 
 export type Apprentice = {

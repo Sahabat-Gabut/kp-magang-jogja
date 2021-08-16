@@ -19,7 +19,7 @@ class CreateTeamTable extends Migration
             $table->foreignId('agency_id')->constrained('agency')->onUpdate('cascade')->onDelete('cascade');
             $table->enum('status', ['SEDANG DIPROSES','DITERIMA', 'DITOLAK', 'SELESAI'])->default('SEDANG DIPROSES');
             $table->string('university');
-            $table->string('departement');
+            $table->string('department');
             $table->string('proposal');
             $table->string('presentation');
             $table->string('cover_letter');

@@ -1,19 +1,11 @@
-import React, { useState, useRef, useEffect, Fragment } from 'react';
-import { InertiaLink } from '@inertiajs/inertia-react';
-import { Inertia } from '@inertiajs/inertia';
-import { usePage } from '@/hooks/usePage';
-import Icons from '@/Components/icons';
+import React, { Fragment } from 'react';
+import {InertiaLink} from '@inertiajs/inertia-react';
 import { Popover, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/solid';
+import useTypedPage from "@/hooks/useTypedPage";
 
-interface Props {
-    y: Number
-    height: Number
-}
-
-// TODOS: FIX THIS PROPS!
 export default function MainUserMenu() {
-    const props = usePage().props;
+    const props = useTypedPage().props;
 
     return (
         <div className="relative pt-4 pb-2 lg:py-0">

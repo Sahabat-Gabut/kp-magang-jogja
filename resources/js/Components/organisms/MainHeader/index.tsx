@@ -3,10 +3,10 @@ import React from "react"
 import route from "ziggy-js";
 import MainUserMenu from "../MainUserMenu";
 import { useViewportScroll } from "framer-motion"
-import { usePage } from "@/hooks/usePage";
+import useTypedPage from "@/hooks/useTypedPage";
 
 const MainHeader = () => {
-    const props = usePage().props;
+    const props = useTypedPage().props;
     const ref = React.useRef<HTMLHeadingElement>(null);
 
     const [y, setY] = React.useState<Number>(0)

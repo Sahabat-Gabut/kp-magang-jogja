@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { usePage } from '@/hooks/usePage'
 import AppLayout from '@/Components/templates/AppLayout';
 import { InertiaLink, useForm } from '@inertiajs/inertia-react';
 import Confirm from '@/Components/molecules/ConfirmDialog';
 import route from 'ziggy-js';
+import useTypedPage from "@/hooks/useTypedPage";
+import {Project} from "@/types/models";
 
 export default function ShowProject() {
-    const { project, percentage } = usePage().props;
+    const { project, percentage } = useTypedPage<{project: Project; percentage: number}>().props;
     const [addOpen, setAddOpen] = useState(false);
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);

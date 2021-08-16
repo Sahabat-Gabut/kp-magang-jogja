@@ -23,7 +23,7 @@ class ProjectController extends Controller
                 $this->isAdmin            = $this->auth->load(['admin.role','admin.agency']);
                 $this->user               = $this->auth->load(['apprentice.team']);
                 $this->isSuperAdmin       = isset($this->isAdmin->admin->role->id) == "1";
-                
+
                 if(null != isset($this->isAdmin->admin->agency_id)) {
                     $this->isAdminAgency  = $this->isAdmin->admin->agency_id == $request->agency_id;
                 }
@@ -39,10 +39,9 @@ class ProjectController extends Controller
         } else {
             $project = Project::with(['progress.jss', 'team.apprentices.jss','team.admin.jss'])->where('team_id',$this->user->apprentice->team->id)->first();
             $done = $project->progress->where('status','SELESAI')->count();
-    
+
             $percentage = number_format($done/$project->progress->count()*100);
         }
-        
 
         return Inertia::render('Project/Index',[
             'title'             => isset($project) ? $project->name : 'Daftar Projek',
@@ -67,12 +66,12 @@ class ProjectController extends Controller
 
         if($insert && $update) {
             return Redirect::back()->with([
-                'type'      => 'success', 
+                'type'      => 'success',
                 'message'   => 'Projek berhasil diset.'
             ]);
         } else {
             return Redirect::back()->with([
-                'type'      => 'error', 
+                'type'      => 'error',
                 'message'   => 'Projek gagal diset.'
             ]);
         }
@@ -84,7 +83,7 @@ class ProjectController extends Controller
         $project = $project->load('progress.jss', 'team.apprentices.jss', 'team.admin.jss');
         $done    = $project->progress->where('status', 'SELESAI')->count();
         $percentage = 0;
-        
+
         if($done > 0) {
             $percentage = number_format($done/$project->progress->count()*100);
         }
