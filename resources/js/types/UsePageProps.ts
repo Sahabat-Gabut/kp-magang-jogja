@@ -87,10 +87,9 @@ export type InertiaSharedProps<T = {}> = T & {
     };
 }
 
-export type PaginatedData<T = {}> = {
+export type PaginatedData<T = {}> = Meta & {
     data: T[];
     links: LinkPagination;
-    meta: Meta;
 }
 
 type Auth = {
@@ -119,18 +118,36 @@ export type LinkPagination = {
 }
 
 export type Meta = {
-    current_page?: number;
-    from?: number;
-    last_page?: number;
-    links?: MetaLink[];
-    path?: string;
-    per_page?: number;
-    to?: number;
-    total?: number;
+    meta: {
+        current_page: number;
+        from: number;
+        last_page: number;
+        links: MetaLink[];
+        path: string;
+        per_page: number;
+        to: number;
+        total: number;
+    }
 }
 
 export type MetaLink = {
-    active?: boolean;
-    label?: string;
+    active: boolean;
+    label: string;
     url?: string;
+}
+
+export type Pagination<T = {}> = {
+    current_page: number;
+    data: T[];
+    first_page_url: number;
+    from: number;
+    last_page: number;
+    last_page_url: string;
+    links: MetaLink[];
+    next_page_url: string | null;
+    path: string;
+    per_page: number;
+    prev_page_url: string | null;
+    to: number;
+    total: number;
 }

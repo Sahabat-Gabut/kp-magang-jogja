@@ -12,18 +12,18 @@ const tailwindcss = require('tailwindcss');
  |
  */
 
-mix.ts('resources/js/app.js', 'public/js').react()
-   .sass('resources/sass/app.sass', 'public/css')
-   .options({
-       processCssUrls: false,
-       postCss: [ tailwindcss('tailwind.config.js') ],
-   })
-   .sourceMaps()
-   .webpackConfig(require('./webpack.config'))
-   .disableNotifications();
+mix.ts('resources/js/app.tsx', 'public/js').react()
+    .sass('resources/sass/app.sass', 'public/css')
+    .options({
+        processCssUrls: false,
+        postCss: [tailwindcss('tailwind.config.js')],
+    })
+    .sourceMaps()
+    .webpackConfig(require('./webpack.config'))
+    .disableNotifications();
 
-if(mix.inProduction()) {
+if (mix.inProduction()) {
     mix.version();
 }
 
-mix.browserSync('magang.test');
+mix.browserSync('kp-magang-jogja.test');

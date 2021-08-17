@@ -8,15 +8,17 @@ class Attendance extends Model
 {
     protected $table        = "attendance";
     public $timestamps      = false;
-    protected $fillable     = [ 
+    protected $fillable     = [
         'id',
-        'start_attendance', 
-        'end_attendance', 
+        'start_attendance',
+        'end_attendance',
         'apprentice_id',
         'status',
     ];
 
-    
+    public const ONTIME = 'TEPAT WAKTU';
+    public const LATE   = 'TERLAMBAT';
+
     public function getApprentice()
     {
         return $this->hasOne(Apprentice::class);

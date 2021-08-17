@@ -3,6 +3,9 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Inertia\Inertia;
 use Throwable;
 
@@ -43,8 +46,10 @@ class Handler extends ExceptionHandler
     /**
      * Prepare exception for rendering.
      *
-     * @param  \Throwable  $e
-     * @return \Throwable
+     * @param $request
+     * @param Throwable $e
+     * @return JsonResponse|RedirectResponse|Response|object|\Symfony\Component\HttpFoundation\Response
+     * @throws Throwable
      */
     public function render($request, Throwable $e)
     {

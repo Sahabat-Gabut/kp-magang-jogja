@@ -1,71 +1,80 @@
-import route from 'ziggy-js';
+import useRoute from '@/Hooks/useRoute';
 import pickBy from 'lodash/pickBy';
-import { usePrevious } from 'react-use';
-import { Inertia } from '@inertiajs/inertia';
-import React, { useState, useEffect } from 'react';
-import useTypedPage from "@/hooks/useTypedPage";
+import {usePrevious} from 'react-use';
+import {Inertia} from '@inertiajs/inertia';
+import React, {useEffect, useState} from 'react';
+import useTypedPage from "@/Hooks/useTypedPage";
 
 export default () => {
-  const { filters } = useTypedPage().props;
-  const [opened, setOpened] = useState(false);
+    const {filters} = useTypedPage().props;
+    const route = useRoute();
+    const [opened, setOpened] = useState(false);
 
-  const [values, setValues] = useState({
-    search: filters.search || ''
-  });
+    const [values, setValues] = useState({
+        search: filters.search || ''
+    });
 
-  const prevValues = usePrevious(values);
+    const prevValues = usePrevious(values);
 
-  function reset() {
-    setValues({search: ''});
-  }
-
-  useEffect(() => {
-    if (prevValues) {
-      const query = Object.keys(
-      pickBy(values)).length
-        ? pickBy(values)
-        : {};
-      Inertia.get(route(route().current()), query, {
-        replace: true,
-        preserveState: true
-      });
+    function reset() {
+        setValues({search: ''});
     }
-  }, [values]);
 
-  function handleChange(e:any) {
-    const key = e.target.name;
-    const value = e.target.value;
+    useEffect(() => {
+        if (prevValues) {
+            const query = Object.keys(
+                pickBy(values)).length
+                ? pickBy(values)
+                : {};
+            Inertia.get(route(route().current() as string), query, {
+                replace: true,
+                preserveState: true
+            });
+        }
+    }, [values]);
 
-    setValues(values => ({
-      ...values, [key]: value
-    }));
+    function handleChange(e: any) {
+        const key = e.target.name;
+        const value = e.target.value;
 
-    if (opened) setOpened(false);
-  }
+        setValues(values => ({
+            ...values, [key]: value
+        }));
 
-  return (
-    <div className="flex items-center w-full">
-      <div className="relative flex w-full bg-white rounded">
-        <div className="absolute top-0 p-3">
-            {/* TODOS: ICON SEARCH! */}
-            <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-        </div>
-        <input
-          className="block w-full py-2 pl-10 pr-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 sm:text-sm"
-          autoComplete="off"
-          type="text"
-          name="search"
-          value={values.search}
-          onChange={handleChange}
-          placeholder="cari..."
-        />
-        <div className="absolute top-0 p-3 right-2">
-            {/* TODOS: ICON SEARCH! */}
-            {values.search !== "" ? (
-                <svg onClick={reset} className="w-4 h-4 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            ) : ""}
+        if (opened) setOpened(false);
+    }
+
+    return (
+        <div className="flex items-center w-full">
+            <div className="relative flex w-full bg-white rounded">
+                <div className="absolute top-0 p-3">
+                    {/* TODOS: ICON SEARCH! */}
+                    <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                <input
+                    className="block w-full py-2 pl-10 pr-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                    autoComplete="off"
+                    type="text"
+                    name="search"
+                    value={values.search}
+                    onChange={handleChange}
+                    placeholder="cari..."
+                />
+                <div className="absolute top-0 p-3 right-2">
+                    {/* TODOS: ICON SEARCH! */}
+                    {values.search !== "" ? (
+                        <svg onClick={reset} className="w-4 h-4 cursor-pointer" fill="none" stroke="currentColor"
+                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                  d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    ) : ""}
+                </div>
             </div>
-      </div>
-    </div>
-  );
+        </div>
+    );
 };

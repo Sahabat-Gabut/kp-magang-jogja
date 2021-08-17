@@ -2,38 +2,47 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\{Builder, Model};
 
-class Admin extends Model {
+/**
+ * Admin
+ *
+ * @mixin Builder
+ */
+class Admin extends Model
+{
 
-    protected $table        = "admin";
-    public $timestamps      = false;
-    protected $fillable     = [
+    public $timestamps = false;
+    protected $table = "admin";
+    protected $fillable = [
         'id',
         'photo',
         'jss_id',
         'agency_id',
         'role_id',
-        'jss_id'
+        'jss_id',
     ];
 
-    public function jss() {
+    public function jss()
+    {
         return $this->hasOne(Jss::class, 'id', 'jss_id');
     }
 
-    public function role() {
+    public function role()
+    {
         return $this->hasOne(Role::class, 'id', 'role_id');
     }
-    
-    public function agency() {
+
+    public function agency()
+    {
         return $this->hasOne(Agency::class, 'id', 'agency_id');
     }
 
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
-            $query->orWhereHas('jss', function($q) use ($search) {
-                $q->where('fullname','ilike', '%'.$search.'%');
+            $query->orWhereHas('jss', function ($q) use ($search) {
+                $q->where('fullname', 'ilike', '%' . $search . '%');
             });
         });
     }

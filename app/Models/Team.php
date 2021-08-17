@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\{Agency,Apprentice,Project};
+use phpDocumentor\Reflection\Types\Boolean;
 
 class Team extends Model
 {
@@ -68,5 +70,15 @@ class Team extends Model
         })->when($filters['status'] ?? null, function($query, $search) {
             $query->where('status', 'ilike', '%'.$search.'%');
         });
+    }
+
+    public function getByRole(bool $isSuperAdmin): Builder
+    {
+        return $isSuperAdmin
+                ? Team::with('apprentices.jss', 'project')
+                        ->where('status', '=', 'DITERIMA')
+                : Team::with('apprentices.jss','project', 'agencies')
+                        ->where('status', '=', 'DITERIMA')
+                        ->where('agency_id', '=', $this->auth->admin->agency_id);
     }
 }

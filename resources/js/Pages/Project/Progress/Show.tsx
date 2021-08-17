@@ -1,15 +1,15 @@
 import Confirm from '@/Components/molecules/ConfirmDialog';
 import AppLayout from '@/Components/templates/AppLayout';
-import { PaperClipIcon } from '@heroicons/react/solid';
-import { useForm } from '@inertiajs/inertia-react';
-import React, { useState } from 'react'
+import {PaperClipIcon} from '@heroicons/react/solid';
+import {useForm} from '@inertiajs/inertia-react';
+import React, {useState} from 'react'
 import route from 'ziggy-js';
-import useTypedPage from "@/hooks/useTypedPage";
+import useTypedPage from "@/Hooks/useTypedPage";
 import {ProgressProject} from "@/types/models";
 
 export default function ShowProgress() {
 
-    const { title, progress, auth } = useTypedPage<{ progress: ProgressProject}>().props;
+    const {title, progress, auth} = useTypedPage<{ progress: ProgressProject }>().props;
     const [valuationOpen, setValuationOpen] = useState(false);
 
     const valuationForm = useForm({
@@ -17,7 +17,7 @@ export default function ShowProgress() {
         description: progress?.valuation?.description ? progress.valuation.description : '',
         progress_project_id: progress.id
     });
-    const { setData, post, put, data } = valuationForm;
+    const {setData, post, put, data} = valuationForm;
     const _onConfirm = () => {
         progress?.valuation?.score ?
             put(route('valuation.update', progress.valuation.id))
@@ -29,7 +29,8 @@ export default function ShowProgress() {
         <>
             <div className="flex justify-end w-full px-5 pt-5 mb-5">
                 {progress.status === 'SELESAI' && auth.user?.admin && (
-                    <button onClick={() => setValuationOpen(true)} type="button" className="px-5 py-1 mr-2 font-medium text-green-700 transform rounded-md cursor-pointer hover:red-800 focus:ring-1 focus:ring-green-600">
+                    <button onClick={() => setValuationOpen(true)} type="button"
+                            className="px-5 py-1 mr-2 font-medium text-green-700 transform rounded-md cursor-pointer hover:red-800 focus:ring-1 focus:ring-green-600">
                         {progress?.valuation?.score ? 'Ubah Nilai' : 'Beri Nilai'}
                     </button>
                 )}
@@ -40,11 +41,19 @@ export default function ShowProgress() {
                         onClose={() => setValuationOpen(false)}
                         onConfirm={_onConfirm}
                         confirmText="Beri Nilai">
-                        <label htmlFor="score" className="block pb-1 mt-2 text-sm font-semibold text-gray-600">nilai</label>
-                        <input type="number" max="100" min="0" placeholder="0-100" id="score" value={data.score} onChange={(e) => { setData('score', e.target.value) }} className="w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-green-600 focus:ring-0" />
+                        <label htmlFor="score"
+                               className="block pb-1 mt-2 text-sm font-semibold text-gray-600">nilai</label>
+                        <input type="number" max="100" min="0" placeholder="0-100" id="score" value={data.score}
+                               onChange={(e) => {
+                                   setData('score', e.target.value)
+                               }}
+                               className="w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-green-600 focus:ring-0"/>
 
-                        <label htmlFor="description" className="block pb-1 mt-2 text-sm font-semibold text-gray-600">Catatan</label>
-                        <textarea id="description" onChange={(e) => setData('description', e.target.value)} className="w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-green-600 focus:ring-0" defaultValue={data.description}></textarea>
+                        <label htmlFor="description"
+                               className="block pb-1 mt-2 text-sm font-semibold text-gray-600">Catatan</label>
+                        <textarea id="description" onChange={(e) => setData('description', e.target.value)}
+                                  className="w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-green-600 focus:ring-0"
+                                  defaultValue={data.description}></textarea>
 
                     </Confirm>
                 </div>
@@ -77,7 +86,8 @@ export default function ShowProgress() {
                             <ul className="border border-gray-200 divide-y divide-gray-200 rounded-md">
                                 <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                                     <div className="flex items-center flex-1 w-0">
-                                        <PaperClipIcon className="flex-shrink-0 w-5 h-5 text-gray-400" aria-hidden="true" />
+                                        <PaperClipIcon className="flex-shrink-0 w-5 h-5 text-gray-400"
+                                                       aria-hidden="true"/>
                                         <span className="flex-1 w-0 ml-2 truncate">resume_back_end_developer.pdf</span>
                                     </div>
                                     <div className="flex-shrink-0 ml-4">
@@ -88,8 +98,10 @@ export default function ShowProgress() {
                                 </li>
                                 <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                                     <div className="flex items-center flex-1 w-0">
-                                        <PaperClipIcon className="flex-shrink-0 w-5 h-5 text-gray-400" aria-hidden="true" />
-                                        <span className="flex-1 w-0 ml-2 truncate">coverletter_back_end_developer.pdf</span>
+                                        <PaperClipIcon className="flex-shrink-0 w-5 h-5 text-gray-400"
+                                                       aria-hidden="true"/>
+                                        <span
+                                            className="flex-1 w-0 ml-2 truncate">coverletter_back_end_developer.pdf</span>
                                     </div>
                                     <div className="flex-shrink-0 ml-4">
                                         <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
@@ -152,4 +164,4 @@ export default function ShowProgress() {
     );
 }
 
-ShowProgress.layout = (page: React.ReactChild) => <AppLayout children={page} />;
+ShowProgress.layout = (page: React.ReactChild) => <AppLayout children={page}/>;

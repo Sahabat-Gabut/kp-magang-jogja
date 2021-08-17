@@ -1712,6 +1712,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/history@npm:*":
+  version: 4.7.9
+  resolution: "@types/history@npm:4.7.9"
+  checksum: 556b062adb92795839301965776b0418e9ca32798bd8a6031345a6a84d7512771107143a497b7e3ff826d0b0d4456e962c6450485dda6f55c7dd33371e840529
+  languageName: node
+  linkType: hard
+
 "@types/http-proxy@npm:^1.17.5":
   version: 1.17.7
   resolution: "@types/http-proxy@npm:1.17.7"
@@ -1806,15 +1813,6 @@ __metadata:
   version: 4.0.0
   resolution: "@types/parse-json@npm:4.0.0"
   checksum: fd6bce2b674b6efc3db4c7c3d336bd70c90838e8439de639b909ce22f3720d21344f52427f1d9e57b265fcb7f6c018699b99e5e0c208a1a4823014269a6bf35b
-  languageName: node
-  linkType: hard
-
-"@types/pdf-viewer-reactjs@npm:^2.2.2":
-  version: 2.2.2
-  resolution: "@types/pdf-viewer-reactjs@npm:2.2.2"
-  dependencies:
-    "@types/react": "*"
-  checksum: 8f11e7d10e63865819f2e2a7ee7d889ddb4ac05b63909f1a610c4b4604f889fa4e3dc94837e59936c6cad7b41098d4b7947d5201d1dded10d5f06ad94f262185
   languageName: node
   linkType: hard
 
@@ -1923,10 +1921,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ziggy-js@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "@types/ziggy-js@npm:1.0.2"
-  checksum: 03bf52ee1c5cf09692d268cbffa75fe7423a80928121b6b808d5f2a1454d0801e41668a6ea96d1c2bf7b2d86e8c89764e45d7f2073884eb8a9097aba01697490
+"@types/ziggy-js@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@types/ziggy-js@npm:1.3.0"
+  dependencies:
+    "@types/history": "*"
+  checksum: b2123c757475cc8750339d9e4dd23e14adff0dd925f475cffb1d40737a16aa923379852fe1dad8f3e0ca04240b295978d21953c1de7f411d3f1ff2fb73b3423e
   languageName: node
   linkType: hard
 
@@ -2988,15 +2988,6 @@ __metadata:
   version: 1.0.30001245
   resolution: "caniuse-lite@npm:1.0.30001245"
   checksum: f4a9a49a5a004c71cf24ed22c5d5d190d2d21854d5fd61e2b17e1ba47509c24a073f951285912212573450917608e63c82b07c7c9b367839a8d7b84f7517fb91
-  languageName: node
-  linkType: hard
-
-"chainsaw@npm:>=0.0.7 <0.1":
-  version: 0.0.9
-  resolution: "chainsaw@npm:0.0.9"
-  dependencies:
-    traverse: ">=0.3.0 <0.4"
-  checksum: 88d19956954f428e6a11d803c6bf608520c3f25974c400165ed6af9628015ef30c333658268dbcf42f2b4ce2cd263fe85b28adafc8a446d8e53ac4c3e25b5219
   languageName: node
   linkType: hard
 
@@ -4975,15 +4966,6 @@ fsevents@~2.3.2:
     inherits: ^2.0.3
     minimalistic-assert: ^1.0.1
   checksum: e350096e659c62422b85fa508e4b3669017311aa4c49b74f19f8e1bc7f3a54a584fdfd45326d4964d6011f2b2d882e38bea775a96046f2a61b7779a979629d8f
-  languageName: node
-  linkType: hard
-
-"hashish@npm:>=0.0.2 <0.1":
-  version: 0.0.4
-  resolution: "hashish@npm:0.0.4"
-  dependencies:
-    traverse: ">=0.2.4"
-  checksum: 8571cee91809661957dba8ae2ca605b1ab1e432b2781e6fc161ffb0caa55658075aecc14a518efe42a5597168dfab37cbdc2483d323851785f234b24b39455da
   languageName: node
   linkType: hard
 
@@ -8233,15 +8215,6 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"remove@npm:^0.1.5":
-  version: 0.1.5
-  resolution: "remove@npm:0.1.5"
-  dependencies:
-    seq: ">= 0.3.5"
-  checksum: 5ee886cb3509e09e706789bc4a9014c1d20b0ee6d004db581b382f3a256a45888526e23b36ce441fbd96ba3ecc453a18785d1e0d4d10dddb8e2e118961f93d9f
-  languageName: node
-  linkType: hard
-
 "replace-ext@npm:^1.0.0":
   version: 1.0.1
   resolution: "replace-ext@npm:1.0.1"
@@ -8422,13 +8395,12 @@ fsevents@~2.3.2:
     "@tailwindcss/forms": ^0.3.3
     "@tailwindcss/typography": ^0.4.1
     "@tailwindcss/ui": ^0.7.2
-    "@types/pdf-viewer-reactjs": ^2.2.2
     "@types/react": ^17.0.14
     "@types/react-helmet": ^6.1.2
     "@types/react-select": ^4.0.17
     "@types/sweetalert": ^2.0.4
     "@types/yup": ^0.29.13
-    "@types/ziggy-js": ^1.0.2
+    "@types/ziggy-js": ^1.3.0
     autoprefixer: ^10.3.1
     axios: ^0.21
     browser-sync: ^2.27.5
@@ -8448,7 +8420,6 @@ fsevents@~2.3.2:
     react-refresh: ^0.10.0
     react-select: ^4.3.1
     react-use: ^17.2.4
-    remove: ^0.1.5
     resolve-url-loader: ^4.0.0
     sass: ^1.35.2
     sass-loader: ^12.1.0
@@ -8673,16 +8644,6 @@ fsevents@~2.3.2:
     range-parser: ~1.2.1
     statuses: ~1.5.0
   checksum: d214c2fa42e7fae3f8fc1aa3931eeb3e6b78c2cf141574e09dbe159915c1e3a337269fc6b7512e7dfddcd7d6ff5974cb62f7c3637ba86a55bde20a92c18bdca0
-  languageName: node
-  linkType: hard
-
-"seq@npm:>= 0.3.5":
-  version: 0.3.5
-  resolution: "seq@npm:0.3.5"
-  dependencies:
-    chainsaw: ">=0.0.7 <0.1"
-    hashish: ">=0.0.2 <0.1"
-  checksum: 5b35acaadbb39ba26879a4395fe931b76addd90fd8bbca0efed3a96c26ecd003be9bc65d7fbf42b98eeb604f216f2ed22f22b01555aa04208f832d5c9b15403b
   languageName: node
   linkType: hard
 
@@ -9644,17 +9605,10 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"traverse@npm:>=0.2.4, traverse@npm:^0.6.6":
+"traverse@npm:^0.6.6":
   version: 0.6.6
   resolution: "traverse@npm:0.6.6"
   checksum: e2afa72f11efa9ba31ed763d2d9d2aa244612f22015d16c0ea3ba5f6ca8bf071de87f8108b721885cce06ea4a36ef4605d9228c67e431d9015ea4685cb364420
-  languageName: node
-  linkType: hard
-
-"traverse@npm:>=0.3.0 <0.4":
-  version: 0.3.9
-  resolution: "traverse@npm:0.3.9"
-  checksum: 982982e4e249e9bbf063732a41fe5595939892758524bbef5d547c67cdf371b13af72b5434c6a61d88d4bb4351d6dabc6e22d832e0d16bc1bc684ef97a1cc59e
   languageName: node
   linkType: hard
 

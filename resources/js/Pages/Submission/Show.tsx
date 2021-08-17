@@ -1,16 +1,16 @@
 import AppLayout from '@/Components/templates/AppLayout';
-import React, { useState } from 'react'
-import { InertiaLink, useForm } from '@inertiajs/inertia-react';
+import React, {useState} from 'react'
+import {InertiaLink, useForm} from '@inertiajs/inertia-react';
 import moment from 'moment-timezone';
 import Confirm from '@/Components/molecules/ConfirmDialog';
 import route from 'ziggy-js';
-import { PaperClipIcon } from '@heroicons/react/solid';
-import { BsArrowLeftShort } from "react-icons/bs"
-import useTypedPage from "@/hooks/useTypedPage";
+import {PaperClipIcon} from '@heroicons/react/solid';
+import {BsArrowLeftShort} from "react-icons/bs"
+import useTypedPage from "@/Hooks/useTypedPage";
 import {Admin, Team} from "@/types/models";
 
 export default function ShowSubmission() {
-    const { team, admins } = useTypedPage<{team:Team, admins: Admin[]}>().props;
+    const {team, admins} = useTypedPage<{ team: Team, admins: Admin[] }>().props;
     const [confirmOpen, setConfirmOpen] = useState(false);
     const [confProjectOpen, setConfProjectOpen] = useState(false);
 
@@ -26,7 +26,7 @@ export default function ShowSubmission() {
         rejectForm.put(`/submission/${team.id}/DITOLAK`);
     }
 
-    const { setData } = projectForm;
+    const {setData} = projectForm;
 
     const insertProject = () => {
         projectForm.post(route('project.store'));
@@ -36,12 +36,14 @@ export default function ShowSubmission() {
         <>
             <div className="flex items-center justify-between w-full my-5">
                 <div>
-                    <InertiaLink href={route('submission.index')} as="button" className="flex items-center gap-2"><BsArrowLeftShort /> kembali</InertiaLink>
+                    <InertiaLink href={route('submission.index')} as="button"
+                                 className="flex items-center gap-2"><BsArrowLeftShort/> kembali</InertiaLink>
                 </div>
                 <div className="flex">
                     {team.status === 'DITERIMA' ? (
                         <>
-                            <button onClick={() => setConfirmOpen(true)} type="button" className="px-5 py-1 mr-2 font-medium text-red-700 transform rounded-md cursor-pointer hover:red-800 focus:ring-1 focus:ring-red-600">
+                            <button onClick={() => setConfirmOpen(true)} type="button"
+                                    className="px-5 py-1 mr-2 font-medium text-red-700 transform rounded-md cursor-pointer hover:red-800 focus:ring-1 focus:ring-red-600">
                                 Batalkan Persetujuan
                             </button>
                             <div>
@@ -57,7 +59,8 @@ export default function ShowSubmission() {
                             </div>
                             {!team.project && (
                                 <>
-                                    <button onClick={() => setConfProjectOpen(true)} type="button" className="px-5 py-1 mr-2 font-medium text-gray-600 transform bg-white border border-gray-300 rounded-md cursor-pointer hover:bg-gray-100 hover:text-gray-600 focus:ring-1 focus:ring-gray-300">
+                                    <button onClick={() => setConfProjectOpen(true)} type="button"
+                                            className="px-5 py-1 mr-2 font-medium text-gray-600 transform bg-white border border-gray-300 rounded-md cursor-pointer hover:bg-gray-100 hover:text-gray-600 focus:ring-1 focus:ring-gray-300">
                                         Atur Projek
                                     </button>
                                     <div>
@@ -65,17 +68,31 @@ export default function ShowSubmission() {
                                             title="Atur Projek"
                                             open={confProjectOpen}
                                             onClose={() => setConfProjectOpen(false)}
-                                            onConfirm={() => { insertProject() }}
+                                            onConfirm={() => {
+                                                insertProject()
+                                            }}
                                             confirmText="Simpan">
 
-                                            <label htmlFor="projectName" className="block pb-1 mt-2 text-sm font-semibold text-gray-600">nama projek</label>
-                                            <input id="projectName" onChange={(e) => { setData('name', e.target.value) }} className="w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-green-600" />
+                                            <label htmlFor="projectName"
+                                                   className="block pb-1 mt-2 text-sm font-semibold text-gray-600">nama
+                                                projek</label>
+                                            <input id="projectName" onChange={(e) => {
+                                                setData('name', e.target.value)
+                                            }}
+                                                   className="w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-green-600"/>
 
-                                            <label htmlFor="projectDesc" className="block pb-1 mt-2 text-sm font-semibold text-gray-600">Deskripsi projek</label>
-                                            <textarea id="projectDesc" onChange={(e) => setData('description', e.target.value)} className="w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-green-600"></textarea>
+                                            <label htmlFor="projectDesc"
+                                                   className="block pb-1 mt-2 text-sm font-semibold text-gray-600">Deskripsi
+                                                projek</label>
+                                            <textarea id="projectDesc"
+                                                      onChange={(e) => setData('description', e.target.value)}
+                                                      className="w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-green-600"></textarea>
 
-                                            <label htmlFor="projectDesc" className="block pb-1 mt-2 text-sm font-semibold text-gray-600">Pembimbing lapangan</label>
-                                            <select onChange={(e) => setData('admin_id', e.target.value)} className="block w-full h-full px-4 py-2 pr-8 leading-tight text-gray-700 bg-white border border-gray-300 rounded appearance-none cursor-pointer focus:ring-0 focus:border-gray-300 focus:outline-none focus:bg-white">
+                                            <label htmlFor="projectDesc"
+                                                   className="block pb-1 mt-2 text-sm font-semibold text-gray-600">Pembimbing
+                                                lapangan</label>
+                                            <select onChange={(e) => setData('admin_id', e.target.value)}
+                                                    className="block w-full h-full px-4 py-2 pr-8 leading-tight text-gray-700 bg-white border border-gray-300 rounded appearance-none cursor-pointer focus:ring-0 focus:border-gray-300 focus:outline-none focus:bg-white">
                                                 <option value=""></option>
                                                 {admins.map((admin, idx) => (
                                                     <option key={idx} value={admin.id}>{admin.jss.fullname}</option>
@@ -89,15 +106,20 @@ export default function ShowSubmission() {
                         </>
                     ) : (
                         team.status === 'DITOLAK' ? (
-                            <InertiaLink href={`/submission/${team.id}/DITERIMA`} method="put" as="button" type="button" className="px-5 py-1 mr-2 font-medium text-green-900 transform bg-green-300 rounded-md cursor-pointer hover:bg-green-400 focus:ring-1 focus:ring-green-600">
+                            <InertiaLink href={`/submission/${team.id}/DITERIMA`} method="put" as="button" type="button"
+                                         className="px-5 py-1 mr-2 font-medium text-green-900 transform bg-green-300 rounded-md cursor-pointer hover:bg-green-400 focus:ring-1 focus:ring-green-600">
                                 Terima
                             </InertiaLink>
                         ) : (
                             <>
-                                <InertiaLink href={`/submission/${team.id}/DITOLAK`} method="put" as="button" type="button" className="px-5 py-1 mr-2 font-medium text-red-700 transform bg-red-300 rounded-md cursor-pointer hover:bg-red-400 focus:ring-1 focus:ring-red-600">
+                                <InertiaLink href={`/submission/${team.id}/DITOLAK`} method="put" as="button"
+                                             type="button"
+                                             className="px-5 py-1 mr-2 font-medium text-red-700 transform bg-red-300 rounded-md cursor-pointer hover:bg-red-400 focus:ring-1 focus:ring-red-600">
                                     Tolak
                                 </InertiaLink>
-                                <InertiaLink href={`/submission/${team.id}/DITERIMA`} method="put" as="button" type="button" className="px-5 py-1 mr-2 font-medium text-green-900 transform bg-green-300 rounded-md cursor-pointer hover:bg-green-400 focus:ring-1 focus:ring-green-600">
+                                <InertiaLink href={`/submission/${team.id}/DITERIMA`} method="put" as="button"
+                                             type="button"
+                                             className="px-5 py-1 mr-2 font-medium text-green-900 transform bg-green-300 rounded-md cursor-pointer hover:bg-green-400 focus:ring-1 focus:ring-green-600">
                                     Terima
                                 </InertiaLink>
                             </>
@@ -113,11 +135,13 @@ export default function ShowSubmission() {
                         <dt className="text-sm font-medium text-gray-500">Status</dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                             {team.status === "SEDANG DIPROSES" || team.status === "DITERIMA" ? (
-                                <span className="inline-block px-2 py-1 text-xs font-semibold text-green-600 uppercase bg-green-200 rounded-full">
+                                <span
+                                    className="inline-block px-2 py-1 text-xs font-semibold text-green-600 uppercase bg-green-200 rounded-full">
                                     {team.status}
                                 </span>
                             ) : (
-                                <span className="inline-block px-2 py-1 text-xs font-semibold text-red-600 uppercase bg-red-200 rounded-full">
+                                <span
+                                    className="inline-block px-2 py-1 text-xs font-semibold text-red-600 uppercase bg-red-200 rounded-full">
                                     {team.status}
                                 </span>
                             )}
@@ -144,7 +168,8 @@ export default function ShowSubmission() {
                         <dd className="flex gap-5 mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                             {team.apprentices.map((apprentice, idx) => (
                                 <div className="flex gap-2" key={idx}>
-                                    <img className="w-10 h-10 transform border border-gray-200 rounded-md" src={`/storage/${apprentice.photo}`} />
+                                    <img className="w-10 h-10 transform border border-gray-200 rounded-md"
+                                         src={`/storage/${apprentice.photo}`}/>
                                     <div className="flex flex-col">
                                         <span className="font-semibold text-gray-700">{apprentice.jss.fullname}</span>
                                         <span className="italic font-thin">{apprentice.jss.id}</span>
@@ -159,33 +184,42 @@ export default function ShowSubmission() {
                             <ul className="border border-gray-200 divide-y divide-gray-200 rounded-md">
                                 <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                                     <div className="flex items-center flex-1 w-0">
-                                        <PaperClipIcon className="flex-shrink-0 w-5 h-5 text-gray-400" aria-hidden="true" />
-                                        <a href={`/storage/${team.proposal}`} target="_blank" className="flex-1 w-0 ml-2 truncate">Proposal.pdf</a>
+                                        <PaperClipIcon className="flex-shrink-0 w-5 h-5 text-gray-400"
+                                                       aria-hidden="true"/>
+                                        <a href={`/storage/${team.proposal}`} target="_blank"
+                                           className="flex-1 w-0 ml-2 truncate">Proposal.pdf</a>
                                     </div>
                                     <div className="flex-shrink-0 ml-4">
-                                        <a href={`/storage/${team.proposal}`} download className="font-medium text-indigo-600 hover:text-indigo-500">
+                                        <a href={`/storage/${team.proposal}`} download
+                                           className="font-medium text-indigo-600 hover:text-indigo-500">
                                             Download
                                         </a>
                                     </div>
                                 </li>
                                 <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                                     <div className="flex items-center flex-1 w-0">
-                                        <PaperClipIcon className="flex-shrink-0 w-5 h-5 text-gray-400" aria-hidden="true" />
-                                        <a href={`/storage/${team.cover_letter}`} target="_blank" className="flex-1 w-0 ml-2 truncate">Surat Pengantar.pdf</a>
+                                        <PaperClipIcon className="flex-shrink-0 w-5 h-5 text-gray-400"
+                                                       aria-hidden="true"/>
+                                        <a href={`/storage/${team.cover_letter}`} target="_blank"
+                                           className="flex-1 w-0 ml-2 truncate">Surat Pengantar.pdf</a>
                                     </div>
                                     <div className="flex-shrink-0 ml-4">
-                                        <a href={`/storage/${team.cover_letter}`} download className="font-medium text-indigo-600 hover:text-indigo-500">
+                                        <a href={`/storage/${team.cover_letter}`} download
+                                           className="font-medium text-indigo-600 hover:text-indigo-500">
                                             Download
                                         </a>
                                     </div>
                                 </li>
                                 <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                                     <div className="flex items-center flex-1 w-0">
-                                        <PaperClipIcon className="flex-shrink-0 w-5 h-5 text-gray-400" aria-hidden="true" />
-                                        <a href={`/storage/${team.presentation}`} target="_blank" className="flex-1 w-0 ml-2 truncate">Presentasi yang akan diajukan.ppt</a>
+                                        <PaperClipIcon className="flex-shrink-0 w-5 h-5 text-gray-400"
+                                                       aria-hidden="true"/>
+                                        <a href={`/storage/${team.presentation}`} target="_blank"
+                                           className="flex-1 w-0 ml-2 truncate">Presentasi yang akan diajukan.ppt</a>
                                     </div>
                                     <div className="flex-shrink-0 ml-4">
-                                        <a href={`/storage/${team.presentation}`} download className="font-medium text-indigo-600 hover:text-indigo-500">
+                                        <a href={`/storage/${team.presentation}`} download
+                                           className="font-medium text-indigo-600 hover:text-indigo-500">
                                             Download
                                         </a>
                                     </div>
@@ -200,4 +234,4 @@ export default function ShowSubmission() {
 
 }
 
-ShowSubmission.layout = (page: React.ReactChild) => <AppLayout children={page} />;
+ShowSubmission.layout = (page: React.ReactChild) => <AppLayout children={page}/>;
