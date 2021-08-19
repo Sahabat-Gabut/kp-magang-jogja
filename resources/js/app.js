@@ -10,7 +10,6 @@ InertiaProgress.init({color: '#10B981'});
 
 createInertiaApp({
     title: title => title === 'Magang Jogja' ? title : `${title} - ${appName}`,
-    // @ts-ignore
     resolve: name => import(`./Pages/${name}`).then((module) => module.default),
     setup({el, App, props}) {
         render(<App {...props} />, el)

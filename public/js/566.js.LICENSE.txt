@@ -1,3 +1,23 @@
+/*!
+  Copyright (c) 2018 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+
+/*!
+ * JavaScript Cookie v2.2.1
+ * https://github.com/js-cookie/js-cookie
+ *
+ * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+ * Released under the MIT license
+ */
+
+/*!
+* screenfull
+* v5.1.0 - 2020-12-24
+* (c) Sindre Sorhus; MIT License
+*/
+
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
 

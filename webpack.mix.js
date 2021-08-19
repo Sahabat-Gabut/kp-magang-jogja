@@ -12,7 +12,7 @@ const tailwindcss = require('tailwindcss');
  |
  */
 
-mix.ts('resources/js/app.tsx', 'public/js').react()
+mix.ts('resources/js/app.js', 'public/js').react()
     .sass('resources/sass/app.sass', 'public/css')
     .options({
         processCssUrls: false,
