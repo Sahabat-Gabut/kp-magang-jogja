@@ -28,13 +28,16 @@ export default function GuestUserMenu() {
                                     leaveTo="opacity-0 translate-y-1">
                             <Popover.Panel
                                 className="absolute z-50 w-56 py-1 mt-2 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-sm lg:right-0">
-                                {props.auth.user.apprentice.team.status === 'DITERIMA' && (
+                                {props.auth.user?.apprentice &&
+                                props.auth.user.apprentice.team.status === 'DITERIMA' && (
                                     <InertiaLink as="button"
                                                  className="block w-full px-4 py-2 text-sm font-medium tracking-tight text-left text-gray-800 transition duration-200 cursor-pointer focus:outline-none hover:text-gray-900 hover:bg-gray-100"
                                                  href="/dashboard">
                                         <span>Dasbor</span>
                                     </InertiaLink>
-                                )}
+                                )
+
+                                }
                                 {props.auth.user.admin && (
                                     <InertiaLink as="button"
                                                  className="block w-full px-4 py-2 text-sm font-medium tracking-tight text-left text-gray-800 transition duration-200 cursor-pointer focus:outline-none hover:text-gray-900 hover:bg-gray-100"
