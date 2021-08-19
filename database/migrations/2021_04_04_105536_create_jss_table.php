@@ -15,12 +15,12 @@ class CreateJssTable extends Migration
     {
         Schema::create('jss', function (Blueprint $table) {
             $table->string('id');
-            $table->char('NIK',17);
-            $table->string('username',50);
-            $table->string('fullname',100);
-            $table->string('password',100);
-            $table->string('email',100)->unique();
-            $table->char('no_wa',15);
+            $table->char('NIK', 17);
+            $table->string('username', 50);
+            $table->string('fullname', 100);
+            $table->string('password', 100);
+            $table->string('email', 100)->unique();
+            $table->string('no_wa', 50);
         });
     }
 

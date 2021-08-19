@@ -1,15 +1,17 @@
-import AppLayout from '@/Components/templates/AppLayout';
-import React, {useState} from 'react'
+import AppLayout from '@/Layouts/AppLayout';
+import React, {ChangeEvent, useState} from 'react'
 import {InertiaLink, useForm} from '@inertiajs/inertia-react';
 import moment from 'moment-timezone';
-import Confirm from '@/Components/molecules/ConfirmDialog';
-import route from 'ziggy-js';
 import {PaperClipIcon} from '@heroicons/react/solid';
 import {BsArrowLeftShort} from "react-icons/bs"
-import useTypedPage from "@/Hooks/useTypedPage";
-import {Admin, Team} from "@/types/models";
+import {useRoute, useTypedPage} from "@/Hooks";
+import {Admin, Team} from "@/types";
+import {DialogModal} from "@/Components/Dialog";
+import {DangerButton, SecondaryButton, SuccessButton} from "@/Components/Button";
+import {Input, Select, Textarea} from "@/Components/Form";
 
 export default function ShowSubmission() {
+    const route = useRoute();
     const {team, admins} = useTypedPage<{ team: Team, admins: Admin[] }>().props;
     const [confirmOpen, setConfirmOpen] = useState(false);
     const [confProjectOpen, setConfProjectOpen] = useState(false);
@@ -37,7 +39,9 @@ export default function ShowSubmission() {
             <div className="flex items-center justify-between w-full my-5">
                 <div>
                     <InertiaLink href={route('submission.index')} as="button"
-                                 className="flex items-center gap-2"><BsArrowLeftShort/> kembali</InertiaLink>
+                                 className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-gray-300 active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition gap-2"><BsArrowLeftShort/>
+                        kembali
+                    </InertiaLink>
                 </div>
                 <div className="flex">
                     {team.status === 'DITERIMA' ? (
@@ -46,61 +50,49 @@ export default function ShowSubmission() {
                                     className="px-5 py-1 mr-2 font-medium text-red-700 transform rounded-md cursor-pointer hover:red-800 focus:ring-1 focus:ring-red-600">
                                 Batalkan Persetujuan
                             </button>
-                            <div>
-                                <Confirm
-                                    title="Apakah anda yakin?"
-                                    open={confirmOpen}
-                                    onClose={() => setConfirmOpen(false)}
-                                    onConfirm={reject}
-                                    confirmText="Ya, saya yakin"
-                                    confirmClass="bg-red-600 hover:bg-red-700 focus:ring-red-500 text-white">
+                            <DialogModal isOpen={confirmOpen} onClose={() => setConfirmOpen(false)}>
+                                <DialogModal.Content title={'Hapus Admin'}>
                                     apakah anda yakin ingin membatalkan persetujuan tim ini?
-                                </Confirm>
-                            </div>
+                                </DialogModal.Content>
+                                <DialogModal.Footer>
+                                    <SecondaryButton onClick={() => setConfirmOpen(false)}>
+                                        Batal
+                                    </SecondaryButton>
+                                    <DangerButton
+                                        onClick={reject}
+                                        className={'ml-2'}>
+                                        Ya, Saya yakin
+                                    </DangerButton>
+                                </DialogModal.Footer>
+                            </DialogModal>
                             {!team.project && (
                                 <>
                                     <button onClick={() => setConfProjectOpen(true)} type="button"
                                             className="px-5 py-1 mr-2 font-medium text-gray-600 transform bg-white border border-gray-300 rounded-md cursor-pointer hover:bg-gray-100 hover:text-gray-600 focus:ring-1 focus:ring-gray-300">
                                         Atur Projek
                                     </button>
-                                    <div>
-                                        <Confirm
-                                            title="Atur Projek"
-                                            open={confProjectOpen}
-                                            onClose={() => setConfProjectOpen(false)}
-                                            onConfirm={() => {
-                                                insertProject()
-                                            }}
-                                            confirmText="Simpan">
-
-                                            <label htmlFor="projectName"
-                                                   className="block pb-1 mt-2 text-sm font-semibold text-gray-600">nama
-                                                projek</label>
-                                            <input id="projectName" onChange={(e) => {
-                                                setData('name', e.target.value)
-                                            }}
-                                                   className="w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-green-600"/>
-
-                                            <label htmlFor="projectDesc"
-                                                   className="block pb-1 mt-2 text-sm font-semibold text-gray-600">Deskripsi
-                                                projek</label>
-                                            <textarea id="projectDesc"
-                                                      onChange={(e) => setData('description', e.target.value)}
-                                                      className="w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-green-600"></textarea>
-
-                                            <label htmlFor="projectDesc"
-                                                   className="block pb-1 mt-2 text-sm font-semibold text-gray-600">Pembimbing
-                                                lapangan</label>
-                                            <select onChange={(e) => setData('admin_id', e.target.value)}
-                                                    className="block w-full h-full px-4 py-2 pr-8 leading-tight text-gray-700 bg-white border border-gray-300 rounded appearance-none cursor-pointer focus:ring-0 focus:border-gray-300 focus:outline-none focus:bg-white">
-                                                <option value=""></option>
+                                    <DialogModal isOpen={confProjectOpen} onClose={() => setConfProjectOpen(false)}>
+                                        <DialogModal.Content title={'Atur Projek'}>
+                                            <Input name={'projectName'}
+                                                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                                       setData('name', e.target.value)
+                                                   }}/>
+                                            <Textarea name={'projectDesc'}
+                                                      onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setData('description', e.target.value)}/>
+                                            <Select name={'admin_id'}>
+                                                <option value={''}/>
                                                 {admins.map((admin, idx) => (
-                                                    <option key={idx} value={admin.id}>{admin.jss.fullname}</option>
-                                                ))}
-                                            </select>
-
-                                        </Confirm>
-                                    </div>
+                                                    <option key={idx} value={admin.id}>{admin.jss.fullname}</option>))}
+                                            </Select>
+                                        </DialogModal.Content>
+                                        <DialogModal.Footer>
+                                            <SecondaryButton onClick={() => setConfProjectOpen(false)}>
+                                                Batal
+                                            </SecondaryButton>
+                                            <SuccessButton onClick={insertProject}
+                                                           className={'ml-2'}>Simpan</SuccessButton>
+                                        </DialogModal.Footer>
+                                    </DialogModal>
                                 </>
                             )}
                         </>
@@ -169,7 +161,7 @@ export default function ShowSubmission() {
                             {team.apprentices.map((apprentice, idx) => (
                                 <div className="flex gap-2" key={idx}>
                                     <img className="w-10 h-10 transform border border-gray-200 rounded-md"
-                                         src={`/storage/${apprentice.photo}`}/>
+                                         src={`/storage/${apprentice.photo}`} alt={apprentice.jss.username}/>
                                     <div className="flex flex-col">
                                         <span className="font-semibold text-gray-700">{apprentice.jss.fullname}</span>
                                         <span className="italic font-thin">{apprentice.jss.id}</span>

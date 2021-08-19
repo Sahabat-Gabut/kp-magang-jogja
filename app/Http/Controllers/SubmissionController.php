@@ -32,7 +32,7 @@ class SubmissionController extends Controller
     {
         $this->middleware(function ($request, $next) {
             if (Auth::check()) {
-                $this->user = Auth::user()->load(['admin.role', 'admin.agency']);
+                $this->user = Auth::user()->load(['admin.role', 'admin.agency', 'apprentice']);
             }
             return $next($request);
         });
@@ -40,14 +40,15 @@ class SubmissionController extends Controller
 
     public function index(): Response
     {
-        if (!$this->user->admin) {
-            return abort(403);
+        if (!$this->user->apprentice && !$this->user->admin) {
+            return Inertia::render('Error', ['status' => 403]);
         }
 
         $title = 'Daftar Pengajuan';
         $filters = RequestFacade::all(['search', 'status']);
         $data_paginate = new PaginateCollenction(
             Team::with('apprentices.jss', 'agency')
+                ->orWhere('agency_id', 'LIKE', $this->user->admin->agency_id)
                 ->filter(RequestFacade::only(['search', 'status']))
                 ->paginate(15)
                 ->appends(RequestFacade::all()));
@@ -118,6 +119,10 @@ class SubmissionController extends Controller
 
     public function show(int $id): Response
     {
+        if (!$this->user->apprentice && !$this->user->admin) {
+            return Inertia::render('Error', ['status' => 403]);
+        }
+
         $title = 'Detail Tim';
         $team = Team::with('apprentices', 'agency', 'apprentices.jss', 'project')->find($id);
         $admins = Admin::with('jss')->where('agency_id', $team->agency_id)->where('role_id', 3)->get();

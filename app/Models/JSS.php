@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Models\{Admin,Apprentice,Attendance,Team,Project};
 
-class JSS extends Authenticatable {
+class JSS extends Authenticatable
+{
+    use HasFactory;
 
-    protected $table        = "jss";
-    protected $primaryKey   = "id";
-    protected $keyType      = "string";
+    public $timestamps = false;
+    protected $table = "jss";
+    protected $primaryKey = "id";
+    protected $keyType = "string";
     protected $fillable = [
         'id',
         'username',
@@ -23,41 +27,15 @@ class JSS extends Authenticatable {
      *
      * @var array
      */
-    protected $hidden = ['NIK','password'];
+    protected $hidden = ['NIK', 'password'];
 
-    public function admin()
+    public function admin(): HasOne
     {
-        return $this->hasOne(Admin::class,'jss_id','id');
+        return $this->hasOne(Admin::class, 'jss_id', 'id');
     }
 
-    public function apprentice()
+    public function apprentice(): HasOne
     {
         return $this->hasOne(Apprentice::class, 'jss_id');
     }
-  
-    // public function adminRole()
-    // {
-    //     return $this->hasOneThrough(RoleAdmin::class, Admin::class,'jss_id','id','id','role_admin_id');
-    // }
-
-
-    // public function apprenticeTeam()
-    // {
-    //     return $this->hasOneThrough(Team::class,Apprentice::class, 'jss_id', 'id','id','team_id');
-    // }
-
-    // public function apprenticeTeams()
-    // {
-    //     return $this->hasManyThrough(Team::class,Apprentice::class, 'jss_id', 'id','id','team_id');
-    // }
-
-    // public function apprenticeProject()
-    // {
-    //     return $this->hasOneThrough(Project::class, Apprentice::class, 'jss_id','team_id','id','team_id');
-    // }
-
-    // public function apprenticeAttendance()
-    // {
-    //     return $this->hasOneThrough(Attendance::class, Apprentice::class, 'jss_id', 'id', 'id', 'apprentice_id');
-    // }
 }

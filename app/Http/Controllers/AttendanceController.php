@@ -24,8 +24,7 @@ class AttendanceController extends Controller
         $this->middleware(function ($request, $next) {
             if (Auth::check()) {
                 $this->auth = Auth::user()->load(['admin.role', 'admin.agency', 'apprentice']);
-
-                if (null != $this->auth->admin) {
+                if ($this->auth->admin) {
                     $this->isSuperAdmin = $this->auth->admin->role->id == "1";
                 }
             }
@@ -33,12 +32,13 @@ class AttendanceController extends Controller
         });
     }
 
-    public function index()
+    public function index(): Response
     {
         $team = new Team();
+        $agency_id = $this->auth->admin->agency_id ?? 0;
         if ($this->auth->admin) {
             $data_paginate = new PaginateCollenction(
-                $team->getByRole($this->isSuperAdmin)
+                $team->getByRole($this->isSuperAdmin, $agency_id)
                     ->filter(RequestFacade::only('search'))
                     ->paginate(20)->appends(RequestFacade::all())
             );
@@ -51,12 +51,14 @@ class AttendanceController extends Controller
                     ->appends(RequestFacade::all())
             );
         }
-
-        return Inertia::render('Attendance/Index', [
-            'title' => 'Absensi',
-            'filters' => RequestFacade::all('search'),
-            'data_paginate' => $data_paginate,
-        ]);
+        if ($this->auth->apprentice || $this->auth->admin) {
+            return Inertia::render('Attendance/Index', [
+                'title' => 'Absensi',
+                'filters' => RequestFacade::all('search'),
+                'data_paginate' => $data_paginate,
+            ]);
+        }
+        return Inertia::render('Error', ['status' => 403]);
     }
 
     public function show($id): Response
@@ -65,17 +67,20 @@ class AttendanceController extends Controller
         $callback = function ($query) use ($id) {
             $query->where('apprentice.team_id', '=', $id);
         };
+        if ($this->auth->apprentice || $this->auth->admin) {
+            return Inertia::render('Attendance/Show', [
+                'title' => 'Absensi',
+                'filters' => $filters,
+                'apprentices' => new ApprenticeSelectCollection(Apprentice::with('jss')->where('team_id', '=', $id)->get()),
+                'attendance_paginate' => new PaginateCollenction(Attendance::whereHas('apprentice', $callback)
+                    ->with('apprentice.jss')
+                    ->filter(RequestFacade::only(['search', 'select']))
+                    ->paginate($filters['show'])
+                    ->appends(RequestFacade::all())),
+            ]);
+        }
 
-        return Inertia::render('Attendance/Show', [
-            'title' => 'Absensi',
-            'filters' => $filters,
-            'apprentices' => new ApprenticeSelectCollection(Apprentice::with('jss')->where('team_id', '=', $id)->get()),
-            'attendance_paginate' => new PaginateCollenction(Attendance::whereHas('apprentice', $callback)
-                ->with('apprentice.jss')
-                ->filter(RequestFacade::only(['search', 'select']))
-                ->paginate($filters['show'])
-                ->appends(RequestFacade::all())),
-        ]);
+        return Inertia::render('Error', ['status' => 403]);
     }
 
     public function update(Attendance $attendance, Request $request): RedirectResponse

@@ -1,17 +1,18 @@
-import Pagination from '@/Components/molecules/Pagination';
-import SearchFilter from '@/Components/molecules/SearchFilter';
-import AppLayout from '@/Components/templates/AppLayout'
+import Pagination from '@/Components/Pagination';
+import {SearchFilter} from '@/Components/Form';
+import AppLayout from '@/Layouts/AppLayout'
 import {Listbox, Transition} from '@headlessui/react';
 import {SelectorIcon} from '@heroicons/react/solid';
 import {Inertia} from '@inertiajs/inertia';
-import {InertiaLink} from '@inertiajs/inertia-react';
 import {pickBy} from 'lodash';
 import React, {Fragment, useEffect, useState} from 'react'
 import {usePrevious} from 'react-use';
-import route from 'ziggy-js';
-import useTypedPage from "@/Hooks/useTypedPage";
+import {useRoute, useTypedPage} from "@/Hooks";
 import {PaginatedData} from "@/types/UsePageProps";
 import {Team} from "@/types/models";
+import Table from "@/Components/Table";
+import {IoIosArrowForward} from "react-icons/io";
+import {InertiaLink} from "@inertiajs/inertia-react";
 
 const status = [
     {id: 1, name: 'Semua', value: ''},
@@ -21,6 +22,7 @@ const status = [
 ]
 
 export default function Submission() {
+    const route = useRoute();
     const {data_paginate, filters} = useTypedPage<{ data_paginate: PaginatedData<Team> }>().props;
     const {data: submissions, meta} = data_paginate;
     const [selectedStatus, setSelectedStatus] = useState(status[0]);
@@ -98,103 +100,90 @@ export default function Submission() {
                 </button> */}
             </div>
 
-            <div className="flex flex-col">
-                <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                        <div
-                            className="overflow-hidden overflow-y-auto border border-gray-200 rounded-lg scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-50"
-                            style={{maxHeight: '70vh'}}>
-                            <table className="min-w-full">
-                                <thead className="sticky top-0 bg-gray-50" style={{zIndex: 2}}>
-                                <tr>
-                                    <th
-                                        scope="col"
-                                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                                        Dinas
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                                        Universitas
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                                        Status
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                                        Peserta
-                                    </th>
-                                    <th scope="col" className="relative px-6 py-3">
-                                        <span className="sr-only">Edit</span>
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody className="text-sm font-light bg-white divide-y divide-gray-200">
-                                {submissions.map(({agency: {name}, id, university, apprentices, status}, key) => (
-                                    <tr key={key} className="hover:bg-gray-50">
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            {name}
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            {university}
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            {status === "SEDANG DIPROSES" && (
-                                                <span
-                                                    className="inline-flex px-2 text-xs font-semibold leading-5 text-yellow-800 bg-yellow-100 rounded-full">
+            <Table>
+                <Table.THead>
+                    <Table.Tr>
+                        <Table.Th>Dinas</Table.Th>
+                        <Table.Th>Universitas</Table.Th>
+                        <Table.Th>Status</Table.Th>
+                        <Table.Th>Peserta</Table.Th>
+                        <Table.Th srOnly={true}>Aksi</Table.Th>
+                    </Table.Tr>
+                </Table.THead>
+                <Table.TBody>
+                    {submissions.map(({agency: {name}, id, university, apprentices, status}, key) => (
+                        <Table.Tr key={key} className={'hover:bg-gray-50'}>
+                            <Table.Td style={{padding: 0}}>
+                                <InertiaLink href={route('submission.show', {id: id.toString()})}
+                                             className="w-full text-left py-3 px-6"
+                                             as={'button'}>
+                                    {name}
+                                </InertiaLink>
+                            </Table.Td>
+                            <Table.Td style={{padding: 0}}>
+                                <InertiaLink href={route('submission.show', {id: id.toString()})}
+                                             className="w-full text-left py-3 px-6"
+                                             as={'button'}>
+                                    {university}
+                                </InertiaLink>
+                            </Table.Td>
+                            <Table.Td style={{padding: 0}}>
+                                <InertiaLink href={route('submission.show', {id: id.toString()})}
+                                             className="w-full text-left py-3 px-6"
+                                             as={'button'}>
+                                    {status === "SEDANG DIPROSES" && (
+                                        <span
+                                            className="inline-flex px-2 text-xs font-semibold leading-5 text-yellow-800 bg-yellow-100 rounded-full">
                                                         {status}
                                                     </span>
-                                            )}
-                                            {status === "DITERIMA" && (
-                                                <span
-                                                    className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                    )}
+                                    {status === "DITERIMA" && (
+                                        <span
+                                            className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
                                                         {status}
                                                     </span>
-                                            )}
-                                            {status === "DITOLAK" && (
-                                                <span
-                                                    className="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
+                                    )}
+                                    {status === "DITOLAK" && (
+                                        <span
+                                            className="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
                                                         {status}
                                                     </span>
-                                            )}
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                            <div className="flex items-center">
-                                                {apprentices.map((user, idx) => (
-                                                    <img key={idx}
-                                                         className="w-6 h-6 transform border border-gray-200 rounded-full cursor-pointer hover:scale-125"
-                                                         src={`storage/${user.photo}`} alt={user.jss.username}/>
-                                                ))}
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                                            <InertiaLink href={route('submission.show', {id: id.toString()})}
-                                                         className="text-gray-600 hover:text-gray-900">
-                                                Detail
-                                            </InertiaLink>
-                                        </td>
-                                    </tr>
-                                ))}
-                                {submissions.length === 0 && (
-                                    <tr>
-                                        <td className="w-full py-4 text-center bg-white" colSpan={3}>
-                                            data tidak tersedia!
-                                        </td>
-                                    </tr>
-                                )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                    )}
+                                </InertiaLink>
+                            </Table.Td>
+                            <Table.Td style={{padding: 0}}>
+                                <InertiaLink href={route('submission.show', {id: id.toString()})}
+                                             className="w-full text-left py-3 px-6"
+                                             as={'button'}>
+                                    <div className="flex items-center">
+                                        {apprentices.map((user, idx) => (
+                                            <img key={idx}
+                                                 className="w-6 h-6 transform border border-gray-200 rounded-full cursor-pointer hover:scale-125"
+                                                 src={`storage/${user.photo}`} alt={user.jss.username}/>
+                                        ))}
+                                    </div>
+                                </InertiaLink>
+                            </Table.Td>
+                            <Table.Td style={{padding: 0}}>
+                                <InertiaLink href={route('submission.show', {id: id.toString()})}
+                                             className="w-full text-left py-3 px-6"
+                                             as={'button'}>
+                                    <IoIosArrowForward/>
+                                </InertiaLink>
+                            </Table.Td>
+                        </Table.Tr>
+                    ))}
+                    {submissions.length === 0 && (
+                        <Table.Tr>
+                            <Table.Td className="w-full py-4 text-center bg-white" colSpan={3}>
+                                data tidak tersedia!
+                            </Table.Td>
+                        </Table.Tr>
+                    )}
+                </Table.TBody>
+            </Table>
 
-            <div className="px-2">
-                <Pagination meta={meta}/>
-            </div>
+            <Pagination meta={meta}/>
         </>
     )
 }

@@ -1,5 +1,5 @@
-import { Page, PageProps } from '@inertiajs/inertia';
-import { Admin, Agency, Apprentice, Attendance, JSS, Project, Role, Team } from './models';
+import {Admin, Agency, Apprentice, Team} from './models';
+
 export type Nullable<T> = T | null;
 
 // export interface UsePageProps extends Page<PageProps> {
@@ -69,12 +69,14 @@ export type Nullable<T> = T | null;
 export type InertiaSharedProps<T = {}> = T & {
     title: string;
     errors: any;
-    errorBags:any;
-    auth: {user: Nullable<User>};
+    errorBags: any;
+    auth: { user: User };
     total_team: Number;
     total_admin: Number;
     total_project: Number;
     total_submission: Number;
+    agencies: Agency[];
+    team: Team;
     flash: {
         type: string;
         message: string;
@@ -90,10 +92,6 @@ export type InertiaSharedProps<T = {}> = T & {
 export type PaginatedData<T = {}> = Meta & {
     data: T[];
     links: LinkPagination;
-}
-
-type Auth = {
-    user: Nullable<User>
 }
 
 type User = {

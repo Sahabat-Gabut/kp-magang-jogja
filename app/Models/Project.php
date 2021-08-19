@@ -2,56 +2,62 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
-use App\Models\{Team,ProgressProject};
 
 class Project extends Model
 {
-    protected $table        = "project";
-    public $timestamps      = false;
-
-    protected $fillable     = [
+    public $timestamps = false;
+    protected $table = "project";
+    protected $fillable = [
         'id',
         'team_id',
         'name',
         'description',
-        'status'
+        'status',
     ];
 
-    public function progress()
+    public function progress(): HasMany
     {
-        return $this->hasMany(ProgressProject::class)->orderBy('id','ASC');
+        return $this->hasMany(ProgressProject::class)->orderBy('id', 'ASC');
     }
 
-    public function team()
+    public function team(): HasOne
     {
         return $this->hasOne(Team::class, 'id', 'team_id');
     }
 
     public function scopeFilter($query, array $filters)
     {
-        $query->when($filters['search'] ?? null, function($query, $search) {
-            $query->where('name','ilike','%'.$search.'%');
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where('name', 'ilike', '%' . $search . '%');
         });
     }
 
-    public function get(bool $isAdmin)
+    public function get(bool $isAdmin, int $agency_id)
     {
         $auth = Auth::user()->load('apprentice.team');
 
-        return $isAdmin ? Project::with(['team.agency','team.apprentices.jss'])
-                        : Project::with(['progress.jss', 'team.apprentices.jss','team.admin.jss'])
-                                ->where('team_id',$auth->apprentice->team->id)
-                                ->first();
+        return $isAdmin ? Project::with(['team.agency', 'team.apprentices.jss', 'progress'])->orWhereHas('team', function ($q) use ($agency_id) {
+            $q->orWhere('agency_id', 'LIKE', $agency_id);
+        })
+            : Project::with(['progress.jss', 'team.apprentices.jss', 'team.admin.jss'])
+                ->where('team_id', $auth->apprentice->team->id)
+                ->first();
     }
 
     public function percentageTeam($project)
     {
         $auth = Auth::user()->load('admin');
-        if($auth->admin) return 0;
+        if ($auth->admin) return 0;
 
-        return number_format($project->progress->where('status','SELESAI')->count()/$project->progress->count()*100);
+        return number_format($project->progress->where('status', 'SELESAI')->count() / $project->progress->count() * 100);
+    }
+
+    public function percentageTeam2($project)
+    {
+        return number_format($project->progress->where('status', 'SELESAI')->count() / $project->progress->count() * 100);
     }
 }

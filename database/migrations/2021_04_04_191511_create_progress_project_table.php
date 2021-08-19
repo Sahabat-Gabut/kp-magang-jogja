@@ -20,8 +20,8 @@ class CreateProgressProjectTable extends Migration
             $table->foreignId('apprentice_id')->constrained('apprentice')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->string('description')->nullable();
-            $table->enum('status',['PENGEMBANGAN','SELESAI']);
-            $table->string('file')->nullable();
+            $table->enum('status', ['PENGEMBANGAN', 'SELESAI']);
+            $table->string('link')->nullable();
             $table->timestampTz('date_of_created')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }

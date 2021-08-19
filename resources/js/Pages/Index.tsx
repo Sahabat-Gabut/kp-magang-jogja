@@ -1,8 +1,8 @@
 import React from 'react'
-import MainCard from '@/Components/organisms/MainCard';
-import {MainLayout} from '@/Components/templates';
 import {InertiaLink} from '@inertiajs/inertia-react';
 import useRoute from '@/Hooks/useRoute';
+import GuestLayout from "@/Layouts/GuestLayout";
+import {GuestCard} from "@/Components/Guest";
 
 export default function HomePage() {
     const route = useRoute();
@@ -21,41 +21,41 @@ export default function HomePage() {
                         </InertiaLink>
                     </div>
                     <div data-aos="fade-left" className="order-first lg:order-last aos-init aos-animate">
-                        <img className="h-96" src="/img/logo.webp"/>
+                        <img className="h-96" src="/img/logo.webp" alt={'logo'}/>
                     </div>
                 </div>
             </div>
             <div
                 className="container flex flex-wrap items-center justify-between max-w-screen-xl px-0 py-6 mx-4 md:mx-auto md:grid md:grid-cols-2 md:gap-6 md:px-2 lg:grid-cols-3 lg:gap-6">
-                <MainCard
+                <GuestCard
                     img="/img/logo/register.png"
                     title="Daftar Magang"
                     desc="Halaman pendaftaran magang mahasiswa pada instansi di seluruh Kota Yogyakarta."
                     buttonLink={route('submission.create')}
                     buttonText="Daftar"/>
 
-                <MainCard
+                <GuestCard
                     img="/img/logo/attention.png"
                     title="Pengumuman"
                     desc="Melihat hasil Pengumuman pendaftaran magang Dinas Koya Yogyakarta."
                     buttonLink="/dashboard"
                     buttonText="Lihat Pengumuman"/>
 
-                <MainCard
+                <GuestCard
                     img="/img/logo/attendance.png"
                     title="Absensi"
                     desc="Melakukan penginputan dan pemantauan absen Magang Kota Yogyakarta."
                     buttonLink={route('attendance.index')}
                     buttonText="Lihat Absensi"/>
 
-                <MainCard
+                <GuestCard
                     img="/img/logo/progress.png"
                     title="Progres Projek"
                     desc="Melakukan Input dan melihat progres yang telah dilakukan dalam Magang Kota Yogyakarta."
                     buttonLink={route('project.index')}
                     buttonText="Lihat Progres"/>
 
-                <MainCard
+                <GuestCard
                     img="/img/logo/download.png"
                     title="Kuota Magang"
                     desc="Daftar Kuota Magang di Setiap Dinas"
@@ -66,4 +66,4 @@ export default function HomePage() {
         </>
     )
 }
-HomePage.layout = (page: React.ReactChild) => <MainLayout children={page} showFooter={false}/>;
+HomePage.layout = (page: React.ReactChild) => <GuestLayout children={page} showFooter={false}/>;

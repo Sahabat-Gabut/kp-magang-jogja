@@ -4,15 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\PaginateCollenction;
 use App\Models\Agency;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request as RequestFacade;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class AgencyController extends Controller
 {
-    protected $isSuperAdmin = false, $isAdminAgency = false;
+    protected $isSuperAdmin = false, $isAdminAgency = false, $user;
 
     public function __construct()
     {
@@ -28,9 +30,8 @@ class AgencyController extends Controller
         });
     }
 
-    public function index()
+    public function index(): Response
     {
-        if (!$this->isSuperAdmin) return abort(403);
         $title = 'Daftar Dinas';
         $filters = RequestFacade::all('search');
         $data_paginate = new PaginateCollenction(
@@ -39,10 +40,23 @@ class AgencyController extends Controller
                 ->paginate(RequestFacade::only('show'))
                 ->appends(RequestFacade::all())
         );
+        if (!$this->user->apprentice && !$this->isSuperAdmin) {
+            return Inertia::render('Error', ['status' => 403]);
+        }
         return Inertia::render('Agency/Index', compact(['title', 'filters', 'data_paginate']));
     }
 
-    public function update(Agency $agency, Request $request)
+    public function show(): Response
+    {
+        $title = 'Daftar Kuota Dinas';
+        $agencies = Agency::all();
+        if (!$this->user->apprentice) {
+            return Inertia::render('Error', ['status' => 403]);
+        }
+        return Inertia::render('Agency/Show', compact(['title', 'agencies']));
+    }
+
+    public function update(Agency $agency, Request $request): RedirectResponse
     {
         $update = $agency->update([
             'name' => $request->name,
@@ -62,7 +76,7 @@ class AgencyController extends Controller
         }
     }
 
-    public function destroy(Agency $agency)
+    public function destroy(Agency $agency): RedirectResponse
     {
         $delete = $agency->delete();
 

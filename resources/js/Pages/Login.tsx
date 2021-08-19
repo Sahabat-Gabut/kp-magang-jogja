@@ -1,8 +1,8 @@
 import React from 'react'
-import {MainLayout} from '@/Components/templates'
 import {useForm} from '@inertiajs/inertia-react';
 import route from 'ziggy-js';
 import useTypedPage from "@/Hooks/useTypedPage";
+import GuestLayout from "@/Layouts/GuestLayout";
 
 export default function Login() {
     const {errors} = useTypedPage().props;
@@ -19,7 +19,7 @@ export default function Login() {
 
     const formHandler = (e: React.FormEvent) => {
         e.preventDefault();
-        loginForm.post(route('login')).then();
+        loginForm.post(route('login'));
     }
 
     return (
@@ -67,4 +67,4 @@ export default function Login() {
     )
 }
 
-Login.layout = (page: React.ReactChild) => <MainLayout children={page} showFooter={false}/>;
+Login.layout = (page: React.ReactChild) => <GuestLayout children={page} showFooter={false}/>;

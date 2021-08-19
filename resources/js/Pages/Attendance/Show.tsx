@@ -1,5 +1,5 @@
-import Pagination from '@/Components/molecules/Pagination';
-import AppLayout from '@/Components/templates/AppLayout';
+import Pagination from '@/Components/Pagination';
+import AppLayout from '@/Layouts/AppLayout';
 import React, {Fragment, useEffect, useState} from 'react'
 import moment from 'moment-timezone'
 import {Listbox, RadioGroup, Transition} from '@headlessui/react';
@@ -10,7 +10,7 @@ import {pickBy} from 'lodash';
 import {Inertia} from '@inertiajs/inertia';
 import useRoute from "@/Hooks/useRoute";
 import {useForm} from '@inertiajs/inertia-react';
-import Confirm from '@/Components/molecules/ConfirmDialog';
+import Confirm from '@/Components/Dialog/ConfirmDialog';
 import useTypedPage from "@/Hooks/useTypedPage";
 import {PaginatedData} from "@/types/UsePageProps";
 import {Apprentice, Attendance} from "@/types/models";
@@ -241,11 +241,11 @@ export default function AttendanceShow() {
                                             <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                                                 <div className="flex justify-end gap-2 text-center">
                                                     <button onClick={() => _onClick(id, status)}
-                                                            className="font-semibold text-yellow-600 outline-none hover:text-yellow-900 focus:outline-none">
+                                                            className="font-semibold text-gray-600 outline-none hover:text-yellow-900 focus:outline-none">
                                                         Ubah
                                                     </button>
                                                     <button onClick={() => handleDelete(id)}
-                                                            className="font-semibold text-red-600 outline-none hover:text-red-900">
+                                                            className="font-semibold text-gray-600 outline-none hover:text-red-900">
                                                         Hapus
                                                     </button>
                                                 </div>

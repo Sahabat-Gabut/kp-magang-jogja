@@ -29,7 +29,7 @@ export type Team = {
     agency: Agency
     apprentices: Apprentice[]
     jss: JSS;
-    project?: Project;
+    project: Project;
     admin: Admin
 }
 
@@ -38,6 +38,7 @@ export type Project = {
     admin_id: number;
     name: string;
     description: string;
+    status: string;
     team: Team;
     admin: Admin;
     progress: ProgressProject[];
@@ -50,7 +51,7 @@ export type ProgressProject = {
     name: string;
     description: string;
     status: string;
-    file: string;
+    link: string;
     date_of_created: Date;
     jss: JSS;
     valuation: any;

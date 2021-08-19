@@ -47,7 +47,7 @@ class AdminController extends Controller
         $admin = Admin::with('jss', 'role');
 
         if ($this->isAdminAgency) {
-            $admin = $admin->where('agency_id', '=', $this->user->admin->agency_id);
+            $admin = $admin->where('agency_id', '=', $this->auth->admin->agency_id);
         }
 
         $title = 'Daftar Admin';
@@ -74,7 +74,7 @@ class AdminController extends Controller
         if ($request->role_admin_id == "1") {
             $request->agency_id = NULL;
         } else if ($request->agency_id == '0') {
-            $request->agency_id = $this->user->admin->agency_id;
+            $request->agency_id = $this->auth->admin->agency_id;
         }
 
         $insert = (new Admin)->create([

@@ -29,7 +29,7 @@ class ProjectController extends Controller
 
     public function index(): Response
     {
-        $project = (new Project)->get((bool)$this->auth->admin);
+        $project = (new Project)->get((bool)$this->auth->admin, $this->auth->admin->agency_id ?? 0);
         $filters = RequestFacade::all('search');
         $data_paginate = new PaginateCollenction(
             $project->filter(RequestFacade::only('search'))
@@ -39,7 +39,10 @@ class ProjectController extends Controller
         $title = $this->auth->admin ? 'Daftar Projek' : $project->name;
 
         $project = $this->auth->admin ? null : $project;
-        return Inertia::render('Project/Index', compact(['title', 'filters', 'data_paginate', 'project', 'percentage']));
+        if ($this->auth->apprentice || $this->auth->admin) {
+            return Inertia::render('Project/Index', compact(['title', 'filters', 'data_paginate', 'project', 'percentage']));
+        }
+        return Inertia::render('Error', ['status' => 403]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -67,8 +70,10 @@ class ProjectController extends Controller
         }
     }
 
-    public function show(Project $project)
+    public function show(Project $project): Response
     {
+
+
         $title = $project->name;
         $project = $project->load('progress.jss', 'team.apprentices.jss', 'team.admin.jss');
         $done = $project->progress->where('status', 'SELESAI')->count();
@@ -77,7 +82,9 @@ class ProjectController extends Controller
         if ($done > 0) {
             $percentage = number_format($done / $project->progress->count() * 100);
         }
-
-        return Inertia::render('Project/Show', compact('title', 'project', 'percentage'));
+        if ($this->auth->apprentice || $this->auth->admin) {
+            return Inertia::render('Project/Show', compact('title', 'project', 'percentage'));
+        }
+        return Inertia::render('Error', ['status' => 403]);
     }
 }

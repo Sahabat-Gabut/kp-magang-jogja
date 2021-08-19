@@ -1,13 +1,16 @@
-import Pagination from '@/Components/molecules/Pagination';
-import AppLayout from '@/Components/templates/AppLayout'
+import Pagination from '@/Components/Pagination';
+import AppLayout from '@/Layouts/AppLayout'
 import {InertiaLink, useForm} from '@inertiajs/inertia-react';
 import React, {useState} from 'react'
 import useRoute from "@/Hooks/useRoute";
-import Confirm from '@/Components/molecules/ConfirmDialog';
-import SearchFilter from '@/Components/molecules/SearchFilter';
+import {Input, SearchFilter, Select} from '@/Components/Form';
 import useTypedPage from "@/Hooks/useTypedPage";
 import {PaginatedData} from "@/types/UsePageProps";
 import {Project} from "@/types/models";
+import Table from "@/Components/Table";
+import {DialogModal} from "@/Components/Dialog";
+import {SecondaryButton, SuccessButton} from "@/Components/Button";
+import {IoIosArrowForward} from "react-icons/io";
 
 export default function ProjectIndex() {
     const route = useRoute();
@@ -26,7 +29,7 @@ export default function ProjectIndex() {
         fullname: ''
     });
 
-    const progressForm = useForm({
+    const form = useForm({
         id: 0,
         name: '',
         apprentice_id: 0,
@@ -34,7 +37,7 @@ export default function ProjectIndex() {
         project_id: project?.id
     });
 
-    const {setData, put, data} = progressForm;
+    const {setData, put, data} = form;
 
     const _onChange = (e: any) => {
         const key = e.target.name;
@@ -57,6 +60,14 @@ export default function ProjectIndex() {
         });
     };
 
+    const updateProject = () => {
+        put(`/progress/${data.id}`, {
+            preserveScroll: true,
+            onSuccess: () => setEditOpen(false),
+            onFinish: () => form.reset()
+        })
+    }
+
     return (
         <>
             {!project ? (
@@ -64,69 +75,64 @@ export default function ProjectIndex() {
                     <div className="mt-10 mb-5 rounded-lg ">
                         <SearchFilter/>
                     </div>
-                    <div className="flex flex-col">
-                        <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                            <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                                <div className="overflow-hidden border border-gray-200 rounded-lg">
-                                    <table className="min-w-full divide-y divide-gray-200">
-                                        <thead className="bg-gray-50">
-                                        <tr>
-                                            <th
-                                                scope="col"
-                                                className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                                                Nama Projek
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                                                Peserta
-                                            </th>
-                                            <th scope="col" className="relative px-6 py-3">
-                                                <span className="sr-only">Edit</span>
-                                            </th>
-                                        </tr>
-                                        </thead>
-                                        <tbody className="text-sm font-light bg-white divide-y divide-gray-200">
-                                        {projects.data.map(({name, team, id}, key) => (
-                                            <tr key={key} className="hover:bg-gray-50">
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    {name}
-                                                </td>
+                    <Table>
+                        <Table.THead>
+                            <Table.Tr>
+                                <Table.Th>Nama Projek</Table.Th>
+                                <Table.Th>Peserta</Table.Th>
+                                <Table.Th>Status</Table.Th>
+                                <Table.Th srOnly={true}>Aksi</Table.Th>
+                            </Table.Tr>
+                        </Table.THead>
+                        <Table.TBody>
+                            {projects.data.map(({name, team, id, status}, key) => (
+                                <Table.Tr key={key} className={'hover:bg-gray-50'}>
+                                    <Table.Td style={{padding: 0}}>
+                                        <InertiaLink href={route('project.show', {id: id})}
+                                                     className="w-full text-left py-3 px-6"
+                                                     as={'button'}>
+                                            {name}
+                                        </InertiaLink>
+                                    </Table.Td>
+                                    <Table.Td style={{padding: 0}}>
+                                        <InertiaLink href={route('project.show', {id: id})}
+                                                     className="w-full text-left py-3 px-6 flex"
+                                                     as={'button'}>
+                                            {team.apprentices.map((apprentice, idx) => (
+                                                <img key={idx}
+                                                     className="w-6 h-6 mr-2 transform border border-gray-200 rounded-full cursor-pointer hover:scale-125"
+                                                     src={`/storage/${apprentice?.photo}`}
+                                                     alt={apprentice.jss.username}/>
+                                            ))}
+                                        </InertiaLink>
+                                    </Table.Td>
+                                    <Table.Td style={{padding: 0}}>
+                                        <InertiaLink href={route('project.show', {id: id})}
+                                                     className="w-full text-left py-3 px-6"
+                                                     as={'button'}>
+                                            {status}
+                                        </InertiaLink>
+                                    </Table.Td>
+                                    <Table.Td style={{padding: 0}}>
+                                        <InertiaLink href={route('project.show', {id: id})}
+                                                     className="w-full text-left py-3 px-6 flex justify-end"
+                                                     as={'button'}>
+                                            <IoIosArrowForward/>
+                                        </InertiaLink>
+                                    </Table.Td>
+                                </Table.Tr>
+                            ))}
+                            {projects.data.length === 0 && (
+                                <Table.Tr>
+                                    <Table.Td className="w-full py-4 text-center bg-white" colSpan={3}>
+                                        data tidak tersedia!
+                                    </Table.Td>
+                                </Table.Tr>
+                            )}
+                        </Table.TBody>
+                    </Table>
 
-                                                <td className="flex px-6 py-4 whitespace-nowrap">
-                                                    {team.apprentices.map((apprentice, idx) => (
-                                                        <img key={idx}
-                                                             className="w-6 h-6 mr-2 transform border border-gray-200 rounded-full cursor-pointer hover:scale-125"
-                                                             src={`/storage/${apprentice?.photo}`}
-                                                             alt={apprentice.jss.username}/>
-                                                    ))}
-                                                </td>
-
-                                                <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                                                    <InertiaLink href={route('project.show', {id: id})}
-                                                                 className="text-gray-600 hover:text-gray-900">
-                                                        Detail
-                                                    </InertiaLink>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                        {projects.data.length === 0 && (
-                                            <tr>
-                                                <td className="w-full py-4 text-center bg-white" colSpan={3}>
-                                                    data tidak tersedia!
-                                                </td>
-                                            </tr>
-                                        )}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="">
-                        <Pagination meta={projects.meta}/>
-                    </div>
+                    <Pagination meta={projects.meta}/>
                 </>
             ) : (
                 <>
@@ -160,7 +166,7 @@ export default function ProjectIndex() {
                                 </div>
                             </div>
                         </div>
-                        <div className="pt-4 mt-10 border-t-2">
+                        <div className="pt-4 mt-10 border-t-2 mb-5">
                             <h4 className="mt-2 font-semibold text-gray-700 uppercase">Pembimbing Lapangan</h4>
                             <div className="flex">
                                 <div className="flex items-center gap-4 mt-4 mr-4">
@@ -169,137 +175,79 @@ export default function ProjectIndex() {
                             </div>
                         </div>
                     </div>
-                    <div className="w-full mt-10 overflow-x-auto border border-gray-300 rounded-lg h-ful">
-                        <table className="w-full h-full rounded-lg whitespace-nowrap">
-                            <thead className="leading-normal border-b border-gray-300">
-                            <tr className="flex w-full">
-                                <th className="w-full px-5 py-4 text-xs font-semibold tracking-wider text-left text-gray-800 uppercase">
-                                    Progress
-                                </th>
-                                <th className="w-full px-5 py-4 text-xs font-semibold tracking-wider text-left text-gray-800 uppercase">
-                                    <span className="font-semibold text-gray-800">Penanggung Jawab</span>
-                                </th>
-                                <th className="w-full px-5 py-4 text-xs font-semibold tracking-wider text-left text-gray-800 uppercase">
-                                    <span className="font-semibold text-gray-800">Status</span>
-                                </th>
-                                <th className="w-1/4 px-5 py-4 text-xs font-semibold tracking-wider text-left text-gray-800 uppercase">
-                                    <span className="font-semibold text-gray-800">Aksi</span>
-                                </th>
-                            </tr>
-                            </thead>
 
-                            <tbody
-                                className="flex flex-col items-center w-full overflow-y-auto text-sm font-light text-gray-800 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-50"
-                                style={{maxHeight: '39vh'}}>
-                            {project.progress.map(({name, jss, id, status, apprentice_id}, idx) => {
-                                return (
-                                    <tr className="flex w-full border-b last:border-b-0 hover:bg-gray-50" key={idx}>
-                                        <td className="w-full px-5 py-3 text-sm">
-                                                <span className="font-semibold">
-                                                    {name}
-                                                </span>
-                                        </td>
-                                        <td className="flex items-center w-full px-5 py-3 text-sm">
-                                                <span>
-                                                    {jss.fullname}
-                                                </span>
-                                        </td>
-                                        <td className="flex items-center w-full px-5 py-3 text-sm">
-                                                <span>
-                                                    {status === 'SELESAI' ? (
-                                                        <span
-                                                            className="inline-block px-2 py-1 text-xs font-semibold text-green-600 uppercase bg-green-200 rounded-full group-hover:shadow">
-                                                            {status}
-                                                        </span>
-                                                    ) : (
-                                                        <span
-                                                            className="inline-block px-2 py-1 text-xs font-semibold text-gray-600 uppercase bg-gray-200 rounded-full group-hover:shadow">
-                                                            {status}
-                                                        </span>
-                                                    )}
-                                                </span>
-                                        </td>
-                                        <td className="w-1/4 px-5 py-2">
-                                            <div className="flex justify-center text-lg rounded-lg" role="group">
-                                                <InertiaLink href={route('progress.show', {id: id})} as="button"
-                                                             className="px-4 py-2 mx-0 text-gray-600 bg-white border border-r-0 border-gray-300 outline-none hover:bg-green-200 hover:text-green-600 rounded-l-md">
-                                                    <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path strokeLinecap="round" strokeLinejoin="round"
-                                                              strokeWidth="2"
-                                                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                        <path strokeLinecap="round" strokeLinejoin="round"
-                                                              strokeWidth="2"
-                                                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                                    </svg>
-                                                </InertiaLink>
+                    <Table>
+                        <Table.THead>
+                            <Table.Tr>
+                                <Table.Th>Progress</Table.Th>
+                                <Table.Th>Penanggung Jawab</Table.Th>
+                                <Table.Th>Status</Table.Th>
+                                <Table.Th srOnly={true}>Aksi</Table.Th>
+                            </Table.Tr>
+                        </Table.THead>
+                        <Table.TBody>
+                            {project.progress.map(({name, jss, id, status, apprentice_id}, key) => (
+                                <Table.Tr key={key} className={'hover:bg-gray-50'}>
+                                    <Table.Td>{name}</Table.Td>
+                                    <Table.Td>{jss.fullname}</Table.Td>
+                                    <Table.Td>
+                                        {status === 'SELESAI' ? (
+                                            <span
+                                                className="inline-block px-2 py-1 text-xs font-semibold text-green-600 uppercase bg-green-200 rounded-full group-hover:shadow">
+                                                {status}
+                                            </span>
+                                        ) : (
+                                            <span
+                                                className="inline-block px-2 py-1 text-xs font-semibold text-gray-600 uppercase bg-gray-200 rounded-full group-hover:shadow">
+                                            {status}
+                                            </span>
+                                        )}
+                                    </Table.Td>
 
-                                                <button
-                                                    onClick={() => _onClick(apprentice_id, name, id, status, jss.fullname)}
-                                                    className={`px-4 py-2 mx-0 text-gray-600 bg-white border border-l-0 border-gray-300 outline-none rounded-r-md ${apprentice_id !== auth.user?.apprentice.id ? 'cursor-not-allowed hover:bg-gray-200' : 'hover:bg-yellow-200 hover:text-yellow-600'}`}
-                                                    disabled={apprentice_id !== auth.user?.apprentice.id}>
-                                                    <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path strokeLinecap="round" strokeLinejoin="round"
-                                                              strokeWidth="2"
-                                                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                                    </svg>
-                                                </button>
-                                                <Confirm
-                                                    title="Ubah Planning"
-                                                    open={editOpen}
-                                                    onClose={() => setEditOpen(false)}
-                                                    onConfirm={() => put(`/progress/${data.id}`)}
-                                                    confirmText="Ubah">
+                                    <Table.Td className={'flex justify-end'}>
+                                        <InertiaLink href={route('progress.show', {id: id})} as="button"
+                                                     className="font-semibold text-gray-600 outline-none hover:text-yellow-900 focus:outline-none">
+                                            Detail
+                                        </InertiaLink>
+                                        <button
+                                            onClick={() => _onClick(apprentice_id, name, id, status, jss.fullname)}
+                                            disabled={apprentice_id !== auth.user?.apprentice.id}
+                                            className="font-semibold ml-2 text-gray-600 outline-none hover:text-gray-700">
+                                            Ubah
+                                        </button>
+                                    </Table.Td>
+                                </Table.Tr>
+                            ))}
+                        </Table.TBody>
+                    </Table>
 
-                                                    <label htmlFor="apprentice"
-                                                           className="block pb-1 mt-2 text-sm font-semibold text-gray-600">Penanggung
-                                                        Jawab</label>
-                                                    <input id="apprentice"
-                                                           onChange={(e) => _onChange(e)}
-                                                           value={edit.fullname}
-                                                           name="name"
-                                                           readOnly
-                                                           className="w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-lg focus:outline-none bg-gray-50 focus:border-0"/>
+                    <DialogModal isOpen={editOpen} onClose={() => setEditOpen(false)}>
+                        <DialogModal.Content title={'Ubah Admin'}>
+                            <Input readOnly={true}
+                                   name={'fullname'}
+                                   value={edit.fullname}
+                                   label={'Penanggung Jawab'}
+                                   onChange={(e) => _onChange(e)}/>
+                            <Input name={'progressName'}
+                                   value={edit.name}
+                                   label={'Planning'}
+                                   onChange={(e) => _onChange(e)}/>
 
-                                                    <label htmlFor="progrees"
-                                                           className="block pb-1 mt-2 text-sm font-semibold text-gray-600">planning</label>
-                                                    <input id="progress"
-                                                           onChange={(e) => _onChange(e)}
-                                                           value={edit.name}
-                                                           name="name"
-                                                           className="w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-green-600"/>
-
-                                                    <input
-                                                        value={edit.apprentice_id}
-                                                        name="apprentice_id"
-                                                        hidden
-                                                        onChange={() => {
-                                                        }}
-                                                        className="w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-green-600"/>
-
-                                                    <label htmlFor="status"
-                                                           className="block pb-1 mt-2 text-sm font-semibold text-gray-600">Status</label>
-                                                    <select
-                                                        id="status"
-                                                        onChange={(e) => _onChange(e)}
-                                                        value={edit.status}
-                                                        name="status"
-                                                        className="block w-full h-full px-2 py-3 pr-8 text-sm leading-tight text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none cursor-pointer focus:ring-0 focus:border-green-500 focus:outline-none focus:bg-white">
-                                                        <option value="">Pilih Status</option>
-                                                        <option value="PENGEMBANGAN">Pengembangan</option>
-                                                        <option value="SELESAI">Selesai</option>
-                                                    </select>
-
-                                                </Confirm>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                            </tbody>
-                        </table>
-                    </div>
+                            <Select name={'status'}
+                                    onChange={(e) => _onChange(e)}
+                                    value={edit.status}>
+                                <option value="">Pilih Status</option>
+                                <option value="PENGEMBANGAN">Pengembangan</option>
+                                <option value="SELESAI">Selesai</option>
+                            </Select>
+                        </DialogModal.Content>
+                        <DialogModal.Footer>
+                            <SecondaryButton onClick={() => setEditOpen(false)}>
+                                Batal
+                            </SecondaryButton>
+                            <SuccessButton onClick={updateProject} className={'ml-2'}>Ubah Admin</SuccessButton>
+                        </DialogModal.Footer>
+                    </DialogModal>
                 </>
             )}
         </>

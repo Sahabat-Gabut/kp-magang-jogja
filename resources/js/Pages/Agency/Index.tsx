@@ -1,13 +1,19 @@
-import SearchFilter from '@/Components/molecules/SearchFilter';
-import Pagination from '@/Components/molecules/Pagination';
-import AppLayout from '@/Components/templates/AppLayout'
+import SearchFilter from '@/Components/Form/SearchFilter';
+import Pagination from '@/Components/Pagination';
+import AppLayout from '@/Layouts/AppLayout'
 import React, {useState} from 'react'
-import Confirm from '@/Components/molecules/ConfirmDialog';
 import {useForm} from '@inertiajs/inertia-react';
 import useRoute from "@/Hooks/useRoute";
 import useTypedPage from "@/Hooks/useTypedPage";
 import {PaginatedData} from "@/types/UsePageProps";
 import {Agency} from "@/types/models";
+import Table from "@/Components/Table";
+import DialogModal from "@/Components/Dialog/DialogModal";
+import Input from "@/Components/Form/Input";
+import SecondaryButton from "@/Components/Button/SecondaryButton";
+import SuccessButton from "@/Components/Button/SuccessButton";
+import Textarea from "@/Components/Form/Textarea";
+import DangerButton from "@/Components/Button/DangerButton";
 
 export default function AgencyIndex() {
     const route = useRoute();
@@ -39,15 +45,29 @@ export default function AgencyIndex() {
         setData('id', id)
     }
 
-    const agencyForm = useForm({
+    const form = useForm({
         id: 0,
         name: '',
         quota: 0,
         location: '',
     });
 
-    const {setData, put} = agencyForm;
+    const {setData, put} = form;
 
+    const updateAgency = () => {
+        put(route('agency.update', {agency: edit.id}), {
+            preserveScroll: true,
+            onSuccess: () => setEditOpen(false),
+            onFinish: () => form.reset()
+        });
+    }
+
+    const deleteAgency = () => {
+        form.delete(route('agency.destroy', {agency: form.data.id}), {
+            preserveScroll: true,
+            onFinish: () => setDeleteOpen(false),
+        });
+    }
 
     return (
         <>
@@ -55,106 +75,77 @@ export default function AgencyIndex() {
                 <SearchFilter/>
             </div>
 
-            <div className="flex flex-col">
-                <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                        <div
-                            className="overflow-hidden overflow-y-auto border border-gray-200 rounded-lg scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-50"
-                            style={{maxHeight: '65vh'}}>
-                            <table className="min-w-full">
-                                <thead className="sticky top-0 bg-gray-50" style={{zIndex: 2}}>
-                                <tr>
-                                    <th
-                                        scope="col"
-                                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                                        Dinas
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                                        Kuota
-                                    </th>
-                                    <th scope="col" className="relative px-6 py-3">
-                                        <span className="sr-only">Edit</span>
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody className="text-sm font-light bg-white divide-y divide-gray-200">
-                                {agencies.map(({id, name, quota, location}, key) => (
-                                    <tr key={key} className="hover:bg-gray-50">
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            {name}
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            {quota}
-                                        </td>
-                                        <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                                            <div className="flex justify-end gap-2">
-                                                <button onClick={() => _onClick(id, name, quota, location)}
-                                                        className="font-semibold text-yellow-600 outline-none hover:text-yellow-900 focus:outline-none">
-                                                    Ubah
-                                                </button>
-                                                <button onClick={() => handleDelete(id)}
-                                                        className="font-semibold text-red-600 outline-none hover:text-red-900">
-                                                    Hapus
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="">
-                <Pagination meta={meta}/>
-            </div>
-            <Confirm
-                title="Ubah Dinas"
-                open={editOpen}
-                onClose={() => setEditOpen(false)}
-                onConfirm={() => put(route('agency.update', {agency: edit.id}))}
-                confirmText="Ubah">
+            <Table>
+                <Table.THead>
+                    <Table.Tr>
+                        <Table.Th>Dinas</Table.Th>
+                        <Table.Th>Kuota</Table.Th>
+                        <Table.Th srOnly={true}>Aksi</Table.Th>
+                    </Table.Tr>
+                </Table.THead>
+                <Table.TBody>
+                    {agencies.map(({id, name, quota, location}, key) => (
+                        <Table.Tr key={key} className={'hover:bg-gray-50'}>
+                            <Table.Td>{name}</Table.Td>
+                            <Table.Td>{quota}</Table.Td>
+                            <Table.Td>
+                                <div className="flex justify-end gap-2">
+                                    <button onClick={() => _onClick(id, name, quota, location)}
+                                            className="font-semibold text-emerald-500 hover:text-emerald-600 outline-none focus:outline-none">
+                                        Ubah
+                                    </button>
+                                    <button onClick={() => handleDelete(id)}
+                                            className="font-semibold text-red-300 outline-none hover:text-red-500">
+                                        Hapus
+                                    </button>
+                                </div>
+                            </Table.Td>
+                        </Table.Tr>
+                    ))}
+                </Table.TBody>
+            </Table>
 
-                <label htmlFor="name" className="block pb-1 mt-2 text-sm font-semibold text-gray-600">Nama</label>
-                <input id="name"
-                       onChange={(e) => _onChange(e)}
-                       name="name"
-                       value={edit.name}
-                       className="w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-green-600"/>
+            <Pagination meta={meta}/>
 
-                <label htmlFor="location" className="block pb-1 mt-2 text-sm font-semibold text-gray-600">Lokasi
-                    Dinas</label>
-                <textarea id="location"
-                          onChange={(e) => _onChange(e)}
-                          name="location"
-                          defaultValue={edit.location}
-                          className="w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-green-600"/>
+            <DialogModal isOpen={editOpen} onClose={() => setEditOpen(false)}>
 
-                <label htmlFor="quota" className="block pb-1 mt-2 text-sm font-semibold text-gray-600">Kuota
-                    Magang</label>
-                <input id="quota"
-                       onChange={(e) => _onChange(e)}
-                       name="quota"
-                       value={edit.quota}
-                       type="number"
-                       className="w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-green-600"/>
-            </Confirm>
+                <DialogModal.Content title={'Ubah Dinas'}>
+                    <Input name={'name'} label={'Nama'} value={edit.name} onChange={(e) => _onChange(e)}/>
+                    <Textarea onChange={(e) => _onChange(e)}
+                              name={'location'}
+                              label={'Lokasi Dinas'}
+                              defaultValue={edit.location}/>
+                    <Input name={'quota'}
+                           label={'Kuota Magang'}
+                           onChange={(e) => _onChange(e)}
+                           value={edit.quota}
+                           type="number"/>
+                </DialogModal.Content>
 
-            <Confirm
-                title="Hapus Dinas"
-                open={deleteOpen}
-                onClose={() => setDeleteOpen(false)}
-                onConfirm={() => agencyForm.delete(route('agency.destroy', {agency: agencyForm.data.id}))}
-                confirmText="Hapus Dinas"
-                confirmClass="bg-red-600 hover:bg-red-700 focus:ring-red-500 text-white">
-                <p className="text-sm">
+                <DialogModal.Footer>
+                    <SecondaryButton onClick={() => setEditOpen(false)}>
+                        Batal
+                    </SecondaryButton>
+                    <SuccessButton onClick={updateAgency} className={'ml-2'}>Ubah Dinas</SuccessButton>
+                </DialogModal.Footer>
+
+            </DialogModal>
+
+            <DialogModal isOpen={deleteOpen} onClose={() => setDeleteOpen(false)}>
+                {/* // TODO: DYNAMIC NAME AGENCY */}
+                <DialogModal.Content title={'Hapus Dinas'}>
                     Apakah kamu yakin ingin menghapus Dinas ini? Data yang sudah dihapus tidak akan bisa dikembalikan
                     kembali.
-                </p>
-            </Confirm>
+                </DialogModal.Content>
+
+                <DialogModal.Footer>
+                    <SecondaryButton onClick={() => setDeleteOpen(false)}>
+                        Batal
+                    </SecondaryButton>
+                    <DangerButton onClick={deleteAgency} className={'ml-2'}>Hapus Dinas</DangerButton>
+                </DialogModal.Footer>
+
+            </DialogModal>
         </>
     )
 }

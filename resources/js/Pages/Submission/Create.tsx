@@ -1,22 +1,24 @@
-import React from 'react'
-import {MainLayout} from '@/Components/templates';
-import ImageField from '@/Components/molecules/ImageField';
-import InputField from '@/Components/molecules/InputField';
-import JSSField from '@/Components/molecules/JSSField';
-import {FieldArray, FormikValues} from 'formik';
-import {SelectField} from '@/Components/molecules/SelectField';
-import {generalSchema, schemaFiles, schemaParticipants,} from './formModel/schema';
-import WizardForm, {FormStep} from '@/Components/templates/WizardForm';
-import FileField from '@/Components/molecules/FileField';
-import Swal from 'sweetalert2'
+import React from "react";
 import axios from 'axios';
-import route from 'ziggy-js';
-import useTypedPage from "@/Hooks/useTypedPage";
-import {SelectOptions} from "@/types/UsePageProps";
+import Swal from 'sweetalert2';
+import {FieldArray, FormikValues} from 'formik';
+import {generalSchema, schemaFiles, schemaParticipants,} from './formModel/schema';
+import {useRoute, useTypedPage} from "@/Hooks";
+import {SelectOptions} from "@/types";
+import GuestLayout from "@/Layouts/GuestLayout";
+import {
+    FormikImage,
+    FormikInput,
+    FormikInputFile,
+    FormikJSS,
+    FormikSelect,
+    FormikWizard,
+    FormStep
+} from '@/Components/Formik';
 
 export default function Submission() {
     const {auth, options} = useTypedPage<{ options: SelectOptions[] }>().props;
-
+    const route = useRoute();
     const initialValues = {
         agency: '',
         university: '',
@@ -97,7 +99,7 @@ export default function Submission() {
                     </div>
                 </div>
 
-                <WizardForm
+                <FormikWizard
                     initialValues={initialValues}
                     onSubmit={values => _onSubmit(values)}>
 
@@ -105,30 +107,30 @@ export default function Submission() {
                         stepName="Informasi Umum"
                         validationSchema={generalSchema}>
 
-                        <SelectField
+                        <FormikSelect
                             label="Dinas"
                             name="agency"
                             options={options}
                             placeholder="Pilih Dinas..."/>
 
                         <div className="grid mt-2 md:grid-cols-2 md:grid-rows-2 md:gap-4">
-                            <InputField id="university" label="Universitas" name="university"/>
-                            <InputField id="department" label="Jurusan" name="department"/>
+                            <FormikInput id="university" label="Universitas" name="university"/>
+                            <FormikInput id="department" label="Jurusan" name="department"/>
 
-                            <InputField id="dateStart" label="Rencana Mulai" type="date" name="dateStart"/>
-                            <InputField id="dateFinish" label="Rencana Selesai" type="date" name="dateFinish"/>
+                            <FormikInput id="dateStart" label="Rencana Mulai" type="date" name="dateStart"/>
+                            <FormikInput id="dateFinish" label="Rencana Selesai" type="date" name="dateFinish"/>
                         </div>
                     </FormStep>
 
                     <FormStep
                         stepName="Unggah Berkas"
                         validationSchema={schemaFiles}>
-                        <FileField helperText="PDF dibawah 10Mb" accept=".pdf" type="file" label="Surat Pengantar"
-                                   name="coverLetter"/>
-                        <FileField helperText="PDF dibawah 10Mb" accept=".pdf" type="file" label="Proposal"
-                                   name="proposal"/>
-                        <FileField helperText="PPT dibawah 10Mb" accept=".ppt,.pptx" type="file"
-                                   label="Presentasi yang akan diajukan" name="presentation"/>
+                        <FormikInputFile helperText="PDF dibawah 10Mb" accept=".pdf" type="file" label="Surat Pengantar"
+                                         name="coverLetter"/>
+                        <FormikInputFile helperText="PDF dibawah 10Mb" accept=".pdf" type="file" label="Proposal"
+                                         name="proposal"/>
+                        <FormikInputFile helperText="PPT dibawah 10Mb" accept=".ppt,.pptx" type="file"
+                                         label="Presentasi yang akan diajukan" name="presentation"/>
                     </FormStep>
 
                     {/* <FormStep
@@ -144,7 +146,7 @@ export default function Submission() {
                         <div>
                             <div className="flex flex-col items-center md:flex-row">
                                 <div className="mr-5 h-36 w-36">
-                                    <ImageField
+                                    <FormikImage
                                         name="participants.0.img"
                                         label="upload image"
                                         type="file"
@@ -153,13 +155,13 @@ export default function Submission() {
                                 </div>
                                 <div className="w-full">
                                     <div className="flex flex-col justify-between gap-4 md:flex-row">
-                                        <InputField label="ID JSS" name={`participants.0.jss_id`} readOnly={true}/>
-                                        <InputField label="NPM" name={`participants.0.npm`}/>
+                                        <FormikInput label="ID JSS" name={`participants.0.jss_id`} readOnly={true}/>
+                                        <FormikInput label="NPM" name={`participants.0.npm`}/>
                                     </div>
                                     <div className="flex flex-col justify-between gap-4 md:flex-row">
-                                        <InputField label="Nama" name={`participants.0.name`} readOnly={true}/>
-                                        <FileField helperText="PDF dibawah 10Mb" accept=".pdf" label="CV"
-                                                   name={`participants.0.cv`} type="file"/>
+                                        <FormikInput label="Nama" name={`participants.0.name`} readOnly={true}/>
+                                        <FormikInputFile helperText="PDF dibawah 10Mb" accept=".pdf" label="CV"
+                                                         name={`participants.0.cv`} type="file"/>
                                     </div>
                                 </div>
                             </div>
@@ -180,26 +182,29 @@ export default function Submission() {
                                                         </button>
                                                     </div>
                                                     <div className="flex flex-col items-center md:flex-row">
-                                                        <ImageField
+                                                        <FormikImage
                                                             accept=".jpeg, .jpg, .png"
                                                             name={`participants.${index}.img`}/>
                                                         <div className="w-full">
                                                             <div
                                                                 className="flex flex-col justify-between gap-4 md:flex-row">
-                                                                <JSSField
+                                                                <FormikJSS
                                                                     label="ID JSS"
                                                                     index={index}
                                                                     name={`participants.${index}.jss_id`}/>
 
-                                                                <InputField label="NPM" name={`participants.${index}.npm`}/>
+                                                                <FormikInput label="NPM"
+                                                                             name={`participants.${index}.npm`}/>
                                                             </div>
                                                             <div
                                                                 className="flex flex-col justify-between gap-4 md:flex-row">
-                                                                <InputField label="Nama" name={`participants.${index}.name`}
-                                                                            readOnly={true}/>
-                                                                <FileField helperText="PDF dibawah 10Mb" accept=".pdf"
-                                                                           label="CV" name={`participants.${index}.cv`}
-                                                                           type="file"/>
+                                                                <FormikInput label="Nama"
+                                                                             name={`participants.${index}.name`}
+                                                                             readOnly={true}/>
+                                                                <FormikInputFile helperText="PDF dibawah 10Mb" accept=".pdf"
+                                                                                 label="CV"
+                                                                                 name={`participants.${index}.cv`}
+                                                                                 type="file"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -219,13 +224,13 @@ export default function Submission() {
                             </div>
                             <div className="px-5">
                                 <div className="grid mt-2 md:grid-cols-2 md:grid-rows-2 md:gap-4">
-                                    <InputField id="university" label="Universitas" name="university" readOnly={true}/>
-                                    <InputField id="department" label="Jurusan" name="department" readOnly={true}/>
+                                    <FormikInput id="university" label="Universitas" name="university" readOnly={true}/>
+                                    <FormikInput id="department" label="Jurusan" name="department" readOnly={true}/>
 
-                                    <InputField id="dateStart" label="Rencana Mulai" type="date" name="dateStart"
-                                                readOnly={true}/>
-                                    <InputField id="dateFinish" label="Rencana Selesai" type="date" name="dateFinish"
-                                                readOnly={true}/>
+                                    <FormikInput id="dateStart" label="Rencana Mulai" type="date" name="dateStart"
+                                                 readOnly={true}/>
+                                    <FormikInput id="dateFinish" label="Rencana Selesai" type="date" name="dateFinish"
+                                                 readOnly={true}/>
                                 </div>
                             </div>
                         </div>
@@ -235,10 +240,10 @@ export default function Submission() {
                                 <span className="w-full text-lg font-semibold text-gray-700 uppercase">Berkas Tim</span>
                             </div>
                             <div className="px-5">
-                                <InputField label="Surat Pengantar" name="coverLetter.name" readOnly={true}/>
-                                <InputField label="Proposal" name="proposal.name" readOnly={true}/>
-                                <InputField label="Presentasi yang akan diajukan" name="presentation.name"
-                                            readOnly={true}/>
+                                <FormikInput label="Surat Pengantar" name="coverLetter.name" readOnly={true}/>
+                                <FormikInput label="Proposal" name="proposal.name" readOnly={true}/>
+                                <FormikInput label="Presentasi yang akan diajukan" name="presentation.name"
+                                             readOnly={true}/>
                             </div>
                         </div>
 
@@ -248,9 +253,9 @@ export default function Submission() {
                                     className="w-full text-lg font-semibold text-gray-700 uppercase">Informasi Projek</span>
                             </div>
                             <div className="px-5">
-                                <InputField id="projectName" label="Nama Projek" name="projectName" readOnly={true}/>
-                                <InputField id="projectDesc" label="Deskripsi Projek" name="projectDesc"
-                                            readOnly={true}/>
+                                <FormikInput id="projectName" label="Nama Projek" name="projectName" readOnly={true}/>
+                                <FormikInput id="projectDesc" label="Deskripsi Projek" name="projectDesc"
+                                             readOnly={true}/>
                             </div>
                         </div>
 
@@ -268,28 +273,29 @@ export default function Submission() {
                                                     <div className="flex items-center justify-between mb-2">
                                                         <span
                                                             className="w-24 mr-2 font-semibold text-gray-700 uppercase">peserta {index + 1}</span>
-                                                        <hr className="w-full border-gray-300 border-dashed"></hr>
+                                                        <hr className="w-full border-gray-300 border-dashed"/>
                                                     </div>
                                                     <div className="flex flex-col items-center md:flex-row">
-                                                        <ImageField name={`participants.${index}.img`} readOnly={true}/>
+                                                        <FormikImage name={`participants.${index}.img`}
+                                                                     readOnly={true}/>
                                                         <div className="w-full">
                                                             <div
                                                                 className="flex flex-col justify-between gap-4 md:flex-row">
-                                                                <InputField label="NPM"
-                                                                            name={`participants.${index}.jss_id`}
-                                                                            readOnly={true}/>
-                                                                <InputField label="NPM"
-                                                                            name={`participants.${index}.npm`}
-                                                                            readOnly={true}/>
+                                                                <FormikInput label="NPM"
+                                                                             name={`participants.${index}.jss_id`}
+                                                                             readOnly={true}/>
+                                                                <FormikInput label="NPM"
+                                                                             name={`participants.${index}.npm`}
+                                                                             readOnly={true}/>
                                                             </div>
                                                             <div
                                                                 className="flex flex-col justify-between gap-4 md:flex-row">
-                                                                <InputField label="Nama"
-                                                                            name={`participants.${index}.name`}
-                                                                            readOnly={true}/>
-                                                                <InputField label="CV"
-                                                                            name={`participants.${index}.cv.name`}
-                                                                            readOnly={true}/>
+                                                                <FormikInput label="Nama"
+                                                                             name={`participants.${index}.name`}
+                                                                             readOnly={true}/>
+                                                                <FormikInput label="CV"
+                                                                             name={`participants.${index}.cv.name`}
+                                                                             readOnly={true}/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -301,7 +307,7 @@ export default function Submission() {
                             />
                         </div>
                     </FormStep>
-                </WizardForm>
+                </FormikWizard>
                 <div className="flex justify-center py-4 mt-auto font-semibold text-green-800">
                     Magang Dinas Kota Yogyakarta
                 </div>
@@ -311,4 +317,4 @@ export default function Submission() {
 
 }
 
-Submission.layout = (page: React.ReactChild) => <MainLayout children={page} showFooter={false}/>;
+Submission.layout = (page: React.ReactChild) => <GuestLayout children={page} showFooter={false}/>;

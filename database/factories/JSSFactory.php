@@ -21,15 +21,17 @@ class JSSFactory extends Factory
      */
     public function definition(): array
     {
+//        $faker = Factory::create('id_ID');
+//        $faker = new Faker\Generator();
+//        $faker->addProvider(new Faker\Provider\en_US\PhoneNumber($faker));
         return [
-//            'id' => 'JSS-' . $this->faker->regexify('[A-Z]{1}') . $this->faker->numerify(),
-            'id' => $this->faker->bothify('JSS-?####'),
+            'id' => strtoupper($this->faker->bothify('JSS-?####')),
             'NIK' => $this->faker->numerify('#################'),
             'username' => $this->faker->userName(),
             'fullname' => $this->faker->name(),
             'password' => '$2y$10$X091UPR.dyjM1xwJTTxeDuwCLQq2A5ffGjRvwypXULLC5E2./e/tq',
-            'email' => $this->faker->unique()->email(),
-            'nomor_wa' => $this->faker->e164PhoneNumber(),
+            'email' => $this->faker->email(),
+            'no_wa' => $this->faker->phoneNumber('id_ID'),
         ];
     }
 }

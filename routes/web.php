@@ -9,6 +9,7 @@ use App\Http\Controllers\ProgressProjectController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\SubmissionController;
+use App\Http\Controllers\TeamController;
 use App\Http\Controllers\ValuationController;
 use App\Http\Resources\JSSResource;
 use App\Models\JSS;
@@ -30,6 +31,10 @@ Route::get('login', [SessionController::class, 'create'])->name('login');
 Route::post('login', [SessionController::class, 'store']);
 Route::post('logout', [SessionController::class, 'destroy'])->name('logout');
 
+Route::get('/api/jss', function () {
+    return JSS::all();
+});
+
 Route::group(['middleware' => ['auth']], function () {
 
     // Dashboard
@@ -43,8 +48,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('admin', AdminController::class)->except('create');
 
     // Agency
-    Route::resource('agency', AgencyController::class);
+    Route::resource('agency', AgencyController::class)->except(['show']);
+    Route::get('quota-agency', [AgencyController::class, 'show']);
 
+    // Generate PDF
+    Route::get('team/print/{team}', [TeamController::class, 'showPDF'])->name('showPDF');
+    Route::get('team/generate/{team}', [TeamController::class, 'generatePDF'])->name('generatePDF');
     // Project
     Route::resource('project', ProjectController::class)->except('create');
 
