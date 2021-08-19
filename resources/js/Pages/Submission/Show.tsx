@@ -2,7 +2,7 @@ import AppLayout from '@/Layouts/AppLayout';
 import React, {ChangeEvent, useState} from 'react'
 import {InertiaLink, useForm} from '@inertiajs/inertia-react';
 import moment from 'moment-timezone';
-import {PaperClipIcon} from '@heroicons/react/solid';
+import {HiPaperClip} from 'react-icons/hi';
 import {BsArrowLeftShort} from "react-icons/bs"
 import {useRoute, useTypedPage} from "@/Hooks";
 import {Admin, Team} from "@/types";
@@ -179,8 +179,8 @@ export default function ShowSubmission() {
                             <ul className="border border-gray-200 divide-y divide-gray-200 rounded-md">
                                 <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                                     <div className="flex items-center flex-1 w-0">
-                                        <PaperClipIcon className="flex-shrink-0 w-5 h-5 text-gray-400"
-                                                       aria-hidden="true"/>
+                                        <HiPaperClip className="flex-shrink-0 w-5 h-5 text-gray-400"
+                                                     aria-hidden="true"/>
                                         <a href={`/storage/${team.proposal}`} target="_blank"
                                            className="flex-1 w-0 ml-2 truncate">Proposal.pdf</a>
                                     </div>
@@ -193,8 +193,8 @@ export default function ShowSubmission() {
                                 </li>
                                 <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                                     <div className="flex items-center flex-1 w-0">
-                                        <PaperClipIcon className="flex-shrink-0 w-5 h-5 text-gray-400"
-                                                       aria-hidden="true"/>
+                                        <HiPaperClip className="flex-shrink-0 w-5 h-5 text-gray-400"
+                                                     aria-hidden="true"/>
                                         <a href={`/storage/${team.cover_letter}`} target="_blank"
                                            className="flex-1 w-0 ml-2 truncate">Surat Pengantar.pdf</a>
                                     </div>
@@ -207,8 +207,8 @@ export default function ShowSubmission() {
                                 </li>
                                 <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                                     <div className="flex items-center flex-1 w-0">
-                                        <PaperClipIcon className="flex-shrink-0 w-5 h-5 text-gray-400"
-                                                       aria-hidden="true"/>
+                                        <HiPaperClip className="flex-shrink-0 w-5 h-5 text-gray-400"
+                                                     aria-hidden="true"/>
                                         <a href={`/storage/${team.presentation}`} target="_blank"
                                            className="flex-1 w-0 ml-2 truncate">Presentasi yang akan diajukan.ppt</a>
                                     </div>

@@ -6,7 +6,7 @@ import {InertiaProgress} from '@inertiajs/progress'
 import {appName} from "@/Common/constants";
 
 moment.locale('id');
-InertiaProgress.init({color: '#10B981'});
+InertiaProgress.init({color: '#10B981', showSpinner: true});
 
 createInertiaApp({
     title: title => title === 'Magang Jogja' ? title : `${title} - ${appName}`,

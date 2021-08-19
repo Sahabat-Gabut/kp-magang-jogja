@@ -1,7 +1,22 @@
 import React from "react"
-import Icons from "@/Components/icons"
 import AsideLink from "@/Components/App/AsideLink";
 import useTypedPage from "@/Hooks/useTypedPage";
+import {
+    HiBeaker,
+    HiClipboardList,
+    HiCog,
+    HiHome,
+    HiKey,
+    HiLibrary,
+    HiOutlineBeaker,
+    HiOutlineClipboardList,
+    HiOutlineCog,
+    HiOutlineHome,
+    HiOutlineKey,
+    HiOutlineLibrary,
+    HiOutlineTag,
+    HiTag
+} from "react-icons/hi";
 
 const AppAside = () => {
     const {auth} = useTypedPage().props;
@@ -16,14 +31,17 @@ const AppAside = () => {
                     </div>
                 </div>
 
-                <AsideLink text="Dasbor" href="/dashboard" icon={<Icons.Home className="w-5 h-5"/>}/>
+                <AsideLink text="Dasbor" href={'/dashboard'} icon={<HiOutlineHome className="w-5 h-5"/>}
+                           iconFill={<HiHome className="w-5 h-5"/>}/>
 
                 <div className="mt-2">
                     <label className="ml-6 text-sm font-bold text-gray-600 uppercase">App</label>
                 </div>
 
-                <AsideLink text="Absensi" href="/attendance" icon={<Icons.ClipboardList className="w-5 h-5"/>}/>
-                <AsideLink text="Projek" href="/project" icon={<Icons.Beaker className="w-5 h-5"/>}/>
+                <AsideLink text="Absensi" href={'/attendance'} icon={<HiOutlineClipboardList className="w-5 h-5"/>}
+                           iconFill={<HiClipboardList className="w-5 h-5"/>}/>
+                <AsideLink text="Projek" href={'/project'} icon={<HiOutlineBeaker className="w-5 h-5"/>}
+                           iconFill={<HiBeaker className="w-5 h-5"/>}/>
 
                 {/* ADMIN PANEL */}
                 {auth.user?.admin && (
@@ -31,15 +49,24 @@ const AppAside = () => {
                         <div className="my-2">
                             <label className="ml-6 text-sm font-bold text-gray-600 uppercase">Admin Panel</label>
                         </div>
-                        <AsideLink text="Daftar Pengajuan" href="/submission"
-                                   icon={<Icons.PaperClip className="w-5 h-5"/>}/>
+                        <AsideLink text="Daftar Pengajuan" href={'/submission'}
+                                   icon={<HiOutlineTag className="w-5 h-5"/>}
+                                   iconFill={<HiTag className="w-5 h-5"/>}/>
                         {auth.user?.admin.role.id !== 3 && (
                             <>
                                 {auth.user?.admin.role.id === 1 && (
-                                    <AsideLink text="Daftar Dinas" href="/agency"
-                                               icon={<Icons.Library className="w-5 h-5"/>}/>
+                                    <AsideLink text="Daftar Dinas" href={'/agency'}
+                                               icon={<HiOutlineLibrary className="w-5 h-5"/>}
+                                               iconFill={<HiLibrary className="w-5 h-5"/>}/>
                                 )}
-                                <AsideLink text="Daftar Admin" href="/admin" icon={<Icons.Key className="w-5 h-5"/>}/>
+                                <AsideLink text="Daftar Admin" href={'/admin'}
+                                           icon={<HiOutlineKey className="w-5 h-5"/>}
+                                           iconFill={<HiKey className="w-5 h-5"/>}/>
+                                {auth.user?.admin.role.id === 2 && (
+                                    <AsideLink text="Pengaturan Dinas" href={'/agency/setting'}
+                                               icon={<HiOutlineCog className="w-5 h-5"/>}
+                                               iconFill={<HiCog className="w-5 h-5"/>}/>
+                                )}
                             </>
                         )}
                     </>

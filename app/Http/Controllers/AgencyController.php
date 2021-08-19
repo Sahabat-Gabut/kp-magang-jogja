@@ -14,16 +14,15 @@ use Inertia\Response;
 
 class AgencyController extends Controller
 {
-    protected $isSuperAdmin = false, $isAdminAgency = false, $user;
+    private $auth, $isSuperAdmin = false;
 
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
             if (Auth::check()) {
-                $this->auth = Auth::user();
-                $this->user = $this->auth->load(['admin.role', 'admin.agency', 'apprentice']);
-                if ($this->user->admin) {
-                    $this->isSuperAdmin = $this->user->admin->role->id == 1;
+                $this->auth = Auth::user()->load(['admin.role', 'admin.agency', 'apprentice']);
+                if ($this->auth->admin) {
+                    $this->isSuperAdmin = $this->auth->admin->role->id == 1;
                 }
             }
             return $next($request);
@@ -40,7 +39,7 @@ class AgencyController extends Controller
                 ->paginate(RequestFacade::only('show'))
                 ->appends(RequestFacade::all())
         );
-        if (!$this->user->apprentice && !$this->isSuperAdmin) {
+        if (!$this->auth->apprentice && !$this->isSuperAdmin) {
             return Inertia::render('Error', ['status' => 403]);
         }
         return Inertia::render('Agency/Index', compact(['title', 'filters', 'data_paginate']));
@@ -50,10 +49,18 @@ class AgencyController extends Controller
     {
         $title = 'Daftar Kuota Dinas';
         $agencies = Agency::all();
-        if (!$this->user->apprentice) {
+        return Inertia::render('Agency/Show', compact(['title', 'agencies']));
+    }
+
+    public function config(): Response
+    {
+        if ($this->auth->admin->role_id !== 2) {
             return Inertia::render('Error', ['status' => 403]);
         }
-        return Inertia::render('Agency/Show', compact(['title', 'agencies']));
+        $title = 'Pengaturan Dinas';
+        $agency = Agency::find($this->auth->admin->agency_id);
+
+        return Inertia::render('Agency/Config', compact('title', 'agency'));
     }
 
     public function update(Agency $agency, Request $request): RedirectResponse

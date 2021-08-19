@@ -91,11 +91,11 @@ export default function AgencyIndex() {
                             <Table.Td>
                                 <div className="flex justify-end gap-2">
                                     <button onClick={() => _onClick(id, name, quota, location)}
-                                            className="font-semibold text-emerald-500 hover:text-emerald-600 outline-none focus:outline-none">
+                                            className="font-semibold text-gray-600 outline-none hover:text-yellow-600 focus:outline-none">
                                         Ubah
                                     </button>
                                     <button onClick={() => handleDelete(id)}
-                                            className="font-semibold text-red-300 outline-none hover:text-red-500">
+                                            className="font-semibold text-gray-600 outline-none hover:text-red-600 focus:outline-none">
                                         Hapus
                                     </button>
                                 </div>

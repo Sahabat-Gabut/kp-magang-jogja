@@ -5,7 +5,7 @@ import {GuestUserMenu} from "@/Components/Guest";
 import {useViewportScroll} from "framer-motion"
 import useTypedPage from "@/Hooks/useTypedPage";
 
-const MainHeader = () => {
+const GuestHeader = () => {
     const props = useTypedPage().props;
     const ref = React.useRef<HTMLHeadingElement>(null);
 
@@ -18,7 +18,7 @@ const MainHeader = () => {
     }, [scrollY]);
     return (
         <nav ref={ref}
-             className={`z-50 fixed bg-transparent w-full transition duration-300 ease-in-out ${y > height ? 'bg-green-600 text-white bg-opacity-95' : ''}`}>
+             className={`z-50 fixed w-full transition duration-300 ease-in-out ${y > height ? 'bg-green-600 text-white bg-opacity-95' : 'bg-transparent'}`}>
             <div className="max-w-screen-xl mx-auto lg:px-4">
                 <div className="flex flex-col items-center justify-between py-0 lg:flex-row lg:py-4">
                     <div className="w-full px-4 py-3 lg:w-auto lg:py-0 lg:px-0">
@@ -68,4 +68,4 @@ const MainHeader = () => {
     )
 }
 
-export default MainHeader;
+export default GuestHeader;

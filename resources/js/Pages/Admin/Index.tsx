@@ -1,7 +1,7 @@
 import Pagination from '@/Components/Pagination';
 import SearchFilter from '@/Components/Form/SearchFilter';
 import AppLayout from '@/Layouts/AppLayout'
-import {PlusIcon} from '@heroicons/react/solid';
+import {HiOutlinePlusSm} from 'react-icons/hi';
 import {useForm} from '@inertiajs/inertia-react';
 import React, {useState} from 'react';
 import useTypedPage from "@/Hooks/useTypedPage";
@@ -13,35 +13,20 @@ import DangerButton from "@/Components/Button/DangerButton";
 import SecondaryButton from "@/Components/Button/SecondaryButton";
 import SuccessButton from "@/Components/Button/SuccessButton";
 import Table from "@/Components/Table";
-import Input from "@/Components/Form/Input";
 import Select from "@/Components/Form/Select";
+import InputJSS from "@/Components/Form/InputJSS";
 
 export default function AdminIndex() {
     const route = useRoute();
-    const {data_paginate: {data: admins, meta}, agencies, roles, auth} =
-        useTypedPage<{
-            data_paginate: PaginatedData<Admin>;
-            agencies: Agency[];
-            roles: Role[]
-        }>().props;
-    const [addOpen, setAddOpen] = useState(false);
-    const [editOpen, setEditOpen] = useState(false);
-    const [deleteOpen, setDeleteOpen] = useState(false);
-    const [edit, setEdit] = useState({
-        id: 0,
-        jss_id: '',
-        role_id: 0,
-        agency_id: 0,
-    });
-    const _onClick = (id: number, jss_id: string, role_id: number, agency_id: number) => {
-        setEditOpen(true);
-        setData({id: id, jss_id: jss_id, role_id: role_id, agency_id: agency_id});
-        setEdit({id: id, jss_id: jss_id, role_id: role_id, agency_id: agency_id});
-    };
-    const handleDelete = (id: number) => {
-        setDeleteOpen(true);
-        setData('id', id)
-    }
+    const {
+        data_paginate: {
+            data: admins, meta
+        }, agencies, roles, auth
+    } = useTypedPage<{
+        data_paginate: PaginatedData<Admin>;
+        agencies: Agency[];
+        roles: Role[]
+    }>().props;
     const form = useForm({
         id: 0,
         jss_id: '',
@@ -49,43 +34,24 @@ export default function AdminIndex() {
         agency_id: 0,
     });
 
+    const [addOpen, setAddOpen] = useState(false);
+    const [editOpen, setEditOpen] = useState(false);
+    const [deleteOpen, setDeleteOpen] = useState(false);
+    const [overlay, setOverlay] = useState(false);
     const {setData, put, post} = form;
+
     const _onChange = (e: any) => {
         const key = e.target.name;
         const value = e.target.value;
         setData(data => ({...data, [key]: value}));
-        setEdit(values => ({...values, [key]: value}));
     };
-
-    const deleteAdmin = () => {
-        form.delete(route('admin.destroy', {id: form.data.id}), {
-            preserveScroll: true,
-            onFinish: () => setDeleteOpen(false),
-        })
-    };
-
-    const updateAdmin = () => {
-        put(route('admin.update', {admin: edit.id}), {
-            preserveScroll: true,
-            onSuccess: () => setEditOpen(false),
-            onFinish: () => form.reset()
-        })
-    };
-
-    const storeAdmin = () => {
-        post(route('admin.store'), {
-            preserveScroll: true,
-            onSuccess: () => setAddOpen(false),
-            onFinish: () => form.reset()
-        });
-    }
 
     return (
         <>
             <div className="flex items-center gap-2 mt-10 mb-5 rounded-lg">
                 <SearchFilter/>
                 <SecondaryButton className={'flex items-center gap-2 py-3'} onClick={() => setAddOpen(true)}>
-                    <PlusIcon className="w-4 h-4"/>
+                    <HiOutlinePlusSm className="w-4 h-4"/>
                     Tambah
                 </SecondaryButton>
             </div>
@@ -102,17 +68,23 @@ export default function AdminIndex() {
                 <Table.TBody>
                     {admins.map(({role, jss, id, agency_id}, key) => (
                         <Table.Tr key={key} className={'hover:bg-gray-50'}>
-                            <Table.Td>{jss.id}</Table.Td>
+                            <Table.Td><span className={'font-semibold text-gray-600'}>{jss.id}</span></Table.Td>
                             <Table.Td>{jss.fullname}</Table.Td>
                             <Table.Td>{role.name}</Table.Td>
                             <Table.Td>
                                 <div className="flex justify-end gap-2">
-                                    <button onClick={() => _onClick(id, jss.id, role.id, agency_id)}
-                                            className="font-semibold text-emerald-500 hover:text-emerald-600 outline-none focus:outline-none">
+                                    <button onClick={() => {
+                                        setEditOpen(true);
+                                        setData({id: id, jss_id: jss.id, role_id: role.id, agency_id: agency_id});
+                                    }}
+                                            className="font-semibold text-gray-600 outline-none hover:text-yellow-600 focus:outline-none">
                                         Ubah
                                     </button>
-                                    <button onClick={() => handleDelete(id)}
-                                            className="font-semibold text-red-300 outline-none hover:text-red-500">
+                                    <button onClick={() => {
+                                        setDeleteOpen(true);
+                                        setData('id', id);
+                                    }}
+                                            className="font-semibold text-gray-600 outline-none hover:text-red-600 focus:outline-none">
                                         Hapus
                                     </button>
                                 </div>
@@ -127,7 +99,12 @@ export default function AdminIndex() {
             {/* Modal Add Admin */}
             <DialogModal isOpen={addOpen} onClose={() => setAddOpen(false)}>
                 <DialogModal.Content title={'Tambah Admin'}>
-                    <Input name={'jss_id'} label={'ID JSS'} onChange={(e) => _onChange(e)}/>
+                    <InputJSS
+                        name={'jss_id'}
+                        value={form.data.jss_id}
+                        setOverlay={setOverlay}
+                        setValue={setData}
+                        onChange={(e) => _onChange(e)}/>
                     <Select name={'role_id'} label={'Role'} onChange={(e) => _onChange(e)}>
                         <option value={''}>Pilih Role</option>
                         {roles.map((role, idx) => (
@@ -151,16 +128,25 @@ export default function AdminIndex() {
                     <SecondaryButton onClick={() => setAddOpen(false)}>
                         Batal
                     </SecondaryButton>
-                    <SuccessButton onClick={storeAdmin} className={'ml-2'}>Tambah Admin</SuccessButton>
+                    <SuccessButton onClick={() => post(route('admin.store'), {
+                        preserveScroll: true,
+                        onSuccess: () => setAddOpen(false),
+                        onFinish: () => form.reset()
+                    })} className={'ml-2'}>Tambah Admin</SuccessButton>
                 </DialogModal.Footer>
             </DialogModal>
 
             {/* Modal Edit Admin */}
             <DialogModal isOpen={editOpen} onClose={() => setEditOpen(false)}>
                 <DialogModal.Content title={'Ubah Admin'}>
-                    <Input name={'jss_id'} label={'ID JSS'} value={edit.jss_id} onChange={(e) => _onChange(e)}/>
+                    <InputJSS
+                        name={'jss_id'}
+                        value={form.data.jss_id}
+                        setOverlay={setOverlay}
+                        setValue={setData}
+                        onChange={(e) => _onChange(e)}/>
 
-                    <Select name={'role_id'} label={'Role'} value={edit.role_id} onChange={(e) => _onChange(e)}>
+                    <Select name={'role_id'} label={'Role'} value={form.data.role_id} onChange={(e) => _onChange(e)}>
                         <option value={''}>Pilih Role</option>
                         {roles.map((role, idx) => (
                             role.id === 1
@@ -172,7 +158,8 @@ export default function AdminIndex() {
                     </Select>
 
                     {auth.user?.admin.role.id === 1 &&
-                    <Select name={'agency_id'} label={'Dinas'} value={edit.agency_id} onChange={(e) => _onChange(e)}>
+                    <Select name={'agency_id'} label={'Dinas'} value={form.data.agency_id}
+                            onChange={(e) => _onChange(e)}>
                         <option value={''}>Pilih Dinas</option>
                         {agencies.map((agency, idx) => (
                             <option key={idx} value={agency.id}>{agency.name}</option>
@@ -183,7 +170,11 @@ export default function AdminIndex() {
                     <SecondaryButton onClick={() => setEditOpen(false)}>
                         Batal
                     </SecondaryButton>
-                    <SuccessButton onClick={updateAdmin} className={'ml-2'}>Ubah Admin</SuccessButton>
+                    <SuccessButton onClick={() => put(route('admin.update', {admin: form.data.id}), {
+                        preserveScroll: true,
+                        onSuccess: () => setEditOpen(false),
+                        onFinish: () => form.reset()
+                    })} className={'ml-2'}>Ubah Admin</SuccessButton>
                 </DialogModal.Footer>
             </DialogModal>
 
@@ -197,12 +188,24 @@ export default function AdminIndex() {
                         Batal
                     </SecondaryButton>
                     <DangerButton
-                        onClick={deleteAdmin}
+                        onClick={() => form.delete(route('admin.destroy', {id: form.data.id}), {
+                            preserveScroll: true,
+                            onFinish: () => setDeleteOpen(false),
+                        })}
                         className={'ml-2'}>
                         Hapus Admin
                     </DangerButton>
                 </DialogModal.Footer>
             </DialogModal>
+            {overlay && (
+                <div className="absolute top-0 left-0 right-0 z-50 w-screen h-screen bg-black bg-opacity-50">
+                    <div className="flex h-full text-white">
+                        <div className="m-auto">
+                            sedang mencari akun JSS
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     )
 }

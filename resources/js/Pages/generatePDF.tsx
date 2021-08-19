@@ -4,8 +4,8 @@ import {InertiaLink} from "@inertiajs/inertia-react";
 import {SuccessButton} from "@/Components/Button";
 import {MdKeyboardArrowLeft} from "react-icons/md";
 import moment from "moment-timezone";
-import {PaperClipIcon} from "@heroicons/react/solid";
 import ReactToPrint from "react-to-print";
+import {HiPaperClip} from "react-icons/hi";
 
 export default function generatePDF() {
     const route = useRoute();
@@ -107,8 +107,8 @@ export default function generatePDF() {
                                         <ul className="border border-gray-200 divide-y divide-gray-200 rounded-md">
                                             <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm hover:bg-gray-50">
                                                 <div className="flex items-center flex-1 w-0">
-                                                    <PaperClipIcon className="flex-shrink-0 w-5 h-5 text-gray-400"
-                                                                   aria-hidden="true"/>
+                                                    <HiPaperClip className="flex-shrink-0 w-5 h-5 text-gray-400"
+                                                                 aria-hidden="true"/>
                                                     <a href={`/storage/${team.proposal}`} target="_blank"
                                                        className="flex-1 w-0 ml-2 truncate">Proposal.pdf</a>
                                                 </div>
@@ -121,8 +121,8 @@ export default function generatePDF() {
                                             </li>
                                             <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm hover:bg-gray-50">
                                                 <div className="flex items-center flex-1 w-0">
-                                                    <PaperClipIcon className="flex-shrink-0 w-5 h-5 text-gray-400"
-                                                                   aria-hidden="true"/>
+                                                    <HiPaperClip className="flex-shrink-0 w-5 h-5 text-gray-400"
+                                                                 aria-hidden="true"/>
                                                     <a href={`/storage/${team.cover_letter}`} target="_blank"
                                                        className="flex-1 w-0 ml-2 truncate">Surat Pengantar.pdf</a>
                                                 </div>
@@ -135,8 +135,8 @@ export default function generatePDF() {
                                             </li>
                                             <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm hover:bg-gray-50">
                                                 <div className="flex items-center flex-1 w-0">
-                                                    <PaperClipIcon className="flex-shrink-0 w-5 h-5 text-gray-400"
-                                                                   aria-hidden="true"/>
+                                                    <HiPaperClip className="flex-shrink-0 w-5 h-5 text-gray-400"
+                                                                 aria-hidden="true"/>
                                                     <a href={`/storage/${team.presentation}`} target="_blank"
                                                        className="flex-1 w-0 ml-2 truncate">Presentasi yang akan
                                                         diajukan.ppt</a>

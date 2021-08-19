@@ -1,8 +1,8 @@
 import React, {Fragment} from 'react';
 import {InertiaLink} from '@inertiajs/inertia-react';
 import {Popover, Transition} from '@headlessui/react';
-import {ChevronDownIcon} from '@heroicons/react/solid';
 import useTypedPage from "@/Hooks/useTypedPage";
+import {HiChevronDown} from "react-icons/hi";
 
 export default function GuestUserMenu() {
     const props = useTypedPage().props;
@@ -15,7 +15,7 @@ export default function GuestUserMenu() {
                         <Popover.Button
                             className="flex items-center px-4 group focus:outline-none lg:px-0">
                             <span>{props.auth.user?.username}</span>
-                            <ChevronDownIcon
+                            <HiChevronDown
                                 className={`${open ? '' : 'text-opacity-70'} ml-2 h-5 w-5 group-hover:text-opacity-80 transition ease-in-out duration-150`}
                                 aria-hidden="true"/>
                         </Popover.Button>

@@ -12,6 +12,7 @@ use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\ValuationController;
 use App\Http\Resources\JSSResource;
+use App\Models\Admin;
 use App\Models\JSS;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,9 @@ Route::post('logout', [SessionController::class, 'destroy'])->name('logout');
 Route::get('/api/jss', function () {
     return JSS::all();
 });
+Route::get('/api/admin', function () {
+    return Admin::with('jss', 'agency', 'role')->get();
+});
 
 Route::group(['middleware' => ['auth']], function () {
 
@@ -49,6 +53,7 @@ Route::group(['middleware' => ['auth']], function () {
     // Agency
     Route::resource('agency', AgencyController::class)->except(['show']);
     Route::get('quota-agency', [AgencyController::class, 'show']);
+    Route::get('agency/setting', [AgencyController::class, 'config'])->name('agency.config');
 
     // Generate PDF
     Route::get('team/print/{team}', [TeamController::class, 'showPDF'])->name('showPDF');

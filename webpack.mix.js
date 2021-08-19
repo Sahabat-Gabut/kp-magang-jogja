@@ -13,11 +13,11 @@ const tailwindcss = require('tailwindcss');
  */
 
 mix.ts('resources/js/app.js', 'public/js').react()
-    .sass('resources/sass/app.sass', 'public/css')
-    .options({
-        processCssUrls: false,
-        postCss: [tailwindcss('tailwind.config.js')],
-    })
+    .postCss('resources/css/app.css', 'public/css', [
+        require('postcss-import'),
+        require('tailwindcss'),
+        require('autoprefixer'),
+    ])
     .sourceMaps()
     .webpackConfig(require('./webpack.config'))
     .disableNotifications();

@@ -1,0 +1,16 @@
+td {
+    clear: both
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+table th, table tr td {
+    @apply border-b
+}
+
+table tr:last-child td {
+    @apply border-b-0
+}

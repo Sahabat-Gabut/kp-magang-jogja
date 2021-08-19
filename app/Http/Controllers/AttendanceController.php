@@ -46,6 +46,7 @@ class AttendanceController extends Controller
             $data_paginate = new PaginateCollenction(
                 Attendance::with('apprentice.team', 'apprentice.jss')
                     ->where('apprentice_id', $this->auth->apprentice->id)
+                    ->orderBy('start_attendance', 'ASC')
                     ->filter(RequestFacade::only('search'))
                     ->paginate(20)
                     ->appends(RequestFacade::all())
@@ -73,6 +74,7 @@ class AttendanceController extends Controller
                 'filters' => $filters,
                 'apprentices' => new ApprenticeSelectCollection(Apprentice::with('jss')->where('team_id', '=', $id)->get()),
                 'attendance_paginate' => new PaginateCollenction(Attendance::whereHas('apprentice', $callback)
+                    ->orderBy('start_attendance', 'ASC')
                     ->with('apprentice.jss')
                     ->filter(RequestFacade::only(['search', 'select']))
                     ->paginate($filters['show'])

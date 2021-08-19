@@ -2,8 +2,14 @@ const colors = require('tailwindcss/colors')
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-    purge: false,
     darkMode: false,
+    mode: 'jit',
+    purge: [
+        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+        './storage/framework/views/*.php',
+        './resources/views/**/*.blade.php',
+        './resources/js/**/*.tsx',
+    ],
     theme: {
         minHeight: {
             '96': '24rem',
@@ -16,28 +22,17 @@ module.exports = {
                 'print': {'raw': 'print'},
             },
             colors: {
-                blueGray: colors.blueGray,
-                coolGray: colors.coolGray,
                 gray: colors.gray,
-                trueGray: colors.trueGray,
-                warmGray: colors.warmGray,
                 red: colors.red,
                 orange: colors.orange,
                 amber: colors.amber,
                 yellow: colors.yellow,
-                lime: colors.lime,
                 green: colors.green,
                 emerald: colors.emerald,
                 teal: colors.teal,
-                cyan: colors.cyan,
                 sky: colors.sky,
                 blue: colors.blue,
                 indigo: colors.indigo,
-                violet: colors.violet,
-                purple: colors.purple,
-                fuchsia: colors.fuchsia,
-                pink: colors.pink,
-                rose: colors.rose,
             },
             order: {
                 first: '-9999',

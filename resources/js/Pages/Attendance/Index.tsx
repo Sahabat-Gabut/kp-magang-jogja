@@ -87,74 +87,6 @@ export default function AttendanceIndex() {
                             )}
                         </Table.TBody>
                     </Table>
-                    {/*<div className="flex flex-col">*/}
-                    {/*    <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">*/}
-                    {/*        <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">*/}
-                    {/*            <div*/}
-                    {/*                className="overflow-hidden overflow-y-auto border border-gray-200 rounded-lg scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-50"*/}
-                    {/*                style={{maxHeight: '70vh'}}>*/}
-                    {/*                <table className="min-w-full">*/}
-                    {/*                    <thead className="sticky top-0 bg-gray-50" style={{zIndex: 2}}>*/}
-                    {/*                    <tr>*/}
-                    {/*                        <th*/}
-                    {/*                            scope="col"*/}
-                    {/*                            className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">*/}
-                    {/*                            Nama Projek*/}
-                    {/*                        </th>*/}
-                    {/*                        <th*/}
-                    {/*                            scope="col"*/}
-                    {/*                            className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">*/}
-                    {/*                            Peserta*/}
-                    {/*                        </th>*/}
-                    {/*                        <th scope="col" className="relative px-6 py-3">*/}
-                    {/*                            <span className="sr-only">Edit</span>*/}
-                    {/*                        </th>*/}
-                    {/*                    </tr>*/}
-                    {/*                    </thead>*/}
-                    {/*                    <tbody className="text-sm font-light bg-white divide-y divide-gray-200">*/}
-                    {/*                    {data.map((team: Team, key: number) => (*/}
-                    {/*                        <tr key={key} className="hover:bg-gray-50">*/}
-                    {/*                            <td className="px-6 py-4 whitespace-nowrap">*/}
-                    {/*                                {*/}
-                    {/*                                    team?.project ?*/}
-                    {/*                                        team.project.name*/}
-                    {/*                                        :*/}
-                    {/*                                        <span*/}
-                    {/*                                            className="font-bold text-red-500">PROJEK BELUM DISET</span>*/}
-                    {/*                                }*/}
-                    {/*                            </td>*/}
-
-                    {/*                            <td className="flex px-6 py-4 whitespace-nowrap">*/}
-                    {/*                                {team.apprentices.map((apprentice, idx) => (*/}
-                    {/*                                    <img key={idx}*/}
-                    {/*                                         className="w-6 h-6 mr-2 transform border border-gray-200 rounded-full cursor-pointer hover:scale-125"*/}
-                    {/*                                         src={`/storage/${apprentice?.photo}`}*/}
-                    {/*                                         alt={apprentice.jss.username}/>*/}
-                    {/*                                ))}*/}
-                    {/*                            </td>*/}
-
-                    {/*                            <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">*/}
-                    {/*                                <InertiaLink href={route('attendaceshow', {id: team.id})}*/}
-                    {/*                                             className="text-gray-600 hover:text-gray-900">*/}
-                    {/*                                    Detail*/}
-                    {/*                                </InertiaLink>*/}
-                    {/*                            </td>*/}
-                    {/*                        </tr>*/}
-                    {/*                    ))}*/}
-                    {/*                    {data.length === 0 && (*/}
-                    {/*                        <tr>*/}
-                    {/*                            <td className="w-full py-4 text-center bg-white" colSpan={3}>*/}
-                    {/*                                data tidak tersedia!*/}
-                    {/*                            </td>*/}
-                    {/*                        </tr>*/}
-                    {/*                    )}*/}
-                    {/*                    </tbody>*/}
-                    {/*                </table>*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-
                     <div className="px-2">
                         <Pagination meta={meta}/>
                     </div>
@@ -200,9 +132,9 @@ export default function AttendanceIndex() {
                                                             <span className="font-semibold">
                                                                 {moment(start_attendance).format('dddd Do MMMM YYYY')}
                                                             </span>
-                                                        <br></br>
+                                                        <br/>
                                                         <span>
-                                                                {start.tz('Asia/Jakarta').format('h:mm:ss')}
+                                                            {start.tz('Asia/Jakarta').format('h:mm:ss')}
                                                             {' - '}
                                                             {ends.tz('Asia/Jakarta').format('h:mm:ss z')}
                                                             </span>
@@ -212,10 +144,8 @@ export default function AttendanceIndex() {
                                                         <div className="flex">
                                                             <img
                                                                 className="w-6 h-6 mr-2 transform border border-gray-200 rounded-full cursor-pointer hover:scale-125"
-                                                                src={`/storage/${apprentice?.photo}`}/>
-                                                            <span>
-                                                                    {apprentice?.jss.fullname}
-                                                                </span>
+                                                                src={`/storage/${apprentice?.photo}`} alt={'#'}/>
+                                                            <span>{apprentice?.jss.fullname}</span>
                                                         </div>
                                                     </td>
 
@@ -253,10 +183,7 @@ export default function AttendanceIndex() {
                                                                         </button>
                                                                     </form>
                                                                     :
-                                                                    <button
-                                                                        className="px-4 py-1 mx-0 bg-gray-200 border border-gray-300 rounded-md outline-none cursor-not-allowed focus:outline-none">
-                                                                        absen
-                                                                    </button>
+                                                                    ''
                                                             )}
                                                         </div>
                                                     </td>

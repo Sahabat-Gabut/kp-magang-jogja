@@ -1,0 +1,10 @@
+@import 'opensans.css';
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import 'tailwindcss/screens';
+@import 'input.css';
+@import 'select.css';
+@import 'swal.css';
+@import 'table.css';
+@import 'typography.css';

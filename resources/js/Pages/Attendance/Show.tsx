@@ -3,17 +3,16 @@ import AppLayout from '@/Layouts/AppLayout';
 import React, {Fragment, useEffect, useState} from 'react'
 import moment from 'moment-timezone'
 import {Listbox, RadioGroup, Transition} from '@headlessui/react';
-import {SelectorIcon} from '@heroicons/react/solid'
+import {HiOutlineSelector} from 'react-icons/hi'
 import {classNames} from '@/Hooks/constants';
 import {usePrevious} from 'react-use';
-import {pickBy} from 'lodash';
+import pickBy from '@/Lib/pickBy';
 import {Inertia} from '@inertiajs/inertia';
 import useRoute from "@/Hooks/useRoute";
 import {useForm} from '@inertiajs/inertia-react';
 import Confirm from '@/Components/Dialog/ConfirmDialog';
 import useTypedPage from "@/Hooks/useTypedPage";
-import {PaginatedData} from "@/types/UsePageProps";
-import {Apprentice, Attendance} from "@/types/models";
+import {Apprentice, Attendance, PaginatedData} from "@/types";
 
 export default function AttendanceShow() {
     const route = useRoute();
@@ -117,7 +116,7 @@ export default function AttendanceShow() {
                                         </span>
                                         <span
                                             className="absolute inset-y-0 right-0 flex items-center pr-2 ml-3 pointer-events-none">
-                                            <SelectorIcon className="w-5 h-5 text-gray-400" aria-hidden="true"/>
+                                            <HiOutlineSelector className="w-5 h-5 text-gray-400" aria-hidden="true"/>
                                         </span>
                                     </Listbox.Button>
 

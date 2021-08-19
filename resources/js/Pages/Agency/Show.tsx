@@ -27,7 +27,7 @@ export default function AgencyShow() {
                                 </Table.THead>
                                 <Table.TBody>
                                     {agencies.map((agency, key) => (
-                                        <Table.Tr key={key}>
+                                        <Table.Tr key={key} className={'hover:bg-gray-50'}>
                                             <Table.Td>{agency.name}</Table.Td>
                                             <Table.Td>{agency.quota}</Table.Td>
                                         </Table.Tr>

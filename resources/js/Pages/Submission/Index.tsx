@@ -2,9 +2,9 @@ import Pagination from '@/Components/Pagination';
 import {SearchFilter} from '@/Components/Form';
 import AppLayout from '@/Layouts/AppLayout'
 import {Listbox, Transition} from '@headlessui/react';
-import {SelectorIcon} from '@heroicons/react/solid';
+import {HiOutlineSelector} from 'react-icons/hi';
 import {Inertia} from '@inertiajs/inertia';
-import {pickBy} from 'lodash';
+import pickBy from '@/Lib/pickBy';
 import React, {Fragment, useEffect, useState} from 'react'
 import {usePrevious} from 'react-use';
 import {useRoute, useTypedPage} from "@/Hooks";
@@ -61,7 +61,7 @@ export default function Submission() {
                                 {selectedStatus.name}
                             </span>
                             <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                <SelectorIcon
+                                <HiOutlineSelector
                                     className="w-5 h-5 text-gray-400"
                                     aria-hidden="true"/>
                             </span>

@@ -1,9 +1,9 @@
 import useRoute from '@/Hooks/useRoute';
-import pickBy from 'lodash/pickBy';
 import {usePrevious} from 'react-use';
 import {Inertia} from '@inertiajs/inertia';
 import React, {useEffect, useState} from 'react';
 import useTypedPage from "@/Hooks/useTypedPage";
+import pickBy from "@/Lib/pickBy";
 
 export default () => {
     const {filters} = useTypedPage().props;
