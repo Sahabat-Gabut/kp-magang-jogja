@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import AppLayout from "@/Layouts/AppLayout";
 import {useRoute, useTypedPage} from "@/Hooks";
 import {Agency} from "@/types";
@@ -15,15 +15,21 @@ export default function AgencyConfig() {
         location: agency.location,
         quota: agency.quota
     });
+    const {setData, data} = form;
     const _onChange = (e: any) => {
-        form.setData(data => ({...data, [e.target.key]: e.target.value}));
+        const key = e.target.name;
+        const value = e.target.value;
+        setData(data => ({...data, [key]: value}));
     };
 
     return (
         <>
-            <Input name={'name'} label={'Nama Dinas'} value={form.data.name} onChange={_onChange}/>
-            <Input name={'quota'} label={'Kuota Magang'} type={'number'} value={form.data.quota} onChange={_onChange}/>
-            <Textarea name={'location'} label={'Lokasi Dinas'} value={form.data.location} onChange={_onChange}/>
+            <Input name={'name'} label={'Nama Dinas'} value={data.name}
+                   onChange={(e: ChangeEvent<HTMLInputElement>) => _onChange(e)}/>
+            <Input name={'quota'} label={'Kuota Magang'} type={'number'} value={data.quota}
+                   onChange={(e: ChangeEvent<HTMLInputElement>) => _onChange(e)}/>
+            <Textarea name={'location'} label={'Lokasi Dinas'} defaultValue={data.location}
+                      onChange={(e: ChangeEvent<HTMLTextAreaElement>) => _onChange(e)}/>
             <div className={'flex justify-end mt-5'}>
                 <SuccessButton onClick={() => form.put(route('agency.update', {id: form.data.id}))}>
                     Simpan
