@@ -82,14 +82,13 @@ export default function ShowProject() {
                         <SecondaryButton onClick={() => setAddOpen(true)}>
                             Tambah Planning
                         </SecondaryButton>
-                        <InertiaLink
-                            href={route('showPDF', {id: project.id})}
-                            className={'inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-gray-300 active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition'}>
-                            Ekspor
-                        </InertiaLink>
-                        {/*<SecondaryButton onClick={() => setAddOpen(true)}>*/}
-                        {/*    Ekspor*/}
-                        {/*</SecondaryButton>*/}
+                        {project.status === 'SELESAI' && (
+                            <InertiaLink
+                                href={route('showPDF', {id: project.team.id})}
+                                className={'inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-gray-300 active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition'}>
+                                Ekspor
+                            </InertiaLink>
+                        )}
                     </div>
                 </div>
                 <div className="flex items-center justify-end mb-2 mt-5 border-t pt-5">
@@ -222,13 +221,13 @@ export default function ShowProject() {
                            label={'Planning'}
                            onChange={(e: ChangeEvent<HTMLInputElement>) => _onChange(e)}/>
 
-                    <Select name={'status'}
-                            label={'Status'}
-                            onChange={(e: ChangeEvent<HTMLSelectElement>) => _onChange(e)}>
-                        <option value="">Pilih Status</option>
-                        <option value="PENGEMBANGAN">Pengembangan</option>
-                        <option value="SELESAI">Selesai</option>
-                    </Select>
+                    {/*<Select name={'status'}*/}
+                    {/*        label={'Status'}*/}
+                    {/*        onChange={(e: ChangeEvent<HTMLSelectElement>) => _onChange(e)}>*/}
+                    {/*    <option value="">Pilih Status</option>*/}
+                    {/*    <option value="PENGEMBANGAN">Pengembangan</option>*/}
+                    {/*    <option value="SELESAI">Selesai</option>*/}
+                    {/*</Select>*/}
                 </DialogModal.Content>
                 <DialogModal.Footer>
                     <SecondaryButton onClick={() => setAddOpen(false)}>

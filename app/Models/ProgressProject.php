@@ -13,8 +13,9 @@ class ProgressProject extends Model
         'project_id',
         'apprentice_id',
         'name',
-        'explanation',
+        'description',
         'link',
+        'status',
         'date_of_created',
     ];
 

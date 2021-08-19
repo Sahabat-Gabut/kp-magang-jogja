@@ -74,12 +74,15 @@ export default function ShowSubmission() {
                                     <DialogModal isOpen={confProjectOpen} onClose={() => setConfProjectOpen(false)}>
                                         <DialogModal.Content title={'Atur Projek'}>
                                             <Input name={'projectName'}
+                                                   label={'Nama Projek'}
                                                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                                        setData('name', e.target.value)
                                                    }}/>
                                             <Textarea name={'projectDesc'}
+                                                      label={'Deskripsi Projek'}
                                                       onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setData('description', e.target.value)}/>
-                                            <Select name={'admin_id'}>
+                                            <Select name={'admin_id'} label={'Pembimbing Lapangan'}
+                                                    onChange={(e: ChangeEvent<HTMLSelectElement>) => setData('admin_id', e.target.value)}>
                                                 <option value={''}/>
                                                 {admins.map((admin, idx) => (
                                                     <option key={idx} value={admin.id}>{admin.jss.fullname}</option>))}

@@ -48,7 +48,7 @@ class ProgressProjectController extends Controller
             'project_id' => $request->project_id,
             'apprentice_id' => $request->apprentice_id,
             'name' => $request->name,
-            'status' => $request->status ? $request->status : 'PENGEMBANGAN',
+            'status' => 'PENGEMBANGAN',
         ]);
 
         if ($insert) {

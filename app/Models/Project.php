@@ -56,7 +56,7 @@ class Project extends Model
         return number_format($project->progress->where('status', 'SELESAI')->count() / $project->progress->count() * 100);
     }
 
-    public function percentageTeam2($project)
+    public function percentageTeam2($project): string
     {
         return number_format($project->progress->where('status', 'SELESAI')->count() / $project->progress->count() * 100);
     }
