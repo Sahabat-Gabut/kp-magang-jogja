@@ -25,7 +25,6 @@ use Inertia\Response;
 
 class SubmissionController extends Controller
 {
-
     private $user;
 
     public function __construct()
@@ -62,6 +61,12 @@ class SubmissionController extends Controller
         $options = (new Agency)->getAgencySelect();
 
         return Inertia::render('Submission/Create', compact('title', 'options'));
+    }
+
+    public function success(): Response
+    {
+        $title = 'Berhasil Mendaftar';
+        return Inertia::render('Submission/Success', compact('title'));
     }
 
     public function store(Request $request)

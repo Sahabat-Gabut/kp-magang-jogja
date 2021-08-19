@@ -30,7 +30,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('login', [SessionController::class, 'create'])->name('login');
 Route::post('login', [SessionController::class, 'store']);
 Route::post('logout', [SessionController::class, 'destroy'])->name('logout');
-
 Route::get('/api/jss', function () {
     return JSS::all();
 });
@@ -54,6 +53,7 @@ Route::group(['middleware' => ['auth']], function () {
     // Generate PDF
     Route::get('team/print/{team}', [TeamController::class, 'showPDF'])->name('showPDF');
     Route::get('team/generate/{team}', [TeamController::class, 'generatePDF'])->name('generatePDF');
+
     // Project
     Route::resource('project', ProjectController::class)->except('create');
 
@@ -71,7 +71,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('submission', SubmissionController::class)->except(['edit', 'update', 'destroy', 'show']);
     Route::get('submission/{team}', [SubmissionController::class, 'show'])->name('submission.show');
     Route::put('submission/{team}/{status}', [SubmissionController::class, 'update'])->name('submission.update');
-
+    Route::get('/submission-success', [SubmissionController::class, 'success'])->name('submission.success');
     Route::get('/getJSS/{id}', function ($id) {
         return new JSSResource(JSS::findOrFail($id));
     });

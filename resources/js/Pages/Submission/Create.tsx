@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import {FieldArray, FormikValues} from 'formik';
@@ -15,10 +15,12 @@ import {
     FormikWizard,
     FormStep
 } from '@/Components/Formik';
+import {Inertia} from "@inertiajs/inertia";
 
 export default function Submission() {
     const {auth, options} = useTypedPage<{ options: SelectOptions[] }>().props;
     const route = useRoute();
+    const [overlay, setOverlay] = useState(false);
     const initialValues = {
         agency: '',
         university: '',
@@ -73,17 +75,25 @@ export default function Submission() {
             cancelButtonText: 'Belum'
         }).then((result: any) => {
             if (result.isConfirmed) {
+                setOverlay(true);
                 axios.post(route('submission.store'), values)
-                    .then(() => Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil',
-                        text: 'Selamat anda berhasil mendaftar!',
-                    }))
-                    .catch(() => Swal.fire({
-                        icon: 'error',
-                        title: 'Kesalahan',
-                        text: 'Maaf terjadi kesalahan!',
-                    }))
+                    .then(() => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: 'Selamat anda berhasil mendaftar!',
+                        });
+                        Inertia.get(route('submission.success'));
+                        setOverlay(false);
+                    })
+                    .catch(() => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Kesalahan',
+                            text: 'Maaf terjadi kesalahan, silahkan melakukan pendaftaran lagi!',
+                        })
+                        setOverlay(false);
+                    })
             }
         })
     }
@@ -247,17 +257,17 @@ export default function Submission() {
                             </div>
                         </div>
 
-                        <div className="pb-10">
-                            <div className="px-5 py-2 mb-5 text-white border-l-4 border-green-600">
-                                <span
-                                    className="w-full text-lg font-semibold text-gray-700 uppercase">Informasi Projek</span>
-                            </div>
-                            <div className="px-5">
-                                <FormikInput id="projectName" label="Nama Projek" name="projectName" readOnly={true}/>
-                                <FormikInput id="projectDesc" label="Deskripsi Projek" name="projectDesc"
-                                             readOnly={true}/>
-                            </div>
-                        </div>
+                        {/*<div className="pb-10">*/}
+                        {/*    <div className="px-5 py-2 mb-5 text-white border-l-4 border-green-600">*/}
+                        {/*        <span*/}
+                        {/*            className="w-full text-lg font-semibold text-gray-700 uppercase">Informasi Projek</span>*/}
+                        {/*    </div>*/}
+                        {/*    <div className="px-5">*/}
+                        {/*        <FormikInput id="projectName" label="Nama Projek" name="projectName" readOnly={true}/>*/}
+                        {/*        <FormikInput id="projectDesc" label="Deskripsi Projek" name="projectDesc"*/}
+                        {/*                     readOnly={true}/>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
 
                         <div className="">
                             <FieldArray
@@ -312,6 +322,15 @@ export default function Submission() {
                     Magang Dinas Kota Yogyakarta
                 </div>
             </div>
+            {overlay && (
+                <div className="fixed top-0 left-0 right-0 z-50 w-screen h-screen bg-black bg-opacity-30">
+                    <div className="flex h-full text-white">
+                        <div className="m-auto">
+                            mohon menunggu, kami sedang mengajukan permohonan anda...
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     )
 
