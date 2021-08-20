@@ -1,18 +1,18 @@
 import Pagination from '@/Components/Pagination';
 import AppLayout from '@/Layouts/AppLayout';
-import React, {Fragment, useEffect, useState} from 'react'
+import React, {ChangeEvent, useEffect, useState} from 'react'
 import moment from 'moment-timezone'
-import {Listbox, RadioGroup, Transition} from '@headlessui/react';
-import {HiOutlineSelector} from 'react-icons/hi'
-import {classNames} from '@/Hooks/constants';
+import {RadioGroup} from '@headlessui/react';
 import {usePrevious} from 'react-use';
-import pickBy from '@/Lib/pickBy';
-import {Inertia} from '@inertiajs/inertia';
 import useRoute from "@/Hooks/useRoute";
-import {useForm} from '@inertiajs/inertia-react';
+import {InertiaLink, useForm} from '@inertiajs/inertia-react';
 import Confirm from '@/Components/Dialog/ConfirmDialog';
 import useTypedPage from "@/Hooks/useTypedPage";
 import {Apprentice, Attendance, PaginatedData} from "@/types";
+import {Select} from "@/Components/Form";
+import {BsArrowLeftShort} from "react-icons/bs";
+import {Inertia} from "@inertiajs/inertia";
+import pickBy from "@/Lib/pickBy";
 
 export default function AttendanceShow() {
     const route = useRoute();
@@ -21,10 +21,8 @@ export default function AttendanceShow() {
         attendance_paginate: PaginatedData<Attendance>;
         apprentices: { data: Apprentice[] };
     }>().props;
-    const [index, setIndex] = useState(0);
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
-    const [selected, setSelected] = useState(apprentices.data[index]);
     const [filter, setFilter] = useState({
         select: filters.select || '',
         show: filters.show || ''
@@ -37,25 +35,19 @@ export default function AttendanceShow() {
                 pickBy(filter)).length
                 ? pickBy(filter)
                 : {};
-            Inertia.get(route(route().current() as string, {team: selected.team_id}), query, {
+            Inertia.get(route(route().current() as string, {team: apprentices.data[0].team_id}), query, {
                 replace: true,
                 preserveState: true
             });
         }
-    }, [selected, filter]);
+    }, [filter]);
 
-    const _onChange = (value: any, name: string) => {
-        if (name === 'select') {
-            setSelected(value);
-            setIndex(apprentices.data.findIndex(
-                ({id}) => id === value.id)
-            );
-        }
+    const _onChange = (e: any) => {
+        const key = e.target.name;
+        const val = e.target.value;
+
         setFilter(values => ({
-            ...values,
-            [name]: name === 'select'
-                ? value.id.toString()
-                : value
+            ...values, [key]: val
         }));
     }
 
@@ -88,71 +80,46 @@ export default function AttendanceShow() {
     }
     return (
         <>
-            <div className="relative flex gap-2 my-5">
-                <div>
-                    <label htmlFor="" className="block mb-1 text-sm font-medium text-gray-700">tampilkan</label>
-                    <select
-                        className="relative w-20 py-2 pl-3 pr-10 text-left bg-white border border-gray-300 rounded-md shadow-sm cursor-default focus:outline-none focus:ring-1 focus:ring-green-200 focus:border-green-500 sm:text-sm"
-                        onChange={(e) => _onChange(e.target.value, 'show')}>
+            <nav className="hidden lg:flex items-center text-gray-500 text-sm font-medium space-x-2 whitespace-nowrap">
+                <InertiaLink href={route('attendance.index')} className="hover:text-gray-900">
+                    Daftar Absensi
+                </InertiaLink>
+                <svg width="24" height="24" fill="none" className="flex-none text-gray-300">
+                    <path d="M10.75 8.75l3.5 3.25-3.5 3.25" stroke="currentColor" strokeWidth="1.5"
+                          strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span aria-current="page"
+                      className="truncate">
+                    Detail
+                </span>
+            </nav>
+            <h2 className="text-2xl font-extrabold text-gray-900 hidden lg:block">Daftar Absensi</h2>
+
+            <div className="relative flex flex-col lg:flex-row gap-2 mb-5 lg:items-center justify-between">
+                <InertiaLink href={route('attendance.index')} as="button"
+                             className="inline-flex w-32 items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-gray-300 active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition gap-2">
+                    <BsArrowLeftShort/>
+                    kembali
+                </InertiaLink>
+                <div className={'flex gap-2 items-center'}>
+                    <Select name={'show'}
+                            className={'py-2 px-3 font-medium w-20'}
+                            style={{lineHeight: '25px!important'}}
+                            onChange={(e: ChangeEvent<HTMLSelectElement>) => _onChange(e)}>
                         <option value="7">7</option>
                         <option value="14">14</option>
                         <option value="21">21</option>
-                    </select>
-                </div>
+                    </Select>
 
-                <div>
-                    <Listbox value={selected} onChange={(values: any) => _onChange(values, 'select')}>
-                        {({open}: any) => (
-                            <>
-                                <Listbox.Label className="block text-sm font-medium text-gray-700">Pilih
-                                    Peserta</Listbox.Label>
-                                <div className="relative mt-1">
-                                    <Listbox.Button
-                                        className="relative w-full py-2 pl-3 pr-10 text-left bg-white border border-gray-300 rounded-md shadow-sm cursor-default md:w-72 focus:outline-none focus:ring-1 focus:ring-green-200 focus:border-green-500 sm:text-sm">
-                                        <span className="flex items-center">
-                                            <img src={`/storage/${selected.photo}`} alt=""
-                                                 className="flex-shrink-0 w-6 h-6 rounded-full"/>
-                                            <span className="block ml-3 truncate">{selected.jss.fullname}</span>
-                                        </span>
-                                        <span
-                                            className="absolute inset-y-0 right-0 flex items-center pr-2 ml-3 pointer-events-none">
-                                            <HiOutlineSelector className="w-5 h-5 text-gray-400" aria-hidden="true"/>
-                                        </span>
-                                    </Listbox.Button>
-
-                                    <Transition
-                                        show={open}
-                                        as={Fragment}
-                                        leave="transition ease-in duration-100"
-                                        leaveFrom="opacity-100"
-                                        leaveTo="opacity-0">
-                                        <Listbox.Options static
-                                                         className="absolute z-10 w-full py-1 mt-1 overflow-hidden text-base bg-white rounded-md shadow-lg md:w-72 max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                            {apprentices.data.map((apprentice, idx) => (
-                                                <Listbox.Option
-                                                    key={idx}
-                                                    className={({active}: any) => classNames(active ? 'text-green-900 bg-green-200' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9')}
-                                                    value={apprentice}>
-                                                    {({selected}: any) => (
-                                                        <>
-                                                            <div className="flex items-center">
-                                                                <img src={`/storage/${apprentice.photo}`} alt=""
-                                                                     className="flex-shrink-0 w-6 h-6 rounded-full"/>
-                                                                <span
-                                                                    className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
-                                                                    {apprentice.jss.fullname}
-                                                                </span>
-                                                            </div>
-                                                        </>
-                                                    )}
-                                                </Listbox.Option>
-                                            ))}
-                                        </Listbox.Options>
-                                    </Transition>
-                                </div>
-                            </>
-                        )}
-                    </Listbox>
+                    <Select name={'select'}
+                            className={'py-2 px-3 font-medium'}
+                            style={{lineHeight: '25px!important'}}
+                            onChange={(e: ChangeEvent<HTMLSelectElement>) => _onChange(e)}>
+                        <option value={''}>semua peserta</option>
+                        {apprentices.data.map((apprentice, key) => (
+                            <option key={key} value={`${apprentice.id}`}>{apprentice.jss.fullname}</option>
+                        ))}
+                    </Select>
                 </div>
             </div>
 

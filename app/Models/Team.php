@@ -27,10 +27,14 @@ class Team extends Model
         'date_of_created',
     ];
 
-
     public function agency(): HasOne
     {
         return $this->hasOne(Agency::class, 'id', 'agency_id');
+    }
+
+    public function validation(): HasOne
+    {
+        return $this->hasOne(Validation::class, 'id', 'team_id');
     }
 
     public function agencies(): HasMany

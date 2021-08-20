@@ -7,7 +7,7 @@ import {SuccessButton} from "@/Components/Button";
 import {useForm} from "@inertiajs/inertia-react";
 
 export default function AgencyConfig() {
-    const {agency} = useTypedPage<{ agency: Agency }>().props;
+    const {agency, title} = useTypedPage<{ agency: Agency }>().props;
     const route = useRoute();
     const form = useForm({
         id: agency.id,
@@ -24,6 +24,8 @@ export default function AgencyConfig() {
 
     return (
         <>
+            <h2 className="text-2xl font-extrabold text-gray-900 border-l-2 pl-3 hidden lg:block">{title}</h2>
+
             <Input name={'name'} label={'Nama Dinas'} value={data.name}
                    onChange={(e: ChangeEvent<HTMLInputElement>) => _onChange(e)}/>
             <Input name={'quota'} label={'Kuota Magang'} type={'number'} value={data.quota}

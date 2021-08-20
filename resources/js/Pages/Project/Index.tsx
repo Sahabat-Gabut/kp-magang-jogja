@@ -14,7 +14,7 @@ import {IoIosArrowForward} from "react-icons/io";
 
 export default function ProjectIndex() {
     const route = useRoute();
-    const {data_paginate: projects, project, percentage, auth} = useTypedPage<{
+    const {data_paginate: projects, project, percentage, auth, title} = useTypedPage<{
         data_paginate: PaginatedData<Project>;
         percentage: number;
         project: Project;
@@ -72,7 +72,10 @@ export default function ProjectIndex() {
         <>
             {!project ? (
                 <>
-                    <div className="mt-10 mb-5 rounded-lg ">
+                    <h2 className="text-2xl font-extrabold text-gray-900 border-l-2 pl-3 hidden lg:block">Daftar
+                        Projek</h2>
+
+                    <div className="mb-5 rounded-lg">
                         <SearchFilter/>
                     </div>
                     <Table>
@@ -80,7 +83,7 @@ export default function ProjectIndex() {
                             <Table.Tr>
                                 <Table.Th>Nama Projek</Table.Th>
                                 <Table.Th>Peserta</Table.Th>
-                                <Table.Th>Status</Table.Th>
+                                <Table.Th className={'text-center'}>Status</Table.Th>
                                 <Table.Th srOnly={true}>Aksi</Table.Th>
                             </Table.Tr>
                         </Table.THead>
@@ -108,9 +111,19 @@ export default function ProjectIndex() {
                                     </Table.Td>
                                     <Table.Td style={{padding: 0}}>
                                         <InertiaLink href={route('project.show', {id: id})}
-                                                     className="w-full text-left py-3 px-6"
+                                                     className="w-full text-center py-3 px-6"
                                                      as={'button'}>
-                                            {status}
+                                            {status === 'SELESAI' ? (
+                                                <span
+                                                    className="inline-block px-2 py-1 text-xs font-semibold text-green-600 uppercase bg-green-200 rounded-full group-hover:shadow">
+                                                    {status}
+                                                </span>
+                                            ) : (
+                                                <span
+                                                    className="inline-block px-2 py-1 text-xs font-semibold text-gray-600 uppercase bg-gray-200 rounded-full group-hover:shadow">
+                                                    Pengembangan
+                                                </span>
+                                            )}
                                         </InertiaLink>
                                     </Table.Td>
                                     <Table.Td style={{padding: 0}}>
@@ -136,6 +149,13 @@ export default function ProjectIndex() {
                 </>
             ) : (
                 <>
+                    <span aria-current="page"
+                          className="truncate hidden lg:block pl-3 text-gray-500 text-sm font-medium">
+                        Projek
+                    </span>
+                    <h2 className="text-2xl font-extrabold text-gray-900 border-l-2 pl-3 hidden lg:block">
+                        {title}
+                    </h2>
                     <div className="relative pt-1 mt-4">
                         <div className="flex items-center justify-between mb-2">
                             <div>

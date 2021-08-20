@@ -72,8 +72,6 @@ class ProjectController extends Controller
 
     public function show(Project $project): Response
     {
-
-
         $title = $project->name;
         $project = $project->load('progress.jss', 'team.apprentices.jss', 'team.admin.jss');
         $done = $project->progress->where('status', 'SELESAI')->count();

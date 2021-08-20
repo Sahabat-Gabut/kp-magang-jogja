@@ -26,16 +26,33 @@ export default function ShowSubmission() {
 
     const reject = () => {
         rejectForm.put(`/submission/${team.id}/DITOLAK`);
+        setConfirmOpen(false);
     }
 
     const {setData} = projectForm;
 
     const insertProject = () => {
-        projectForm.post(route('project.store'));
+        projectForm.put(`/submission/${team.id}/DITERIMA`);
+        setConfProjectOpen(false);
     }
 
     return (
         <>
+            <nav className="hidden lg:flex items-center text-gray-500 text-sm font-medium space-x-2 whitespace-nowrap">
+                <InertiaLink href={route('submission.index')} className="hover:text-gray-900">
+                    Daftar Pengajuan
+                </InertiaLink>
+                <svg width="24" height="24" fill="none" className="flex-none text-gray-300">
+                    <path d="M10.75 8.75l3.5 3.25-3.5 3.25" stroke="currentColor" strokeWidth="1.5"
+                          strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span aria-current="page"
+                      className="truncate">
+                    Detail
+                </span>
+            </nav>
+            <h2 className="text-2xl font-extrabold text-gray-900 hidden lg:block">Detail Tim Pemohon</h2>
+
             <div className="flex items-center justify-between w-full my-5">
                 <div>
                     <InertiaLink href={route('submission.index')} as="button"
@@ -46,12 +63,19 @@ export default function ShowSubmission() {
                 <div className="flex">
                     {team.status === 'DITERIMA' ? (
                         <>
-                            <button onClick={() => setConfirmOpen(true)} type="button"
-                                    className="px-5 py-1 mr-2 font-medium text-red-700 transform rounded-md cursor-pointer hover:red-800 focus:ring-1 focus:ring-red-600">
+                            {!team.project && (
+                                <>
+                                    <SecondaryButton onClick={() => setConfProjectOpen(true)}>
+                                        Atur Projek
+                                    </SecondaryButton>
+                                </>
+                            )}
+
+                            <DangerButton onClick={() => setConfirmOpen(true)} className={'ml-5'}>
                                 Batalkan Persetujuan
-                            </button>
+                            </DangerButton>
                             <DialogModal isOpen={confirmOpen} onClose={() => setConfirmOpen(false)}>
-                                <DialogModal.Content title={'Hapus Admin'}>
+                                <DialogModal.Content title={'Apakah anda yakin?'}>
                                     apakah anda yakin ingin membatalkan persetujuan tim ini?
                                 </DialogModal.Content>
                                 <DialogModal.Footer>
@@ -65,46 +89,16 @@ export default function ShowSubmission() {
                                     </DangerButton>
                                 </DialogModal.Footer>
                             </DialogModal>
-                            {!team.project && (
-                                <>
-                                    <button onClick={() => setConfProjectOpen(true)} type="button"
-                                            className="px-5 py-1 mr-2 font-medium text-gray-600 transform bg-white border border-gray-300 rounded-md cursor-pointer hover:bg-gray-100 hover:text-gray-600 focus:ring-1 focus:ring-gray-300">
-                                        Atur Projek
-                                    </button>
-                                    <DialogModal isOpen={confProjectOpen} onClose={() => setConfProjectOpen(false)}>
-                                        <DialogModal.Content title={'Atur Projek'}>
-                                            <Input name={'projectName'}
-                                                   label={'Nama Projek'}
-                                                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                                       setData('name', e.target.value)
-                                                   }}/>
-                                            <Textarea name={'projectDesc'}
-                                                      label={'Deskripsi Projek'}
-                                                      onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setData('description', e.target.value)}/>
-                                            <Select name={'admin_id'} label={'Pembimbing Lapangan'}
-                                                    onChange={(e: ChangeEvent<HTMLSelectElement>) => setData('admin_id', e.target.value)}>
-                                                <option value={''}/>
-                                                {admins.map((admin, idx) => (
-                                                    <option key={idx} value={admin.id}>{admin.jss.fullname}</option>))}
-                                            </Select>
-                                        </DialogModal.Content>
-                                        <DialogModal.Footer>
-                                            <SecondaryButton onClick={() => setConfProjectOpen(false)}>
-                                                Batal
-                                            </SecondaryButton>
-                                            <SuccessButton onClick={insertProject}
-                                                           className={'ml-2'}>Simpan</SuccessButton>
-                                        </DialogModal.Footer>
-                                    </DialogModal>
-                                </>
-                            )}
                         </>
                     ) : (
                         team.status === 'DITOLAK' ? (
-                            <InertiaLink href={`/submission/${team.id}/DITERIMA`} method="put" as="button" type="button"
-                                         className="px-5 py-1 mr-2 font-medium text-green-900 transform bg-green-300 rounded-md cursor-pointer hover:bg-green-400 focus:ring-1 focus:ring-green-600">
+                            // <InertiaLink href={`/submission/${team.id}/DITERIMA`} method="put" as="button" type="button"
+                            //              className="px-5 py-1 mr-2 font-medium text-green-900 transform bg-green-300 rounded-md cursor-pointer hover:bg-green-400 focus:ring-1 focus:ring-green-600">
+                            //     Terima
+                            // </InertiaLink>
+                            <SuccessButton onClick={() => setConfProjectOpen(true)}>
                                 Terima
-                            </InertiaLink>
+                            </SuccessButton>
                         ) : (
                             <>
                                 <InertiaLink href={`/submission/${team.id}/DITOLAK`} method="put" as="button"
@@ -112,15 +106,40 @@ export default function ShowSubmission() {
                                              className="px-5 py-1 mr-2 font-medium text-red-700 transform bg-red-300 rounded-md cursor-pointer hover:bg-red-400 focus:ring-1 focus:ring-red-600">
                                     Tolak
                                 </InertiaLink>
-                                <InertiaLink href={`/submission/${team.id}/DITERIMA`} method="put" as="button"
-                                             type="button"
-                                             className="px-5 py-1 mr-2 font-medium text-green-900 transform bg-green-300 rounded-md cursor-pointer hover:bg-green-400 focus:ring-1 focus:ring-green-600">
+                                {/*<InertiaLink href={`/submission/${team.id}/DITERIMA`} method="put" as="button"*/}
+                                {/*             type="button"*/}
+                                {/*             className="px-5 py-1 mr-2 font-medium text-green-900 transform bg-green-300 rounded-md cursor-pointer hover:bg-green-400 focus:ring-1 focus:ring-green-600">*/}
+                                {/*    Terima*/}
+                                {/*</InertiaLink>*/}
+                                <SuccessButton onClick={() => setConfProjectOpen(true)}>
                                     Terima
-                                </InertiaLink>
+                                </SuccessButton>
                             </>
-
                         )
                     )}
+                    <DialogModal isOpen={confProjectOpen} onClose={() => setConfProjectOpen(false)}>
+                        <DialogModal.Content title={'Atur Projek'}>
+                            <Input name={'projectName'}
+                                   label={'Nama Projek'}
+                                   onChange={(e: ChangeEvent<HTMLInputElement>) => setData('name', e.target.value)}/>
+                            <Textarea name={'projectDesc'}
+                                      label={'Deskripsi Projek'}
+                                      onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setData('description', e.target.value)}/>
+                            <Select name={'admin_id'} label={'Pembimbing Lapangan'}
+                                    onChange={(e: ChangeEvent<HTMLSelectElement>) => setData('admin_id', e.target.value)}>
+                                <option value={''}/>
+                                {admins.map((admin, idx) => (
+                                    <option key={idx} value={admin.id}>{admin.jss.fullname}</option>))}
+                            </Select>
+                        </DialogModal.Content>
+                        <DialogModal.Footer>
+                            <SecondaryButton onClick={() => setConfProjectOpen(false)}>
+                                Batal
+                            </SecondaryButton>
+                            <SuccessButton onClick={insertProject}
+                                           className={'ml-2'}>Simpan</SuccessButton>
+                        </DialogModal.Footer>
+                    </DialogModal>
                 </div>
             </div>
 
@@ -177,7 +196,7 @@ export default function ShowSubmission() {
                         <dt className="text-sm font-medium text-gray-500">Lampiran</dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                             <ul className="border border-gray-200 divide-y divide-gray-200 rounded-md">
-                                <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
+                                <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm hover:bg-gray-50">
                                     <div className="flex items-center flex-1 w-0">
                                         <HiPaperClip className="flex-shrink-0 w-5 h-5 text-gray-400"
                                                      aria-hidden="true"/>
@@ -186,12 +205,12 @@ export default function ShowSubmission() {
                                     </div>
                                     <div className="flex-shrink-0 ml-4">
                                         <a href={`/storage/${team.proposal}`} download
-                                           className="font-medium text-indigo-600 hover:text-indigo-500">
+                                           className="font-medium text-emerald-600 hover:text-emerald-500">
                                             Download
                                         </a>
                                     </div>
                                 </li>
-                                <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
+                                <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm hover:bg-gray-50">
                                     <div className="flex items-center flex-1 w-0">
                                         <HiPaperClip className="flex-shrink-0 w-5 h-5 text-gray-400"
                                                      aria-hidden="true"/>
@@ -200,12 +219,12 @@ export default function ShowSubmission() {
                                     </div>
                                     <div className="flex-shrink-0 ml-4">
                                         <a href={`/storage/${team.cover_letter}`} download
-                                           className="font-medium text-indigo-600 hover:text-indigo-500">
+                                           className="font-medium text-emerald-600 hover:text-emerald-500">
                                             Download
                                         </a>
                                     </div>
                                 </li>
-                                <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
+                                <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm hover:bg-gray-50">
                                     <div className="flex items-center flex-1 w-0">
                                         <HiPaperClip className="flex-shrink-0 w-5 h-5 text-gray-400"
                                                      aria-hidden="true"/>
@@ -214,7 +233,7 @@ export default function ShowSubmission() {
                                     </div>
                                     <div className="flex-shrink-0 ml-4">
                                         <a href={`/storage/${team.presentation}`} download
-                                           className="font-medium text-indigo-600 hover:text-indigo-500">
+                                           className="font-medium text-emerald-600 hover:text-emerald-500">
                                             Download
                                         </a>
                                     </div>

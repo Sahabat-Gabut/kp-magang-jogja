@@ -18,6 +18,9 @@ module.exports = {
             fontFamily: {
                 sans: ['Poppins', ...defaultTheme.fontFamily.sans],
             },
+            transitionTimingFunction: {
+                'in-expo': 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
+            },
             screens: {
                 'print': {'raw': 'print'},
             },
@@ -52,8 +55,12 @@ module.exports = {
                 '11': '11',
                 '12': '12',
             },
+            fontSize: {
+                'xs': '.75rem',
+            },
             spacing: {
-                '17': '4.75rem'
+                '17': '4.75rem',
+                '32': '8rem'
             },
         },
     },
@@ -63,7 +70,8 @@ module.exports = {
         },
     },
     plugins: [
-        require('@tailwindcss/typography'),
-        require('tailwind-scrollbar')
+        require('tailwind-scrollbar'),
+        require('@tailwindcss/forms'),
+        require('@tailwindcss/ui'),
     ],
 }

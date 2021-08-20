@@ -9,6 +9,7 @@ use App\Models\Apprentice;
 use App\Models\Attendance;
 use App\Models\Project;
 use App\Models\Team;
+use App\Models\Validation;
 use DateInterval;
 use DatePeriod;
 use DateTime;
@@ -138,7 +139,7 @@ class SubmissionController extends Controller
     /**
      * @throws Exception
      */
-    public function update(Team $team, string $status)
+    public function update(Team $team, string $status, Request $request)
     {
         if (!$this->user->admin) {
             return Inertia::render('Response/Index', ['status' => 403]);
@@ -148,6 +149,24 @@ class SubmissionController extends Controller
         $current_quota = $agency->quota;
         $attendances = $this->generateAttendance($team->date_start, $team->date_finish);
         $apprentices = Apprentice::where('team_id', $team->id)->get();
+
+        if ($request->team_id) {
+            Project::create([
+                'team_id' => $team->id,
+                'name' => $request->name,
+                'description' => $request->description,
+            ]);
+
+            Team::find($request->team_id)->update([
+                'admin_id' => $request->admin_id,
+            ]);
+
+            Validation::create([
+                'admin_id' => $this->user->admin->id,
+                'team_id' => $team->id,
+                'result_date' => now(),
+            ]);
+        }
 
         if ($status == 'DITERIMA') {
             $current_quota -= 1;

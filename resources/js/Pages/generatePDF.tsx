@@ -5,7 +5,6 @@ import {SuccessButton} from "@/Components/Button";
 import {MdKeyboardArrowLeft} from "react-icons/md";
 import moment from "moment-timezone";
 import ReactToPrint from "react-to-print";
-import {HiPaperClip} from "react-icons/hi";
 
 export default function generatePDF() {
     const route = useRoute();
@@ -71,6 +70,10 @@ export default function generatePDF() {
                                     <dt className="text-sm font-medium text-gray-500">Rencana Selesai</dt>
                                     <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{moment(team.date_finish).format('dddd Do MMMM YYYY')}</dd>
                                 </div>
+                                {/*<div className="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">*/}
+                                {/*    <dt className="text-sm font-medium text-gray-500">Tanggal divalidasi</dt>*/}
+                                {/*    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{moment(team.validation.result_date).format('dddd Do MMMM YYYY')}</dd>*/}
+                                {/*</div>*/}
                                 <div className="px-4 py-5 bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-500">Dinas</dt>
                                     <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{team.agency.name}</dd>
@@ -101,56 +104,56 @@ export default function generatePDF() {
                                         ))}
                                     </dd>
                                 </div>
-                                <div className="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                    <dt className="text-sm font-medium text-gray-500">Lampiran</dt>
-                                    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                        <ul className="border border-gray-200 divide-y divide-gray-200 rounded-md">
-                                            <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm hover:bg-gray-50">
-                                                <div className="flex items-center flex-1 w-0">
-                                                    <HiPaperClip className="flex-shrink-0 w-5 h-5 text-gray-400"
-                                                                 aria-hidden="true"/>
-                                                    <a href={`/storage/${team.proposal}`} target="_blank"
-                                                       className="flex-1 w-0 ml-2 truncate">Proposal.pdf</a>
-                                                </div>
-                                                <div className="flex-shrink-0 ml-4">
-                                                    <a href={`/storage/${team.proposal}`} download
-                                                       className="font-medium text-indigo-600 hover:text-indigo-500">
-                                                        Download
-                                                    </a>
-                                                </div>
-                                            </li>
-                                            <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm hover:bg-gray-50">
-                                                <div className="flex items-center flex-1 w-0">
-                                                    <HiPaperClip className="flex-shrink-0 w-5 h-5 text-gray-400"
-                                                                 aria-hidden="true"/>
-                                                    <a href={`/storage/${team.cover_letter}`} target="_blank"
-                                                       className="flex-1 w-0 ml-2 truncate">Surat Pengantar.pdf</a>
-                                                </div>
-                                                <div className="flex-shrink-0 ml-4">
-                                                    <a href={`/storage/${team.cover_letter}`} download
-                                                       className="font-medium text-indigo-600 hover:text-indigo-500">
-                                                        Download
-                                                    </a>
-                                                </div>
-                                            </li>
-                                            <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm hover:bg-gray-50">
-                                                <div className="flex items-center flex-1 w-0">
-                                                    <HiPaperClip className="flex-shrink-0 w-5 h-5 text-gray-400"
-                                                                 aria-hidden="true"/>
-                                                    <a href={`/storage/${team.presentation}`} target="_blank"
-                                                       className="flex-1 w-0 ml-2 truncate">Presentasi yang akan
-                                                        diajukan.ppt</a>
-                                                </div>
-                                                <div className="flex-shrink-0 ml-4">
-                                                    <a href={`/storage/${team.presentation}`} download
-                                                       className="font-medium text-indigo-600 hover:text-indigo-500">
-                                                        Download
-                                                    </a>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </dd>
-                                </div>
+                                {/*<div className="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">*/}
+                                {/*    <dt className="text-sm font-medium text-gray-500">Lampiran</dt>*/}
+                                {/*    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">*/}
+                                {/*        <ul className="border border-gray-200 divide-y divide-gray-200 rounded-md">*/}
+                                {/*            <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm hover:bg-gray-50">*/}
+                                {/*                <div className="flex items-center flex-1 w-0">*/}
+                                {/*                    <HiPaperClip className="flex-shrink-0 w-5 h-5 text-gray-400"*/}
+                                {/*                                 aria-hidden="true"/>*/}
+                                {/*                    <a href={`/storage/${team.proposal}`} target="_blank"*/}
+                                {/*                       className="flex-1 w-0 ml-2 truncate">Proposal.pdf</a>*/}
+                                {/*                </div>*/}
+                                {/*                <div className="flex-shrink-0 ml-4">*/}
+                                {/*                    <a href={`/storage/${team.proposal}`} download*/}
+                                {/*                       className="font-medium text-indigo-600 hover:text-indigo-500">*/}
+                                {/*                        Download*/}
+                                {/*                    </a>*/}
+                                {/*                </div>*/}
+                                {/*            </li>*/}
+                                {/*            <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm hover:bg-gray-50">*/}
+                                {/*                <div className="flex items-center flex-1 w-0">*/}
+                                {/*                    <HiPaperClip className="flex-shrink-0 w-5 h-5 text-gray-400"*/}
+                                {/*                                 aria-hidden="true"/>*/}
+                                {/*                    <a href={`/storage/${team.cover_letter}`} target="_blank"*/}
+                                {/*                       className="flex-1 w-0 ml-2 truncate">Surat Pengantar.pdf</a>*/}
+                                {/*                </div>*/}
+                                {/*                <div className="flex-shrink-0 ml-4">*/}
+                                {/*                    <a href={`/storage/${team.cover_letter}`} download*/}
+                                {/*                       className="font-medium text-indigo-600 hover:text-indigo-500">*/}
+                                {/*                        Download*/}
+                                {/*                    </a>*/}
+                                {/*                </div>*/}
+                                {/*            </li>*/}
+                                {/*            <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm hover:bg-gray-50">*/}
+                                {/*                <div className="flex items-center flex-1 w-0">*/}
+                                {/*                    <HiPaperClip className="flex-shrink-0 w-5 h-5 text-gray-400"*/}
+                                {/*                                 aria-hidden="true"/>*/}
+                                {/*                    <a href={`/storage/${team.presentation}`} target="_blank"*/}
+                                {/*                       className="flex-1 w-0 ml-2 truncate">Presentasi yang akan*/}
+                                {/*                        diajukan.ppt</a>*/}
+                                {/*                </div>*/}
+                                {/*                <div className="flex-shrink-0 ml-4">*/}
+                                {/*                    <a href={`/storage/${team.presentation}`} download*/}
+                                {/*                       className="font-medium text-indigo-600 hover:text-indigo-500">*/}
+                                {/*                        Download*/}
+                                {/*                    </a>*/}
+                                {/*                </div>*/}
+                                {/*            </li>*/}
+                                {/*        </ul>*/}
+                                {/*    </dd>*/}
+                                {/*</div>*/}
                             </dl>
                         </div>
                     </div>

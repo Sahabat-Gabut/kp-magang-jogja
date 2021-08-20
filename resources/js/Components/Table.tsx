@@ -11,7 +11,7 @@ Table.Td = function Td({children, className = '', ...props}: TdProps) {
 };
 
 Table.TBody = function Tbody({children, className = ''}: PropsWithChildren<{ className?: string }>) {
-    return <tbody className={clsx("text-sm font-light bg-white divide-y divide-gray-200", className)}>{children}</tbody>
+    return <tbody className={clsx("text-sm bg-white divide-y divide-gray-200", className)}>{children}</tbody>
 };
 
 Table.Th = function Th(

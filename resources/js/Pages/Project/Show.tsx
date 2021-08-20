@@ -12,7 +12,7 @@ import {BsArrowLeftShort} from "react-icons/bs";
 
 export default function ShowProject() {
     const route = useRoute();
-    const {project, percentage} = useTypedPage<{ project: Project; percentage: number }>().props;
+    const {project, percentage, title} = useTypedPage<{ project: Project; percentage: number }>().props;
     const [progressID, setProgressID] = useState(0);
     const [addOpen, setAddOpen] = useState(false);
     const [editOpen, setEditOpen] = useState(false);
@@ -72,10 +72,26 @@ export default function ShowProject() {
 
     return (
         <>
+            <nav className="hidden lg:flex items-center text-gray-500 text-sm font-medium space-x-2 whitespace-nowrap">
+                <InertiaLink href={route('project.index')} className="hover:text-gray-900">
+                    Daftar Projek
+                </InertiaLink>
+                <svg width="24" height="24" fill="none" className="flex-none text-gray-300">
+                    <path d="M10.75 8.75l3.5 3.25-3.5 3.25" stroke="currentColor" strokeWidth="1.5"
+                          strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span aria-current="page"
+                      className="truncate">
+                    Detail
+                </span>
+            </nav>
+            <h2 className="text-2xl font-extrabold text-gray-900 hidden lg:block">{title}</h2>
+
             <div className="relative my-5">
                 <div className="flex justify-between">
                     <InertiaLink href={route('project.index')} as="button"
-                                 className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-gray-300 active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition gap-2"><BsArrowLeftShort/>
+                                 className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-gray-300 active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition gap-2">
+                        <BsArrowLeftShort/>
                         kembali
                     </InertiaLink>
                     <div className={'flex gap-2'}>
@@ -84,7 +100,7 @@ export default function ShowProject() {
                         </SecondaryButton>
                         {project.status === 'SELESAI' && (
                             <InertiaLink
-                                href={route('showPDF', {id: project.team.id})}
+                                href={route('showPDF', {id: project.team_id})}
                                 className={'inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-gray-300 active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition'}>
                                 Ekspor
                             </InertiaLink>

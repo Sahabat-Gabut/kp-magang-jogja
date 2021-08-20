@@ -26,7 +26,7 @@ export default function HomePage() {
                 </div>
             </div>
             <div
-                className="container flex flex-wrap items-center justify-between max-w-screen-xl px-0 py-6 mx-4 md:mx-auto md:grid md:grid-cols-2 md:gap-6 md:px-2 lg:grid-cols-3 lg:gap-6">
+                className="container flex flex-col items-center justify-between max-w-screen-md py-6 mx-auto text-center lg:flex-row lg:text-left lg:max-w-screen-xl px-0 py-6 mx-4 md:mx-auto md:grid md:grid-cols-2 gap-4 md:gap-6 md:px-2 lg:grid-cols-3 lg:gap-6">
                 <GuestCard
                     img="/img/logo/register.png"
                     title="Daftar Magang"

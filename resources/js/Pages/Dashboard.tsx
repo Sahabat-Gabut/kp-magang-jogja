@@ -14,6 +14,7 @@ export default function Dashboard() {
 
     return (
         <>
+            <h2 className="text-2xl font-extrabold text-gray-900 hidden lg:block border-l-2 pl-3">Dasbor</h2>
             {user?.admin && (
                 <div className="grid gap-6 mt-4 mb-8 md:grid-cols-2 xl:grid-cols-4">
                     <InformationCard name="Total Tim" count={total_team}

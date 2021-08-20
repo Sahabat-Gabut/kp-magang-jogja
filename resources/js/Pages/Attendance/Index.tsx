@@ -28,10 +28,11 @@ export default function AttendanceIndex() {
 
     return (
         <>
-
             {auth.user?.admin ? (
                 <>
-                    <div className="mt-10 mb-5 rounded-lg ">
+                    <h2 className="text-2xl font-extrabold text-gray-900 border-l-2 pl-3 hidden lg:block">Daftar
+                        Absensi</h2>
+                    <div className="mb-5 rounded-lg">
                         <SearchFilter/>
                     </div>
                     <Table>
@@ -59,14 +60,16 @@ export default function AttendanceIndex() {
                                     </Table.Td>
                                     <Table.Td style={{padding: 0}}>
                                         <InertiaLink href={route('attendaceshow', {id: team.id})}
-                                                     className="w-full text-left py-3 px-6 flex"
+                                                     className="relative w-full text-left py-3 px-6 flex"
                                                      as={'button'}>
-                                            {team.apprentices.map((apprentice, idx) => (
-                                                <img key={idx}
-                                                     className="w-6 h-6 mr-2 transform border border-gray-200 rounded-full cursor-pointer hover:scale-125"
-                                                     src={`/storage/${apprentice?.photo}`}
-                                                     alt={apprentice.jss.username}/>
-                                            ))}
+                                            <div className="flex -space-x-1 absolute top-0">
+                                                {team.apprentices.map((apprentice, idx) => (
+                                                    <img key={idx}
+                                                         className="inline-block h-6 w-6 rounded-full ring-2 ring-white hover:scale-125"
+                                                         src={`/storage/${apprentice?.photo}`}
+                                                         alt={apprentice.jss.username}/>
+                                                ))}
+                                            </div>
                                         </InertiaLink>
                                     </Table.Td>
                                     <Table.Td style={{padding: 0}}>
@@ -93,6 +96,9 @@ export default function AttendanceIndex() {
                 </>
             ) : (
                 <>
+                    <h2 className="text-2xl font-extrabold text-gray-900 border-l-2 pl-3 hidden lg:block">
+                        Absensi
+                    </h2>
                     <div className="flex flex-col">
                         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">

@@ -17,7 +17,7 @@ import DangerButton from "@/Components/Button/DangerButton";
 
 export default function AgencyIndex() {
     const route = useRoute();
-    const {data_paginate} = useTypedPage<{ data_paginate: PaginatedData<Agency> }>().props;
+    const {data_paginate, title} = useTypedPage<{ data_paginate: PaginatedData<Agency> }>().props;
     const {data: agencies, meta} = data_paginate;
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
@@ -71,7 +71,9 @@ export default function AgencyIndex() {
 
     return (
         <>
-            <div className="flex flex-col items-center gap-2 mt-10 mb-5 md:flex-row">
+            <h2 className="text-2xl font-extrabold text-gray-900 border-l-2 pl-3 hidden lg:block">{title}</h2>
+
+            <div className="flex flex-col items-center gap-2 mb-5 md:flex-row">
                 <SearchFilter/>
             </div>
 
@@ -85,9 +87,9 @@ export default function AgencyIndex() {
                 </Table.THead>
                 <Table.TBody>
                     {agencies.map(({id, name, quota, location}, key) => (
-                        <Table.Tr key={key} className={'hover:bg-gray-50'}>
-                            <Table.Td>{name}</Table.Td>
-                            <Table.Td>{quota}</Table.Td>
+                        <Table.Tr key={key} className={'hover:bg-gray-50 text-gray-700'}>
+                            <Table.Td><span className={'font-medium text-gray-900'}>{name}</span></Table.Td>
+                            <Table.Td><span className={'font-medium'}>{quota}</span></Table.Td>
                             <Table.Td>
                                 <div className="flex justify-end gap-2">
                                     <button onClick={() => _onClick(id, name, quota, location)}

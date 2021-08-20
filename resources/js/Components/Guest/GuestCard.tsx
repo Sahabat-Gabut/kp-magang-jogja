@@ -11,9 +11,9 @@ interface IMainCard {
 
 export default function GuestCard(props: IMainCard) {
     return (
-        <div className="border border-gray-300 rounded-md" style={{maxWidth: '395px'}}>
-            <img className="w-full" src={props.img}/>
-            <div className="p-4">
+        <div className="border border-gray-300 rounded-md h-full flex flex-col" style={{maxWidth: '395px'}}>
+            <img className="w-full" src={props.img} alt={'#'}/>
+            <div className="p-4 flex-1">
                 <h3 className="uppercase">{props.title}</h3>
                 <p>{props.desc}</p>
             </div>

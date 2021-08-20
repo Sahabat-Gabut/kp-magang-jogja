@@ -18,7 +18,7 @@ class CreateValidationTable extends Migration
             $table->foreignId('admin_id')->constrained('admin')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('team_id')->constrained('team')->onUpdate('cascade')->onDelete('cascade');
             $table->date('result_date');
-            $table->string('response_letter',255);
+            $table->string('response_letter', 255)->nullable();
         });
     }
 

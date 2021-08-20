@@ -23,7 +23,7 @@ const status = [
 
 export default function Submission() {
     const route = useRoute();
-    const {data_paginate, filters} = useTypedPage<{ data_paginate: PaginatedData<Team> }>().props;
+    const {data_paginate, filters, title} = useTypedPage<{ data_paginate: PaginatedData<Team> }>().props;
     const {data: submissions, meta} = data_paginate;
     const [selectedStatus, setSelectedStatus] = useState(status[0]);
     const [values, setValues] = useState({
@@ -51,7 +51,9 @@ export default function Submission() {
 
     return (
         <>
-            <div className="flex flex-col items-center gap-2 mt-10 mb-5 md:flex-row">
+            <h2 className="text-2xl font-extrabold text-gray-900 border-l-2 pl-3 hidden lg:block">{title}</h2>
+
+            <div className="flex flex-col items-center gap-2 mb-5 md:flex-row">
                 <SearchFilter/>
                 <Listbox value={selectedStatus} onChange={(value) => handleChange(value)}>
                     <div className="relative w-full md:w-96">
@@ -92,12 +94,6 @@ export default function Submission() {
                         </Transition>
                     </div>
                 </Listbox>
-                {/* <button className="flex items-center w-full gap-2 px-3 py-2 text-gray-800 bg-white border border-gray-300 rounded-lg md:w-36 hover:bg-gray-50 focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
-                    </svg>
-                    Ekspor
-                </button> */}
             </div>
 
             <Table>
@@ -112,10 +108,10 @@ export default function Submission() {
                 </Table.THead>
                 <Table.TBody>
                     {submissions.map(({agency: {name}, id, university, apprentices, status}, key) => (
-                        <Table.Tr key={key} className={'hover:bg-gray-50'}>
+                        <Table.Tr key={key} className={'hover:bg-gray-50 text-gray-700'}>
                             <Table.Td style={{padding: 0}}>
                                 <InertiaLink href={route('submission.show', {id: id.toString()})}
-                                             className="w-full text-left py-3 px-6"
+                                             className="w-full text-left py-3 px-6 text-gray-900 font-medium"
                                              as={'button'}>
                                     {name}
                                 </InertiaLink>

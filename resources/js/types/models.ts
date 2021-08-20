@@ -30,12 +30,14 @@ export type Team = {
     apprentices: Apprentice[]
     jss: JSS;
     project: Project;
-    admin: Admin
+    admin: Admin;
+    validation: Validation;
 }
 
 export type Project = {
     id: number;
     admin_id: number;
+    team_id: number;
     name: string;
     description: string;
     status: string;
@@ -87,4 +89,11 @@ export type Attendance = {
     end_attendance: Date
     status: string
     apprentice?: Apprentice
+}
+
+export type Validation = {
+    id: number;
+    admin_id: number;
+    result_date: Date;
+    response_letter: string;
 }

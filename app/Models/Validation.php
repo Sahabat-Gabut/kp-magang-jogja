@@ -3,20 +3,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Validation extends Model
 {
-    protected $table        = "validation";
-    public $timestamps      = false;
-    protected $fillable     = [ 
-        'id', 
+    public $timestamps = false;
+    protected $table = "validation";
+    protected $fillable = [
+        'id',
         'admin_id',
         'team_id',
-        'agency_id',
         'result_date',
-        'start_date',
-        'field_supervisor',
         'response_letter',
-        'finish'
     ];
+
+    public function admin(): HasOne
+    {
+        return $this->hasOne(Admin::class, 'id', 'admin_id');
+    }
 }

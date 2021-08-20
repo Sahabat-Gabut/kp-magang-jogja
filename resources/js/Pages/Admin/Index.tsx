@@ -21,7 +21,7 @@ export default function AdminIndex() {
     const {
         data_paginate: {
             data: admins, meta
-        }, agencies, roles, auth
+        }, agencies, roles, auth, title
     } = useTypedPage<{
         data_paginate: PaginatedData<Admin>;
         agencies: Agency[];
@@ -48,7 +48,9 @@ export default function AdminIndex() {
 
     return (
         <>
-            <div className="flex items-center gap-2 mt-10 mb-5 rounded-lg">
+            <h2 className="text-2xl font-extrabold text-gray-900 border-l-2 pl-3 hidden lg:block">{title}</h2>
+
+            <div className="flex items-center gap-2 mb-5 rounded-lg">
                 <SearchFilter/>
                 <SecondaryButton className={'flex items-center gap-2 py-3'} onClick={() => setAddOpen(true)}>
                     <HiOutlinePlusSm className="w-4 h-4"/>
@@ -67,8 +69,8 @@ export default function AdminIndex() {
                 </Table.THead>
                 <Table.TBody>
                     {admins.map(({role, jss, id, agency_id}, key) => (
-                        <Table.Tr key={key} className={'hover:bg-gray-50'}>
-                            <Table.Td><span className={'font-semibold text-gray-600'}>{jss.id}</span></Table.Td>
+                        <Table.Tr key={key} className={'hover:bg-gray-50 text-gray-700'}>
+                            <Table.Td><span className={'font-medium text-gray-900'}>{jss.id}</span></Table.Td>
                             <Table.Td>{jss.fullname}</Table.Td>
                             <Table.Td>{role.name}</Table.Td>
                             <Table.Td>
@@ -77,14 +79,14 @@ export default function AdminIndex() {
                                         setEditOpen(true);
                                         setData({id: id, jss_id: jss.id, role_id: role.id, agency_id: agency_id});
                                     }}
-                                            className="font-semibold text-gray-600 outline-none hover:text-yellow-600 focus:outline-none">
+                                            className="font-medium outline-none hover:text-yellow-600 focus:outline-none">
                                         Ubah
                                     </button>
                                     <button onClick={() => {
                                         setDeleteOpen(true);
                                         setData('id', id);
                                     }}
-                                            className="font-semibold text-gray-600 outline-none hover:text-red-600 focus:outline-none">
+                                            className="font-medium outline-none hover:text-red-600 focus:outline-none">
                                         Hapus
                                     </button>
                                 </div>
