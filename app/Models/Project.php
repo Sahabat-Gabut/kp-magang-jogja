@@ -40,9 +40,13 @@ class Project extends Model
     {
         $auth = Auth::user()->load('apprentice.team');
 
-        return $isAdmin ? Project::with(['team.agency', 'team.apprentices.jss', 'progress'])->orWhereHas('team', function ($q) use ($agency_id) {
-            $q->orWhere('agency_id', 'LIKE', $agency_id);
-        })
+        return $isAdmin ?
+            $agency_id > 0 ?
+                Project::with(['team.agency', 'team.apprentices.jss', 'progress'])->orWhereHas('team',
+                    function ($q) use ($agency_id) {
+                        $q->where('agency_id', 'ILIKE', $agency_id);
+                    })
+                : Project::with(['team.agency', 'team.apprentices.jss', 'progress'])
             : Project::with(['progress.jss', 'team.apprentices.jss', 'team.admin.jss'])
                 ->where('team_id', $auth->apprentice->team->id)
                 ->first();
@@ -53,7 +57,11 @@ class Project extends Model
         $auth = Auth::user()->load('admin');
         if ($auth->admin) return 0;
 
-        return number_format($project->progress->where('status', 'SELESAI')->count() / $project->progress->count() * 100);
+        if ($project->progress->count() > 0) {
+            return number_format($project->progress->where('status', 'SELESAI')->count() / $project->progress->count() * 100);
+        } else {
+            return 0;
+        }
     }
 
     public function percentageTeam2($project): string

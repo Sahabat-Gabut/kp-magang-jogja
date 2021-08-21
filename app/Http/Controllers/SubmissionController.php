@@ -160,12 +160,6 @@ class SubmissionController extends Controller
             Team::find($request->team_id)->update([
                 'admin_id' => $request->admin_id,
             ]);
-
-            Validation::create([
-                'admin_id' => $this->user->admin->id,
-                'team_id' => $team->id,
-                'result_date' => now(),
-            ]);
         }
 
         if ($status == 'DITERIMA') {
@@ -206,6 +200,12 @@ class SubmissionController extends Controller
         $update_status = $team->update(['status' => $status]);
         $update_quota = Agency::find($team->agency_id)->update(['quota' => $current_quota]);
 
+        $validation = Validation::create([
+            'admin_id' => $this->user->admin->id,
+            'team_id' => $team->id,
+            'result_date' => now(),
+        ]);
+
         foreach ($attendances as $attendance) {
             foreach ($apprentices as $apprentice) {
                 $handle_attendance = Attendance::create([
@@ -216,7 +216,7 @@ class SubmissionController extends Controller
             }
         }
 
-        if ($update_status && $update_quota && $handle_attendance) {
+        if ($update_status && $update_quota && $validation && $handle_attendance) {
             return Redirect::back()->with([
                 'type' => 'success',
                 'message' => 'Perngajuan berhasil disetujui.',
@@ -234,12 +234,13 @@ class SubmissionController extends Controller
         $update_status = $team->update(['status' => $status]);
         $update_quota = Agency::find($team->agency_id)->update(['quota' => $current_quota]);
         $delete_project = Project::where('team_id', $team->id)->delete();
+        $delete_validation = Validation::where('team_id', $team->id)->delete();
 
         foreach ($apprentices as $apprentice) {
             $handle_attendance = Attendance::where('apprentice_id', $apprentice->id)->delete();
         }
 
-        if ($update_status && $update_quota && $handle_attendance || $delete_project) {
+        if ($update_status && $update_quota && $delete_validation && $handle_attendance || $delete_project) {
             return Redirect::back()->with([
                 'type' => 'success',
                 'message' => 'Perngajuan berhasil ditolak.',

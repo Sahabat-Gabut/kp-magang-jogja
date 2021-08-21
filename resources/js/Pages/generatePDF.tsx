@@ -62,32 +62,24 @@ export default function generatePDF() {
                         <h1 className={'font-black text-lg mb-0'}>Informasi Tim</h1>
                         <div className="border-t border-gray-200">
                             <dl>
-                                <div className="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <div className="py-5 bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4">
                                     <dt className="text-sm font-medium text-gray-500">Tanggal Pengajuan</dt>
                                     <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{moment(team.date_start).format('dddd Do MMMM YYYY')}</dd>
                                 </div>
-                                <div className="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <div className="py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4">
                                     <dt className="text-sm font-medium text-gray-500">Rencana Selesai</dt>
                                     <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{moment(team.date_finish).format('dddd Do MMMM YYYY')}</dd>
                                 </div>
-                                {/*<div className="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">*/}
-                                {/*    <dt className="text-sm font-medium text-gray-500">Tanggal divalidasi</dt>*/}
-                                {/*    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{moment(team.validation.result_date).format('dddd Do MMMM YYYY')}</dd>*/}
-                                {/*</div>*/}
-                                <div className="px-4 py-5 bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <div className="py-5 bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4">
                                     <dt className="text-sm font-medium text-gray-500">Dinas</dt>
                                     <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{team.agency.name}</dd>
                                 </div>
-                                <div className="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <div className="py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4">
                                     <dt className="text-sm font-medium text-gray-500">Universitas</dt>
                                     <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{team.university}</dd>
                                 </div>
-                                {/*<div className="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">*/}
-                                {/*    <dt className="text-sm font-medium text-gray-500">Jurusan</dt>*/}
-                                {/*    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{team.department}</dd>*/}
-                                {/*</div>*/}
 
-                                <div className="px-4 py-5 bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <div className="py-5 bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4">
                                     <dt className="text-sm font-medium text-gray-500">Peserta</dt>
                                     <dd className="flex gap-5 mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                         {team.apprentices.map((apprentice, idx) => (
@@ -104,56 +96,10 @@ export default function generatePDF() {
                                         ))}
                                     </dd>
                                 </div>
-                                {/*<div className="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">*/}
-                                {/*    <dt className="text-sm font-medium text-gray-500">Lampiran</dt>*/}
-                                {/*    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">*/}
-                                {/*        <ul className="border border-gray-200 divide-y divide-gray-200 rounded-md">*/}
-                                {/*            <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm hover:bg-gray-50">*/}
-                                {/*                <div className="flex items-center flex-1 w-0">*/}
-                                {/*                    <HiPaperClip className="flex-shrink-0 w-5 h-5 text-gray-400"*/}
-                                {/*                                 aria-hidden="true"/>*/}
-                                {/*                    <a href={`/storage/${team.proposal}`} target="_blank"*/}
-                                {/*                       className="flex-1 w-0 ml-2 truncate">Proposal.pdf</a>*/}
-                                {/*                </div>*/}
-                                {/*                <div className="flex-shrink-0 ml-4">*/}
-                                {/*                    <a href={`/storage/${team.proposal}`} download*/}
-                                {/*                       className="font-medium text-indigo-600 hover:text-indigo-500">*/}
-                                {/*                        Download*/}
-                                {/*                    </a>*/}
-                                {/*                </div>*/}
-                                {/*            </li>*/}
-                                {/*            <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm hover:bg-gray-50">*/}
-                                {/*                <div className="flex items-center flex-1 w-0">*/}
-                                {/*                    <HiPaperClip className="flex-shrink-0 w-5 h-5 text-gray-400"*/}
-                                {/*                                 aria-hidden="true"/>*/}
-                                {/*                    <a href={`/storage/${team.cover_letter}`} target="_blank"*/}
-                                {/*                       className="flex-1 w-0 ml-2 truncate">Surat Pengantar.pdf</a>*/}
-                                {/*                </div>*/}
-                                {/*                <div className="flex-shrink-0 ml-4">*/}
-                                {/*                    <a href={`/storage/${team.cover_letter}`} download*/}
-                                {/*                       className="font-medium text-indigo-600 hover:text-indigo-500">*/}
-                                {/*                        Download*/}
-                                {/*                    </a>*/}
-                                {/*                </div>*/}
-                                {/*            </li>*/}
-                                {/*            <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm hover:bg-gray-50">*/}
-                                {/*                <div className="flex items-center flex-1 w-0">*/}
-                                {/*                    <HiPaperClip className="flex-shrink-0 w-5 h-5 text-gray-400"*/}
-                                {/*                                 aria-hidden="true"/>*/}
-                                {/*                    <a href={`/storage/${team.presentation}`} target="_blank"*/}
-                                {/*                       className="flex-1 w-0 ml-2 truncate">Presentasi yang akan*/}
-                                {/*                        diajukan.ppt</a>*/}
-                                {/*                </div>*/}
-                                {/*                <div className="flex-shrink-0 ml-4">*/}
-                                {/*                    <a href={`/storage/${team.presentation}`} download*/}
-                                {/*                       className="font-medium text-indigo-600 hover:text-indigo-500">*/}
-                                {/*                        Download*/}
-                                {/*                    </a>*/}
-                                {/*                </div>*/}
-                                {/*            </li>*/}
-                                {/*        </ul>*/}
-                                {/*    </dd>*/}
-                                {/*</div>*/}
+                                <div className="py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4">
+                                    <dt className="text-sm font-medium text-gray-500">Divalidasi pada</dt>
+                                    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{moment(team.validation.result_date).format('dddd Do MMMM YYYY')}</dd>
+                                </div>
                             </dl>
                         </div>
                     </div>
@@ -172,22 +118,6 @@ export default function generatePDF() {
                             </div>
                         </div>
                     </div>
-
-                    {/*<div className={'mb-5'}>*/}
-                    {/*    <h1 className={'font-black text-lg mb-0'}>Peserta</h1>*/}
-                    {/*    <div className={'flex gap-5 mt-2'}>*/}
-                    {/*        {team.apprentices.map((apprentice, key) => (*/}
-                    {/*            <div key={key} className={'flex gap-2'}>*/}
-                    {/*                <img src={`/storage/${apprentice.photo}`} className="rounded-lg h-14 w-14"*/}
-                    {/*                     alt={apprentice.jss.username}/>*/}
-                    {/*                <div className="flex flex-col ml-2">*/}
-                    {/*                    <span className="font-semibold">{apprentice.jss.fullname}</span>*/}
-                    {/*                    <span className="text-sm italic">{apprentice.jss_id}</span>*/}
-                    {/*                </div>*/}
-                    {/*            </div>*/}
-                    {/*        ))}*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
 
                     <div className="overflow-x-auto rounded-lg shadow-sm border dark:border-gray-800">
                         <table className="w-full">
@@ -219,44 +149,7 @@ export default function generatePDF() {
                             </tbody>
                         </table>
                     </div>
-                    {/*<div className={'my-5'}>*/}
-                    {/*    <h1 className={'font-black text-lg mb-2'}>Presentase Kehadiran</h1>*/}
-                    {/*    <div className="overflow-x-auto rounded-lg shadow-sm border dark:border-gray-800">*/}
-                    {/*        <table className="w-full">*/}
-                    {/*            <thead>*/}
-                    {/*            <tr className="text-left border-b dark:border-gray-800">*/}
-                    {/*                <th className="undefined font-medium whitespace-nowrap text-sm px-4 py-3">Peserta</th>*/}
-                    {/*                <th className="undefined font-medium whitespace-nowrap text-sm px-4 py-3">*/}
-                    {/*                    Hadir*/}
-                    {/*                </th>*/}
-                    {/*                <th className="undefined font-medium whitespace-nowrap text-sm px-4 py-3">Izin</th>*/}
-                    {/*                <th className="undefined font-medium whitespace-nowrap text-sm px-4 py-3">Sakit</th>*/}
-                    {/*            </tr>*/}
-                    {/*            </thead>*/}
-                    {/*            <tbody>*/}
-                    {/*            {team.project.progress.map((progress, key) => (*/}
-                    {/*                <tr key={key}*/}
-                    {/*                    className="border-b dark:border-gray-800 last:border-b-0 hover:bg-gray-50 dark:hover:bg-gray-1000">*/}
-                    {/*                    <td className="undefined text-sm px-4 py-3"><strong*/}
-                    {/*                        className="capitalize font-semibold">{progress.name}</strong></td>*/}
-                    {/*                    <td className="undefined text-sm px-4 py-3"><span*/}
-                    {/*                        className="capitalize">{progress.jss.fullname}</span>*/}
-                    {/*                    </td>*/}
-                    {/*                    <td className="undefined text-sm px-4 py-3">{*/}
-                    {/*                        progress.status === 'SELESAI' ? <span*/}
-                    {/*                                className={'text-emerald-500 text-xs uppercase font-semibold'}>SELESAI</span>*/}
-                    {/*                            : <span>DALAM PENGEMBANGAN</span>*/}
-                    {/*                    }</td>*/}
-                    {/*                </tr>*/}
-                    {/*            ))}*/}
-                    {/*            </tbody>*/}
-                    {/*        </table>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-
-
                 </div>
-
             </div>
         </div>
     )

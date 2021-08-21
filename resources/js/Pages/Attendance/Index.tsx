@@ -171,8 +171,8 @@ export default function AttendanceIndex() {
                                                                 ) : (
                                                                     <span
                                                                         className="inline-block px-2 py-1 text-xs font-semibold text-gray-600 uppercase bg-gray-200 rounded-full group-hover:shadow">
-                                                                            {status}
-                                                                        </span>
+                                                                        {status}
+                                                                    </span>
                                                                 )
                                                         )}
                                                     </td>
@@ -180,16 +180,14 @@ export default function AttendanceIndex() {
                                                     <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                                                         <div className="flex text-center">
                                                             {moment().format() >= start_attendance.toString() && (
-                                                                status.length === 0 ?
-                                                                    <form
-                                                                        onSubmit={(event) => formHandler(event, id.toString())}>
-                                                                        <button
-                                                                            className="px-4 py-1 mx-0 text-gray-600 bg-white border border-gray-300 rounded-md outline-none hover:bg-gray-200 hover:text-gray-600 focus:outline-none">
-                                                                            absen
-                                                                        </button>
-                                                                    </form>
-                                                                    :
-                                                                    ''
+                                                                !status &&
+                                                                <form
+                                                                    onSubmit={(event) => formHandler(event, id.toString())}>
+                                                                    <button
+                                                                        className="px-4 py-1 mx-0 text-gray-600 bg-white border border-gray-300 rounded-md outline-none hover:bg-gray-200 hover:text-gray-600 focus:outline-none">
+                                                                        absen
+                                                                    </button>
+                                                                </form>
                                                             )}
                                                         </div>
                                                     </td>

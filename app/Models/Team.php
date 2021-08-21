@@ -34,7 +34,7 @@ class Team extends Model
 
     public function validation(): HasOne
     {
-        return $this->hasOne(Validation::class, 'id', 'team_id');
+        return $this->hasOne(Validation::class);
     }
 
     public function agencies(): HasMany

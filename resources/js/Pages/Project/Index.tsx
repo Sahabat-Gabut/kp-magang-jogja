@@ -224,17 +224,19 @@ export default function ProjectIndex() {
                                         )}
                                     </Table.Td>
 
-                                    <Table.Td className={'flex justify-end'}>
-                                        <InertiaLink href={route('progress.show', {id: id})} as="button"
-                                                     className="font-semibold text-gray-600 outline-none hover:text-yellow-900 focus:outline-none">
-                                            Detail
-                                        </InertiaLink>
-                                        <button
-                                            onClick={() => _onClick(apprentice_id, name, id, status, jss.fullname)}
-                                            disabled={apprentice_id !== auth.user?.apprentice.id}
-                                            className="font-semibold ml-2 text-gray-600 outline-none hover:text-gray-700">
-                                            Ubah
-                                        </button>
+                                    <Table.Td>
+                                        <div className={'flex justify-end'}>
+                                            <InertiaLink href={route('progress.show', {id: id})} as="button"
+                                                         className="font-semibold text-gray-600 outline-none hover:text-yellow-900 focus:outline-none">
+                                                Detail
+                                            </InertiaLink>
+                                            <button
+                                                onClick={() => _onClick(apprentice_id, name, id, status, jss.fullname)}
+                                                disabled={apprentice_id !== auth.user?.apprentice.id}
+                                                className="font-semibold ml-2 text-gray-600 outline-none hover:text-gray-700">
+                                                Ubah
+                                            </button>
+                                        </div>
                                     </Table.Td>
                                 </Table.Tr>
                             ))}
@@ -242,7 +244,7 @@ export default function ProjectIndex() {
                     </Table>
 
                     <DialogModal isOpen={editOpen} onClose={() => setEditOpen(false)}>
-                        <DialogModal.Content title={'Ubah Admin'}>
+                        <DialogModal.Content title={'Ubah Planning'}>
                             <Input readOnly={true}
                                    name={'fullname'}
                                    value={edit.fullname}
@@ -255,6 +257,7 @@ export default function ProjectIndex() {
 
                             <Select name={'status'}
                                     onChange={(e) => _onChange(e)}
+                                    label={'Status'}
                                     value={edit.status}>
                                 <option value="">Pilih Status</option>
                                 <option value="PENGEMBANGAN">Pengembangan</option>
