@@ -15,7 +15,7 @@ export default function AppLayout({children}: PropsWithChildren<{}>) {
         <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
             <Head><title>{title}</title></Head>
             <AppAside/>
-            <div className="flex flex-col flex-1 w-full lg:bg-white rounded-lg shadow lg:mt-3 lg:mb-3 lg:mr-3">
+            <div className="flex flex-col flex-1 w-full lg:bg-white shadow lg:mr-3">
                 <Toaster position="top-right" reverseOrder={true}/>
                 <main className="h-full overflow-y-auto rounded-t-lg md:mb-6 main-scroll md:mt-3">
                     <AppHeader/>

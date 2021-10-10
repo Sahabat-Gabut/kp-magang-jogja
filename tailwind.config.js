@@ -2,14 +2,8 @@ const colors = require('tailwindcss/colors')
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
+    purge: [],
     darkMode: false,
-    mode: 'jit',
-    purge: [
-        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
-        './storage/framework/views/*.php',
-        './resources/views/**/*.blade.php',
-        './resources/js/**/*.tsx',
-    ],
     theme: {
         minHeight: {
             '96': '24rem',
@@ -71,7 +65,5 @@ module.exports = {
     },
     plugins: [
         require('tailwind-scrollbar'),
-        require('@tailwindcss/forms'),
-        require('@tailwindcss/ui'),
     ],
 }

@@ -50,9 +50,9 @@ export default function AdminIndex() {
         <>
             <h2 className="text-2xl font-extrabold text-gray-900 border-l-2 pl-3 hidden lg:block">{title}</h2>
 
-            <div className="flex items-center gap-2 mb-5 rounded-lg">
+            <div className="relative flex items-center gap-2 mb-5 rounded-lg">
                 <SearchFilter/>
-                <SecondaryButton className={'flex items-center gap-2 py-3'} onClick={() => setAddOpen(true)}>
+                <SecondaryButton className={'flex items-center gap-2'} onClick={() => setAddOpen(true)}>
                     <HiOutlinePlusSm className="w-4 h-4"/>
                     Tambah
                 </SecondaryButton>

@@ -1,3 +1,7 @@
+input {
+    height: 38px !important;
+}
+
 [type=file] {
     appearance: none;
     background-color: #fff;

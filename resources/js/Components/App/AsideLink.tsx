@@ -12,9 +12,9 @@ const AsideLink = (props: IAsideLink) => {
     const [, group] = props.href.split("/")
     const active = window.location.pathname.includes(group);
     return (
-        <li className="relative px-6 py-1">
+        <li className="relative">
             <InertiaLink href={props.href}
-                         className={`p-2 text-gray-600 rounded-md inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:bg-green-200 hover:text-green-800 ${active ? 'bg-green-200' : ''}`}>
+                         className={`py-3 px-6 text-gray-600 inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:bg-green-200 hover:text-green-800 ${active ? 'bg-green-100 border-l-4 border-green-600 text-green-800' : ''}`}>
                 {active ? props.iconFill : props.icon}
                 <span className="ml-4">{props.text}</span>
             </InertiaLink>
